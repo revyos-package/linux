@@ -1,0 +1,52 @@
+From e418c0a93ba1482041e40cf9b6182d99108a16c3 Mon Sep 17 00:00:00 2001
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Date: Thu, 13 Mar 2025 13:13:00 +0200
+Subject: [PATCH 103/138] UPSTREAM: spi: sg2044-nor: Convert to dev_err_probe()
+
+One of the cases in sg2044_spifmc_probe() may be converted to use
+dev_err_probe(). Do it.
+
+While at it, use local device pointer in all such calls and drop
+unneeded __func__ parameter as dev_err_probe() is assumed to be called
+only during probe phase.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20250313111423.322775-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+(cherry picked from commit 085cf53d71b9406d646c9f3f24876a36a68ef4e9)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/spi/spi-sg2044-nor.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/spi/spi-sg2044-nor.c b/drivers/spi/spi-sg2044-nor.c
+index 95822f2fc521..d3582c84538e 100644
+--- a/drivers/spi/spi-sg2044-nor.c
++++ b/drivers/spi/spi-sg2044-nor.c
+@@ -439,9 +439,7 @@ static int sg2044_spifmc_probe(struct platform_device *pdev)
+ 
+ 	spifmc->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(spifmc->clk))
+-		return dev_err_probe(&pdev->dev, PTR_ERR(spifmc->clk),
+-				     "%s: Cannot get and enable AHB clock\n",
+-				     __func__);
++		return dev_err_probe(dev, PTR_ERR(spifmc->clk), "Cannot get and enable AHB clock\n");
+ 
+ 	spifmc->dev = &pdev->dev;
+ 	spifmc->ctrl = ctrl;
+@@ -465,10 +463,8 @@ static int sg2044_spifmc_probe(struct platform_device *pdev)
+ 	sg2044_spifmc_init_reg(spifmc);
+ 
+ 	ret = devm_spi_register_controller(&pdev->dev, ctrl);
+-	if (ret) {
+-		dev_err(&pdev->dev, "spi_register_controller failed\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "spi_register_controller failed\n");
+ 
+ 	return 0;
+ }
+-- 
+2.47.3
+

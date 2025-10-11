@@ -1,0 +1,69 @@
+From 260faa2d493ca5898931766520bdff7c46cd9dd7 Mon Sep 17 00:00:00 2001
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
+Date: Thu, 17 Apr 2025 18:14:07 +0530
+Subject: [PATCH 111/138] UPSTREAM: PCI: cadence-ep: Introduce
+ cdns_pcie_ep_disable() helper for cleanup
+
+Introduce the helper function cdns_pcie_ep_disable() which will undo the
+configuration performed by cdns_pcie_ep_setup(). Also, export it for use
+by the existing callers of cdns_pcie_ep_setup(), thereby allowing them
+to cleanup on their exit path.
+
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://patch.msgid.link/20250417124408.2752248-4-s-vadapalli@ti.com
+(cherry picked from commit 3a4b05c9bae485d230560278a659e0830f96e28f)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/pci/controller/cadence/pcie-cadence-ep.c | 11 +++++++++++
+ drivers/pci/controller/cadence/pcie-cadence.h    |  5 +++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-ep.c b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+index 11eb85a1f427..6d2282222d5d 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -646,6 +646,17 @@ static const struct pci_epc_ops cdns_pcie_epc_ops = {
+ 	.get_features	= cdns_pcie_ep_get_features,
+ };
+ 
++void cdns_pcie_ep_disable(struct cdns_pcie_ep *ep)
++{
++	struct device *dev = ep->pcie.dev;
++	struct pci_epc *epc = to_pci_epc(dev);
++
++	pci_epc_deinit_notify(epc);
++	pci_epc_mem_free_addr(epc, ep->irq_phys_addr, ep->irq_cpu_addr,
++			      SZ_128K);
++	pci_epc_mem_exit(epc);
++}
++EXPORT_SYMBOL_GPL(cdns_pcie_ep_disable);
+ 
+ int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep)
+ {
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
+index 0b6bed1ac146..387174d6e453 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.h
++++ b/drivers/pci/controller/cadence/pcie-cadence.h
+@@ -555,11 +555,16 @@ static inline void __iomem *cdns_pci_map_bus(struct pci_bus *bus, unsigned int d
+ 
+ #if IS_ENABLED(CONFIG_PCIE_CADENCE_EP)
+ int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep);
++void cdns_pcie_ep_disable(struct cdns_pcie_ep *ep);
+ #else
+ static inline int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep)
+ {
+ 	return 0;
+ }
++
++static inline void cdns_pcie_ep_disable(struct cdns_pcie_ep *ep)
++{
++}
+ #endif
+ 
+ void cdns_pcie_detect_quiet_min_delay_set(struct cdns_pcie *pcie);
+-- 
+2.47.3
+

@@ -1,0 +1,60 @@
+From 92db9d5fa85ad2b9bdb99a3973f9c6bc4f54d35f Mon Sep 17 00:00:00 2001
+From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+Date: Thu, 5 Dec 2024 17:43:04 +0100
+Subject: [PATCH 064/138] UPSTREAM: net: dwmac-intel-plat: Use helper
+ rgmii_clock
+
+Utilize a new helper function rgmii_clock().
+
+When in, remove dead code in kmb_eth_fix_mac_speed().
+
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20241205-upstream_s32cc_gmac-v8-7-ec1d180df815@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit 8470bfc835154a80774e5ab0e46969f196c0dba1)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../stmicro/stmmac/dwmac-intel-plat.c         | 22 ++++---------------
+ 1 file changed, 4 insertions(+), 18 deletions(-)
+
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
+index 9739bc9867c5..8ca1976a74b5 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
+@@ -31,27 +31,13 @@ struct intel_dwmac_data {
+ static void kmb_eth_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
+ {
+ 	struct intel_dwmac *dwmac = priv;
+-	unsigned long rate;
++	long rate;
+ 	int ret;
+ 
+-	rate = clk_get_rate(dwmac->tx_clk);
+-
+-	switch (speed) {
+-	case SPEED_1000:
+-		rate = 125000000;
+-		break;
+-
+-	case SPEED_100:
+-		rate = 25000000;
+-		break;
+-
+-	case SPEED_10:
+-		rate = 2500000;
+-		break;
+-
+-	default:
++	rate = rgmii_clock(speed);
++	if (rate < 0) {
+ 		dev_err(dwmac->dev, "Invalid speed\n");
+-		break;
++		return;
+ 	}
+ 
+ 	ret = clk_set_rate(dwmac->tx_clk, rate);
+-- 
+2.47.3
+
