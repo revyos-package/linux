@@ -1,3 +1,9 @@
+linux (6.12.48-1.2) trixie; urgency=medium
+
+  * Apply sg2044 backport patchset
+
+ -- Han Gao <rabenda.cn@gmail.com>  Sun, 12 Oct 2025 05:14:41 +0800
+
 linux (6.12.48-1.1) trixie; urgency=medium
 
   * Apply sg2042 backport patchset

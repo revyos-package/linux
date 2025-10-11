@@ -1,0 +1,84 @@
+From 64395e7a619c047e946e30b87029821e577d5657 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Thu, 13 Feb 2025 08:38:47 +0800
+Subject: [PATCH 140/197] UPSTREAM: riscv: hwprobe: export bfloat16 ISA
+ extension
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Export Zfbmin, Zvfbfmin, Zvfbfwma ISA extension through hwprobe.
+
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Clément Léger <cleger@rivosinc.com>
+Link: https://lore.kernel.org/r/20250213003849.147358-4-inochiama@gmail.com
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+(cherry picked from commit a4863e002cf0dd6fb2f06796f16d7bc0974e9845)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ Documentation/arch/riscv/hwprobe.rst  | 12 ++++++++++++
+ arch/riscv/include/uapi/asm/hwprobe.h |  3 +++
+ arch/riscv/kernel/sys_hwprobe.c       |  3 +++
+ 3 files changed, 18 insertions(+)
+
+diff --git a/Documentation/arch/riscv/hwprobe.rst b/Documentation/arch/riscv/hwprobe.rst
+index b4f46578927d..e36e82f6b1b3 100644
+--- a/Documentation/arch/riscv/hwprobe.rst
++++ b/Documentation/arch/riscv/hwprobe.rst
+@@ -239,6 +239,18 @@ The following keys are defined:
+        ratified in commit 98918c844281 ("Merge pull request #1217 from
+        riscv/zawrs") of riscv-isa-manual.
+ 
++  * :c:macro:`RISCV_HWPROBE_EXT_ZFBFMIN`: The Zfbfmin extension is supported as
++       defined in the RISC-V ISA manual starting from commit 4dc23d6229de
++       ("Added Chapter title to BF16").
++
++  * :c:macro:`RISCV_HWPROBE_EXT_ZVFBFMIN`: The Zvfbfmin extension is supported as
++       defined in the RISC-V ISA manual starting from commit 4dc23d6229de
++       ("Added Chapter title to BF16").
++
++  * :c:macro:`RISCV_HWPROBE_EXT_ZVFBFWMA`: The Zvfbfwma extension is supported as
++       defined in the RISC-V ISA manual starting from commit 4dc23d6229de
++       ("Added Chapter title to BF16").
++
+ * :c:macro:`RISCV_HWPROBE_KEY_CPUPERF_0`: Deprecated.  Returns similar values to
+      :c:macro:`RISCV_HWPROBE_KEY_MISALIGNED_SCALAR_PERF`, but the key was
+      mistakenly classified as a bitmask rather than a value.
+diff --git a/arch/riscv/include/uapi/asm/hwprobe.h b/arch/riscv/include/uapi/asm/hwprobe.h
+index 032960bf1cb9..765e0ad67171 100644
+--- a/arch/riscv/include/uapi/asm/hwprobe.h
++++ b/arch/riscv/include/uapi/asm/hwprobe.h
+@@ -72,6 +72,9 @@ struct riscv_hwprobe {
+ #define		RISCV_HWPROBE_EXT_ZCF		(1ULL << 46)
+ #define		RISCV_HWPROBE_EXT_ZCMOP		(1ULL << 47)
+ #define		RISCV_HWPROBE_EXT_ZAWRS		(1ULL << 48)
++#define		RISCV_HWPROBE_EXT_ZFBFMIN	(1ULL << 50)
++#define		RISCV_HWPROBE_EXT_ZVFBFMIN	(1ULL << 51)
++#define		RISCV_HWPROBE_EXT_ZVFBFWMA	(1ULL << 52)
+ #define RISCV_HWPROBE_KEY_CPUPERF_0	5
+ #define		RISCV_HWPROBE_MISALIGNED_UNKNOWN	(0 << 0)
+ #define		RISCV_HWPROBE_MISALIGNED_EMULATED	(1 << 0)
+diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
+index b842322c161d..8a776be23ec9 100644
+--- a/arch/riscv/kernel/sys_hwprobe.c
++++ b/arch/riscv/kernel/sys_hwprobe.c
+@@ -132,6 +132,8 @@ static void hwprobe_isa_ext0(struct riscv_hwprobe *pair,
+ 			EXT_KEY(ZVE64D);
+ 			EXT_KEY(ZVE64F);
+ 			EXT_KEY(ZVE64X);
++			EXT_KEY(ZVFBFMIN);
++			EXT_KEY(ZVFBFWMA);
+ 			EXT_KEY(ZVFH);
+ 			EXT_KEY(ZVFHMIN);
+ 			EXT_KEY(ZVKB);
+@@ -148,6 +150,7 @@ static void hwprobe_isa_ext0(struct riscv_hwprobe *pair,
+ 			EXT_KEY(ZCD);
+ 			EXT_KEY(ZCF);
+ 			EXT_KEY(ZFA);
++			EXT_KEY(ZFBFMIN);
+ 			EXT_KEY(ZFH);
+ 			EXT_KEY(ZFHMIN);
+ 		}
+-- 
+2.47.3
+

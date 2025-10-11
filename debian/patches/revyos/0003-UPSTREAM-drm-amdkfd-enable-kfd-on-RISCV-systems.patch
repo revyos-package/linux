@@ -1,7 +1,7 @@
 From 1e198c3ac97f69afc81d29acab69bb4f1d8e06ec Mon Sep 17 00:00:00 2001
 From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 Date: Thu, 29 May 2025 10:25:11 +0800
-Subject: [PATCH 003/138] UPSTREAM: drm/amdkfd: enable kfd on RISCV systems
+Subject: [PATCH 003/197] UPSTREAM: drm/amdkfd: enable kfd on RISCV systems
 
 KFD has been confirmed that can run on RISCV systems. It's necessary to
 support CONFIG_HSA_AMD on RISCV.

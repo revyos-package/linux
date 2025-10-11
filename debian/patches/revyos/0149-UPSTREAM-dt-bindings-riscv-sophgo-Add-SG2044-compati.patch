@@ -1,0 +1,39 @@
+From 34c20a01256de90166f2eec279deeed4135b1354 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 14 Apr 2025 06:35:03 +0800
+Subject: [PATCH 149/197] UPSTREAM: dt-bindings: riscv: sophgo: Add SG2044
+ compatible string
+
+Add compatible string for the Sophgo SG2044 SoC and the SRD3-10
+board.
+
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Link: https://lore.kernel.org/r/20250413223507.46480-10-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit 22db96e4abc925596750f10b8b4b9a9fba403970)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ Documentation/devicetree/bindings/riscv/sophgo.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/riscv/sophgo.yaml b/Documentation/devicetree/bindings/riscv/sophgo.yaml
+index cbfd07cc053d..e21b65938a65 100644
+--- a/Documentation/devicetree/bindings/riscv/sophgo.yaml
++++ b/Documentation/devicetree/bindings/riscv/sophgo.yaml
+@@ -37,6 +37,10 @@ properties:
+               - sophgo,sg2042-evb-v1
+               - sophgo,sg2042-evb-v2
+           - const: sophgo,sg2042
++      - items:
++          - enum:
++              - sophgo,srd3-10
++          - const: sophgo,sg2044
+ 
+ additionalProperties: true
+ 
+-- 
+2.47.3
+

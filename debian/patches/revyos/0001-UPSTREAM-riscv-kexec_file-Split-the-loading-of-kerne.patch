@@ -1,7 +1,7 @@
 From bfdfcce35be254e361361a3abe6eaf2ac2de94e2 Mon Sep 17 00:00:00 2001
 From: Song Shuai <songshuaishuai@tinylab.org>
 Date: Wed, 9 Apr 2025 21:29:58 +0200
-Subject: [PATCH 001/138] UPSTREAM: riscv: kexec_file: Split the loading of
+Subject: [PATCH 001/197] UPSTREAM: riscv: kexec_file: Split the loading of
  kernel and others
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

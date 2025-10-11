@@ -1,0 +1,53 @@
+From 8912bdc214541958a5603c5b7ff9ecea1ce3659e Mon Sep 17 00:00:00 2001
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Date: Tue, 17 Dec 2024 23:41:53 +0200
+Subject: [PATCH 009/197] UPSTREAM: clk: Drop obsolete
+ devm_clk_bulk_get_all_enable() helper
+
+Commit 265b07df758a ("clk: Provide managed helper to get and enable bulk
+clocks") added devm_clk_bulk_get_all_enable() function, but missed to
+return the number of clocks stored in the clk_bulk_data table referenced
+by the clks argument.  Without knowing the number, it's not possible to
+iterate these clocks when needed, hence the argument is useless and
+could have been simply removed.
+
+A new helper devm_clk_bulk_get_all_enabled() has been introduced, which
+is consistent with devm_clk_bulk_get_all() in terms of the returned
+value.
+
+Drop the obsolete function since all users switched to the new helper.
+
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20241217-clk_bulk_ena_fix-v5-3-aafbbb245155@collabora.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+(cherry picked from commit ef94ea4fc18ff3fa5034d0da4c1a52dba0b23f8c)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ include/linux/clk.h | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/include/linux/clk.h b/include/linux/clk.h
+index 1dcee6d701e4..b607482ca77e 100644
+--- a/include/linux/clk.h
++++ b/include/linux/clk.h
+@@ -1138,15 +1138,6 @@ static inline void clk_restore_context(void) {}
+ 
+ #endif
+ 
+-/* Deprecated. Use devm_clk_bulk_get_all_enabled() */
+-static inline int __must_check
+-devm_clk_bulk_get_all_enable(struct device *dev, struct clk_bulk_data **clks)
+-{
+-	int ret = devm_clk_bulk_get_all_enabled(dev, clks);
+-
+-	return ret > 0 ? 0 : ret;
+-}
+-
+ /* clk_prepare_enable helps cases using clk_enable in non-atomic context. */
+ static inline int clk_prepare_enable(struct clk *clk)
+ {
+-- 
+2.47.3
+

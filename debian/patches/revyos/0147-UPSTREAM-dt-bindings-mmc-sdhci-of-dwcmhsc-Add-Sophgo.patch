@@ -1,0 +1,39 @@
+From 44f1cd97f942a83f44665491af6e9c14f2a9da1f Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 14 Apr 2025 06:35:01 +0800
+Subject: [PATCH 147/197] UPSTREAM: dt-bindings: mmc: sdhci-of-dwcmhsc: Add
+ Sophgo SG2044 support
+
+The sdhci IP of SG2044 is similar to it of SG2042. They
+share the same clock and controller configuration.
+
+Add compatible string for SG2044.
+
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250413223507.46480-8-inochiama@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+(cherry picked from commit 157d4ba8dfdfb1aebf8c2d059e5aa187abe06182)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ Documentation/devicetree/bindings/mmc/snps,dwcmshc-sdhci.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/mmc/snps,dwcmshc-sdhci.yaml b/Documentation/devicetree/bindings/mmc/snps,dwcmshc-sdhci.yaml
+index c3d5e0230af1..5ff38df2efc2 100644
+--- a/Documentation/devicetree/bindings/mmc/snps,dwcmshc-sdhci.yaml
++++ b/Documentation/devicetree/bindings/mmc/snps,dwcmshc-sdhci.yaml
+@@ -16,6 +16,9 @@ properties:
+       - items:
+           - const: rockchip,rk3576-dwcmshc
+           - const: rockchip,rk3588-dwcmshc
++      - items:
++          - const: sophgo,sg2044-dwcmshc
++          - const: sophgo,sg2042-dwcmshc
+       - enum:
+           - rockchip,rk3568-dwcmshc
+           - rockchip,rk3588-dwcmshc
+-- 
+2.47.3
+

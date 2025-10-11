@@ -1,7 +1,7 @@
 From 4c8927c8be277dabdf445f5e344946e7b61eb2ea Mon Sep 17 00:00:00 2001
 From: Song Shuai <songshuaishuai@tinylab.org>
 Date: Wed, 9 Apr 2025 21:29:59 +0200
-Subject: [PATCH 002/138] UPSTREAM: riscv: kexec_file: Support loading Image
+Subject: [PATCH 002/197] UPSTREAM: riscv: kexec_file: Support loading Image
  binary file
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

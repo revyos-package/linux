@@ -1,0 +1,58 @@
+From 1c43f6a2f0c2a9c9d3143b899d96158ccedf797a Mon Sep 17 00:00:00 2001
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Date: Thu, 27 Feb 2025 09:16:59 +0000
+Subject: [PATCH 092/197] UPSTREAM: net: stmmac: rk: switch to use
+ set_clk_tx_rate() hook
+
+Switch from using the fix_mac_speed() hook to set_clk_tx_rate() to
+manage the transmit clock.
+
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/E1tna0p-0052t8-Gn@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit c8caf6100f6d68ad4323eb8d41358688e5cfdf13)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+index 66df399b492e..6831b108d894 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+@@ -1937,9 +1937,10 @@ static void rk_gmac_powerdown(struct rk_priv_data *gmac)
+ 	gmac_clk_enable(gmac, false);
+ }
+ 
+-static void rk_fix_speed(void *priv, int speed, unsigned int mode)
++static int rk_set_clk_tx_rate(void *bsp_priv_, struct clk *clk_tx_i,
++			      phy_interface_t interface, int speed)
+ {
+-	struct rk_priv_data *bsp_priv = priv;
++	struct rk_priv_data *bsp_priv = bsp_priv_;
+ 	struct device *dev = &bsp_priv->pdev->dev;
+ 
+ 	switch (bsp_priv->phy_iface) {
+@@ -1957,6 +1958,8 @@ static void rk_fix_speed(void *priv, int speed, unsigned int mode)
+ 	default:
+ 		dev_err(dev, "unsupported interface %d", bsp_priv->phy_iface);
+ 	}
++
++	return 0;
+ }
+ 
+ static int rk_gmac_probe(struct platform_device *pdev)
+@@ -1985,7 +1988,8 @@ static int rk_gmac_probe(struct platform_device *pdev)
+ 	 */
+ 	if (!plat_dat->has_gmac4)
+ 		plat_dat->has_gmac = true;
+-	plat_dat->fix_mac_speed = rk_fix_speed;
++
++	plat_dat->set_clk_tx_rate = rk_set_clk_tx_rate;
+ 
+ 	plat_dat->bsp_priv = rk_gmac_setup(pdev, plat_dat, data);
+ 	if (IS_ERR(plat_dat->bsp_priv))
+-- 
+2.47.3
+

@@ -1,0 +1,37 @@
+From abd23196fc61e85c1b4976248110ff11f331b252 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 14 Apr 2025 06:34:58 +0800
+Subject: [PATCH 144/197] UPSTREAM: dt-bindings: interrupt-controller: Add
+ Sophgo SG2044 PLIC
+
+The SG2044 implement a standard T-HEAD C900 PLIC, which is
+already supported by the kernel.
+
+Add compatible string for Sophgo SG2044 plic.
+
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://lore.kernel.org/r/20250413223507.46480-5-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit beb207286061427197e413815ee3228a950d1d5c)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../bindings/interrupt-controller/sifive,plic-1.0.0.yaml         | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+index 7e1451f9786a..57d738b19427 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+@@ -69,6 +69,7 @@ properties:
+               - sophgo,cv1812h-plic
+               - sophgo,sg2002-plic
+               - sophgo,sg2042-plic
++              - sophgo,sg2044-plic
+               - thead,th1520-plic
+           - const: thead,c900-plic
+       - items:
+-- 
+2.47.3
+
