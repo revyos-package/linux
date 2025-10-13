@@ -1,7 +1,7 @@
 From d7de3082eed685e811dbe8251078f25590570ad9 Mon Sep 17 00:00:00 2001
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Date: Thu, 13 Mar 2025 13:12:59 +0200
-Subject: [PATCH 112/197] UPSTREAM: spi: sg2044-nor: Fully convert to device
+Subject: [PATCH 112/200] UPSTREAM: spi: sg2044-nor: Fully convert to device
  managed resources
 
 The driver has a wrong order of the cleaning up the resources,

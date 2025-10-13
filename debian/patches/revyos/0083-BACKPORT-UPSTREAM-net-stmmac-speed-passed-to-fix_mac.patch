@@ -1,7 +1,7 @@
 From a2dc6a1002e6a7b2c0379d4ae91571ea316d9c95 Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Tue, 18 Feb 2025 10:24:39 +0000
-Subject: [PATCH 083/197] BACKPORT: UPSTREAM: net: stmmac: "speed" passed to
+Subject: [PATCH 083/200] BACKPORT: UPSTREAM: net: stmmac: "speed" passed to
  fix_mac_speed is an int
 
 priv->plat->fix_mac_speed() is called from stmmac_mac_link_up(), which

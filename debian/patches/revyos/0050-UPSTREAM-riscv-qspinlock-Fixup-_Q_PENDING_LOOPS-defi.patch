@@ -1,7 +1,7 @@
 From 5342309cba9428ffde95a6786413ea44ebc4b024 Mon Sep 17 00:00:00 2001
 From: Guo Ren <guoren@linux.alibaba.com>
 Date: Sun, 15 Dec 2024 08:52:52 -0500
-Subject: [PATCH 050/197] UPSTREAM: riscv: qspinlock: Fixup _Q_PENDING_LOOPS
+Subject: [PATCH 050/200] UPSTREAM: riscv: qspinlock: Fixup _Q_PENDING_LOOPS
  definition
 
 When CONFIG_RISCV_QUEUED_SPINLOCKS=y, the _Q_PENDING_LOOPS

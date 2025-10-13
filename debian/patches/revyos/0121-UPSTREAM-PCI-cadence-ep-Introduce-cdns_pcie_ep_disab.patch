@@ -1,7 +1,7 @@
 From 2bf55d35e419454153ff496d210c08a4c57bb834 Mon Sep 17 00:00:00 2001
 From: Siddharth Vadapalli <s-vadapalli@ti.com>
 Date: Thu, 17 Apr 2025 18:14:07 +0530
-Subject: [PATCH 121/197] UPSTREAM: PCI: cadence-ep: Introduce
+Subject: [PATCH 121/200] UPSTREAM: PCI: cadence-ep: Introduce
  cdns_pcie_ep_disable() helper for cleanup
 
 Introduce the helper function cdns_pcie_ep_disable() which will undo the

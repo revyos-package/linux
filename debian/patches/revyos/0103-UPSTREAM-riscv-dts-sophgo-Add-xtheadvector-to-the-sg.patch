@@ -1,7 +1,7 @@
 From e100753694c10b7c0dcaab8ed021dc22537d17b9 Mon Sep 17 00:00:00 2001
 From: Han Gao <rabenda.cn@gmail.com>
 Date: Sat, 5 Jul 2025 15:00:12 +0800
-Subject: [PATCH 103/197] UPSTREAM: riscv: dts: sophgo: Add xtheadvector to the
+Subject: [PATCH 103/200] UPSTREAM: riscv: dts: sophgo: Add xtheadvector to the
  sg2042 devicetree
 
 The sg2042 SoCs support xtheadvector [1] so it can be included in the

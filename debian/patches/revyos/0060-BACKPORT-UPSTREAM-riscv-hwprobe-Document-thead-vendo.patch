@@ -1,7 +1,7 @@
 From 92d05fc58b9ee4dcc0f302470af878e35460e974 Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:17 -0800
-Subject: [PATCH 060/197] BACKPORT: UPSTREAM: riscv: hwprobe: Document thead
+Subject: [PATCH 060/200] BACKPORT: UPSTREAM: riscv: hwprobe: Document thead
  vendor extensions and xtheadvector extension
 
 Document support for thead vendor extensions using the key

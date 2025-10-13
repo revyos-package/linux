@@ -1,7 +1,7 @@
 From ea891d515aabb5608f8bfe9c1911d7f987ee49b3 Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:43:04 +0100
-Subject: [PATCH 074/197] UPSTREAM: net: dwmac-intel-plat: Use helper
+Subject: [PATCH 074/200] UPSTREAM: net: dwmac-intel-plat: Use helper
  rgmii_clock
 
 Utilize a new helper function rgmii_clock().

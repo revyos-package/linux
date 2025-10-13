@@ -1,7 +1,7 @@
 From a7732c3da19ed18e9c9b819dc20b9cf19a5076e9 Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Thu, 27 Feb 2025 09:17:09 +0000
-Subject: [PATCH 094/197] UPSTREAM: net: stmmac: meson: switch to use
+Subject: [PATCH 094/200] UPSTREAM: net: stmmac: meson: switch to use
  set_clk_tx_rate() hook
 
 Switch from using the fix_mac_speed() hook to set_clk_tx_rate() to

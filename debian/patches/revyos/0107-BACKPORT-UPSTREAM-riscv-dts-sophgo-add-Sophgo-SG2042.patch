@@ -1,7 +1,7 @@
 From a8ddb7c0fe11705e2f11cc06f9d519c268976569 Mon Sep 17 00:00:00 2001
 From: Han Gao <rabenda.cn@gmail.com>
 Date: Sat, 5 Jul 2025 15:39:55 +0800
-Subject: [PATCH 107/197] BACKPORT: UPSTREAM: riscv: dts: sophgo: add Sophgo
+Subject: [PATCH 107/200] BACKPORT: UPSTREAM: riscv: dts: sophgo: add Sophgo
  SG2042_EVB_V1.X board device tree
 
 Sophgo SG2042_EVB_V1.X [1] is a prototype development board based on SG2042

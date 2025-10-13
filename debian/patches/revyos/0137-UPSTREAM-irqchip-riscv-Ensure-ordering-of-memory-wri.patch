@@ -1,7 +1,7 @@
 From 1a259626cde9e1834d261aeb9ca5d838092d1586 Mon Sep 17 00:00:00 2001
 From: Xu Lu <luxu.kernel@bytedance.com>
 Date: Mon, 27 Jan 2025 17:38:46 +0800
-Subject: [PATCH 137/197] UPSTREAM: irqchip/riscv: Ensure ordering of memory
+Subject: [PATCH 137/200] UPSTREAM: irqchip/riscv: Ensure ordering of memory
  writes and IPI writes
 
 RISC-V distinguishes between memory accesses and device I/O and uses FENCE

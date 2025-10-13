@@ -1,7 +1,7 @@
 From 1c43f6a2f0c2a9c9d3143b899d96158ccedf797a Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Thu, 27 Feb 2025 09:16:59 +0000
-Subject: [PATCH 092/197] UPSTREAM: net: stmmac: rk: switch to use
+Subject: [PATCH 092/200] UPSTREAM: net: stmmac: rk: switch to use
  set_clk_tx_rate() hook
 
 Switch from using the fix_mac_speed() hook to set_clk_tx_rate() to

@@ -1,7 +1,7 @@
 From 1bf915057f515c0e2ae628a5acd65dcab331e3da Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Mon, 24 Feb 2025 16:53:15 +0000
-Subject: [PATCH 085/197] UPSTREAM: net: stmmac: dwc-qos: clean up clock
+Subject: [PATCH 085/200] UPSTREAM: net: stmmac: dwc-qos: clean up clock
  initialisation
 
 Clean up the clock initialisation by providing a helper to find a

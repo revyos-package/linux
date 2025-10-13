@@ -1,7 +1,7 @@
-From e28f6d9a66892d09d86d999f36b0875cfab0f743 Mon Sep 17 00:00:00 2001
+From c13ca5055f22ac1ff91fe4bf2a87ffb30ac9f24c Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Fri, 12 Sep 2025 10:37:35 +0800
-Subject: [PATCH 186/197] FROMLIST: riscv: sophgo: dts: enable PCIe for
+Subject: [PATCH 189/200] FROMLIST: riscv: sophgo: dts: enable PCIe for
  SG2042_EVB_V1.X
 
 Enable PCIe controllers for Sophgo SG2042_EVB_V1.X board,

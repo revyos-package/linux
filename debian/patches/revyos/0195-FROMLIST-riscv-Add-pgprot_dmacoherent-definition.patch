@@ -1,7 +1,7 @@
-From d1a19f053a037e69854ed67491b8c36362c325d6 Mon Sep 17 00:00:00 2001
+From ef9feb44e231cbff69fbd5f9f110b6d77887bd28 Mon Sep 17 00:00:00 2001
 From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
 Date: Sat, 11 Oct 2025 11:57:46 -0400
-Subject: [PATCH 192/197] FROMLIST: riscv: Add pgprot_dmacoherent definition
+Subject: [PATCH 195/200] FROMLIST: riscv: Add pgprot_dmacoherent definition
 
 RISC-V Svpbmt Standard Extension for Page-Based Memory Types
 defines three modes:

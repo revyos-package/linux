@@ -1,7 +1,7 @@
 From 3be8155089e23aa35bc35159c927753476dad710 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 13 Feb 2025 08:38:46 +0800
-Subject: [PATCH 139/197] BACKPORT: UPSTREAM: riscv: add ISA extension parsing
+Subject: [PATCH 139/200] BACKPORT: UPSTREAM: riscv: add ISA extension parsing
  for bfloat16 ISA extension
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

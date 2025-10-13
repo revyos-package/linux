@@ -1,7 +1,7 @@
 From 9159d348bf9cb63ae712868a8ce7f5b6f802a420 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Fri, 12 Sep 2025 10:36:31 +0800
-Subject: [PATCH 132/197] UPSTREAM: PCI: sg2042: Add Sophgo SG2042 PCIe driver
+Subject: [PATCH 132/200] UPSTREAM: PCI: sg2042: Add Sophgo SG2042 PCIe driver
 
 Add support for PCIe controller in Sophgo SG2042 SoC. The controller uses
 the Cadence PCIe core programmed by pcie-cadence* common driver. The PCIe

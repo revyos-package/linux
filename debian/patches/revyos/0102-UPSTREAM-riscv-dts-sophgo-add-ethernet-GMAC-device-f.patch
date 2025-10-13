@@ -1,7 +1,7 @@
 From 8d131ff702174641cde2655f47d9bfa1872ba7ee Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 8 Jul 2025 14:46:25 +0800
-Subject: [PATCH 102/197] UPSTREAM: riscv: dts: sophgo: add ethernet GMAC
+Subject: [PATCH 102/200] UPSTREAM: riscv: dts: sophgo: add ethernet GMAC
  device for sg2042
 
 Add ethernet GMAC device node for the sg2042.

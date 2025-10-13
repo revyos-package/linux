@@ -1,7 +1,7 @@
 From 393d00484d4d6937e67168fdf16b7914129b7b7e Mon Sep 17 00:00:00 2001
 From: Han Gao <rabenda.cn@gmail.com>
 Date: Sat, 5 Jul 2025 15:39:54 +0800
-Subject: [PATCH 106/197] UPSTREAM: dt-bindings: riscv: add Sophgo
+Subject: [PATCH 106/200] UPSTREAM: dt-bindings: riscv: add Sophgo
  SG2042_EVB_V1.X/V2.0 bindings
 
 Add DT binding documentation for the Sophgo SG2042_EVB_V1.X/V2.0 board [1].

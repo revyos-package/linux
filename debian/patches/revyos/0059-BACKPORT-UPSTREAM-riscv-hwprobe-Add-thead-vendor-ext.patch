@@ -1,7 +1,7 @@
 From 34be4dce966d593b9ae41e9e0fa432c61f9cd449 Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:16 -0800
-Subject: [PATCH 059/197] BACKPORT: UPSTREAM: riscv: hwprobe: Add thead vendor
+Subject: [PATCH 059/200] BACKPORT: UPSTREAM: riscv: hwprobe: Add thead vendor
  extension probing
 
 Add a new hwprobe key "RISCV_HWPROBE_KEY_VENDOR_EXT_THEAD_0" which

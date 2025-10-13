@@ -1,7 +1,7 @@
 From b75eed8acd93928cb1d692c1b2115fd782e36e45 Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:43:07 +0100
-Subject: [PATCH 077/197] UPSTREAM: net: macb: Use helper rgmii_clock
+Subject: [PATCH 077/200] UPSTREAM: net: macb: Use helper rgmii_clock
 
 Utilize a new helper function rgmii_clock().
 

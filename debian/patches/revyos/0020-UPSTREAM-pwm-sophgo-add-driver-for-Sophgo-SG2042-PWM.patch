@@ -1,7 +1,7 @@
 From 39179765ce73f84d090c90eef1481a3b3a62c848 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Wed, 5 Feb 2025 15:01:13 +0800
-Subject: [PATCH 020/197] UPSTREAM: pwm: sophgo: add driver for Sophgo SG2042
+Subject: [PATCH 020/200] UPSTREAM: pwm: sophgo: add driver for Sophgo SG2042
  PWM
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

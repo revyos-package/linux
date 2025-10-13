@@ -1,7 +1,7 @@
-From 7cd915da6f9304b91263b2290872c251ced0b7b0 Mon Sep 17 00:00:00 2001
+From 2434c2bb127e610cd88f4f3cdad46a4ce0c01c1a Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Fri, 12 Sep 2025 10:36:50 +0800
-Subject: [PATCH 184/197] FROMLIST: riscv: sophgo: dts: add PCIe controllers
+Subject: [PATCH 187/200] FROMLIST: riscv: sophgo: dts: add PCIe controllers
  for SG2042
 
 Add PCIe controller nodes in DTS for Sophgo SG2042.
@@ -16,7 +16,7 @@ Signed-off-by: Han Gao <rabenda.cn@gmail.com>
  1 file changed, 88 insertions(+)
 
 diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-index 029561b6ad81..6ec9fb81af2a 100644
+index c5e49709b308..e3497b5cad1d 100644
 --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
 +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
 @@ -240,6 +240,94 @@ clkgen: clock-controller@7030012000 {

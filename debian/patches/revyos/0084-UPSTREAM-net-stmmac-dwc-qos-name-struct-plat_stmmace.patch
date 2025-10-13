@@ -1,7 +1,7 @@
 From 796c15f0e1826bc49edb63e2ad1cfb098cbdd765 Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Mon, 24 Feb 2025 16:53:10 +0000
-Subject: [PATCH 084/197] UPSTREAM: net: stmmac: dwc-qos: name struct
+Subject: [PATCH 084/200] UPSTREAM: net: stmmac: dwc-qos: name struct
  plat_stmmacenet_data consistently
 
 Most of the stmmac driver uses "plat_dat" to name the platform data,

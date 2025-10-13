@@ -1,7 +1,7 @@
 From bea349108a425872c40568bcdca78a8ab789832f Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:43:08 +0100
-Subject: [PATCH 078/197] UPSTREAM: net: xgene_enet: Use helper rgmii_clock
+Subject: [PATCH 078/200] UPSTREAM: net: xgene_enet: Use helper rgmii_clock
 
 Utilize a new helper function rgmii_clock().
 

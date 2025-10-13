@@ -1,7 +1,7 @@
 From 6321bbb715121f96a91bd092c4775da43d6f8531 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Fri, 12 Sep 2025 10:35:32 +0800
-Subject: [PATCH 130/197] UPSTREAM: dt-bindings: pci: Add Sophgo SG2042 PCIe
+Subject: [PATCH 130/200] UPSTREAM: dt-bindings: pci: Add Sophgo SG2042 PCIe
  host
 
 Add binding for Sophgo SG2042 PCIe host controller.

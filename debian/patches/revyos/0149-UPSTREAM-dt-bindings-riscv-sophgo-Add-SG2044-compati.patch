@@ -1,7 +1,7 @@
 From 34c20a01256de90166f2eec279deeed4135b1354 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:35:03 +0800
-Subject: [PATCH 149/197] UPSTREAM: dt-bindings: riscv: sophgo: Add SG2044
+Subject: [PATCH 149/200] UPSTREAM: dt-bindings: riscv: sophgo: Add SG2044
  compatible string
 
 Add compatible string for the Sophgo SG2044 SoC and the SRD3-10

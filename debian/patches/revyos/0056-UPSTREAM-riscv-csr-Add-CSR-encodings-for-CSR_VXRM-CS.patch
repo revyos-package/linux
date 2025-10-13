@@ -1,7 +1,7 @@
 From bda73f49c41370e9848bd76edfa9597cad3ef4e1 Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:13 -0800
-Subject: [PATCH 056/197] UPSTREAM: riscv: csr: Add CSR encodings for
+Subject: [PATCH 056/200] UPSTREAM: riscv: csr: Add CSR encodings for
  CSR_VXRM/CSR_VXSAT
 
 The VXRM vector csr for xtheadvector has an encoding of 0xa and VXSAT

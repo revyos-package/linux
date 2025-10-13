@@ -1,7 +1,7 @@
 From af29042bae08bda0b81fe7a08aa0be328fb1bab8 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 18 Apr 2025 10:03:20 +0800
-Subject: [PATCH 151/197] UPSTREAM: dt-bindings: soc: sophgo: Add SG2044 top
+Subject: [PATCH 151/200] UPSTREAM: dt-bindings: soc: sophgo: Add SG2044 top
  syscon device
 
 The SG2044 top syscon device provide PLL clock control and some other

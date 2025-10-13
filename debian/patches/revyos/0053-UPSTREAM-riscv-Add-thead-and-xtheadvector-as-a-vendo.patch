@@ -1,7 +1,7 @@
 From e007f720dd88b128fabb65f46e07882d014c13d9 Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:10 -0800
-Subject: [PATCH 053/197] UPSTREAM: riscv: Add thead and xtheadvector as a
+Subject: [PATCH 053/200] UPSTREAM: riscv: Add thead and xtheadvector as a
  vendor extension
 
 Add support to the kernel for THead vendor extensions with the target of

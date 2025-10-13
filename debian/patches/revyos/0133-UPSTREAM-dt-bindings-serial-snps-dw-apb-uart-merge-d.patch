@@ -1,7 +1,7 @@
 From c906cf7b0859dc52564b11e41695a7528667153f Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 24 Oct 2024 14:21:01 +0800
-Subject: [PATCH 133/197] UPSTREAM: dt-bindings: serial: snps,dw-apb-uart:
+Subject: [PATCH 133/200] UPSTREAM: dt-bindings: serial: snps,dw-apb-uart:
  merge duplicate compatible entry.
 
 Each vendor have an items entry of its own compatible, It is needless

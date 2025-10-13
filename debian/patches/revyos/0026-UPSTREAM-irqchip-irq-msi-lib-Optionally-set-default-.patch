@@ -1,7 +1,7 @@
 From 5612b909933d76edba161bb6c606d160c698eedc Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Mon, 17 Feb 2025 14:26:48 +0530
-Subject: [PATCH 026/197] UPSTREAM: irqchip/irq-msi-lib: Optionally set default
+Subject: [PATCH 026/200] UPSTREAM: irqchip/irq-msi-lib: Optionally set default
  irq_eoi()/irq_ack()
 
 msi_lib_init_dev_msi_info() sets the default irq_eoi()/irq_ack() callbacks

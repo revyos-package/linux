@@ -1,7 +1,7 @@
 From 5fa54d25a9d56507c9232168061c3187ec107d3a Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Wed, 26 Feb 2025 10:15:01 +0800
-Subject: [PATCH 022/197] UPSTREAM: dt-bindings: interrupt-controller: Add
+Subject: [PATCH 022/200] UPSTREAM: dt-bindings: interrupt-controller: Add
  Sophgo SG2042 MSI
 
 Add binding for Sophgo SG2042 MSI controller.

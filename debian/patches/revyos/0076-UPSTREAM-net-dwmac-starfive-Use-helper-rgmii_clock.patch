@@ -1,7 +1,7 @@
 From 45377deb34338e284ffb54a530b080ea01dbd8e0 Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:43:06 +0100
-Subject: [PATCH 076/197] UPSTREAM: net: dwmac-starfive: Use helper rgmii_clock
+Subject: [PATCH 076/200] UPSTREAM: net: dwmac-starfive: Use helper rgmii_clock
 
 Utilize a new helper function rgmii_clock().
 

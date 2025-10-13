@@ -1,7 +1,7 @@
 From dc5cc947c0b1fde1ef56c1a0f55f941439651d18 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 18 Apr 2025 10:03:22 +0800
-Subject: [PATCH 153/197] UPSTREAM: dt-bindings: clock: sophgo: add clock
+Subject: [PATCH 153/200] UPSTREAM: dt-bindings: clock: sophgo: add clock
  controller for SG2044
 
 The clock controller on the SG2044 provides common clock function

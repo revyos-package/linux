@@ -1,7 +1,7 @@
 From 56772e77cdedade2daa65be654c29666fcaf4c36 Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:47 +0100
-Subject: [PATCH 043/197] UPSTREAM: riscv: Implement arch_cmpxchg128() using
+Subject: [PATCH 043/200] UPSTREAM: riscv: Implement arch_cmpxchg128() using
  Zacas
 
 Now that Zacas is supported in the kernel, let's use the double word

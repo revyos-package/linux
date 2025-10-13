@@ -1,7 +1,7 @@
 From 98a965f601a38c8d04eaee538922a503897307e6 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 18 Apr 2025 10:03:23 +0800
-Subject: [PATCH 154/197] UPSTREAM: clk: sophgo: Add PLL clock controller
+Subject: [PATCH 154/200] UPSTREAM: clk: sophgo: Add PLL clock controller
  support for SG2044 SoC
 
 Add PLL clock driver and clock definition for SG2044 SoC.

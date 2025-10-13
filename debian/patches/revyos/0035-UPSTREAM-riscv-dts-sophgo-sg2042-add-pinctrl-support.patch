@@ -1,7 +1,7 @@
 From 6e04c4977c596d8b79df45762d92870964071530 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 11 Feb 2025 13:17:56 +0800
-Subject: [PATCH 035/197] UPSTREAM: riscv: dts: sophgo: sg2042: add pinctrl
+Subject: [PATCH 035/200] UPSTREAM: riscv: dts: sophgo: sg2042: add pinctrl
  support
 
 Add pinctrl node and related pin configuration for SG2042 SoC.

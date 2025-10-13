@@ -1,7 +1,7 @@
 From cb97a92ff014942efeb4e70e808415fe20b6ddde Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Tue, 18 Feb 2025 10:24:29 +0000
-Subject: [PATCH 081/197] UPSTREAM: net: stmmac: clarify priv->pause and pause
+Subject: [PATCH 081/200] UPSTREAM: net: stmmac: clarify priv->pause and pause
  module parameter
 
 priv->pause corresponds with "pause_time" in the 802.3 specification,

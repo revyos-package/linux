@@ -1,7 +1,7 @@
 From c3b3905feba5582b2c3b6f659e95248163ea2e17 Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:14 -0800
-Subject: [PATCH 057/197] UPSTREAM: riscv: Add xtheadvector instruction
+Subject: [PATCH 057/200] UPSTREAM: riscv: Add xtheadvector instruction
  definitions
 
 xtheadvector uses different encodings than standard vector for

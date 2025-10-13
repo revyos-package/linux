@@ -1,7 +1,7 @@
-From 17a983da97a85ff248122671e77421993c659271 Mon Sep 17 00:00:00 2001
+From 118313e98e03ea14d63faa6c59becb4fd9fc0299 Mon Sep 17 00:00:00 2001
 From: Han Gao <rabenda.cn@gmail.com>
 Date: Mon, 21 Jul 2025 18:33:50 +0800
-Subject: [PATCH 197/197] REVYOS: HACK: xe: force DG1/DG2/ATS/PVC use xe driver
+Subject: [PATCH 200/200] REVYOS: HACK: xe: force DG1/DG2/ATS/PVC use xe driver
 
 Signed-off-by: Han Gao <rabenda.cn@gmail.com>
 ---

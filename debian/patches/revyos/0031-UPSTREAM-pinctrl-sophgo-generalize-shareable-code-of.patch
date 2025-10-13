@@ -1,7 +1,7 @@
 From 2b35e601c742c33c23155d45db695b3ae587f727 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 11 Feb 2025 13:17:51 +0800
-Subject: [PATCH 031/197] UPSTREAM: pinctrl: sophgo: generalize shareable code
+Subject: [PATCH 031/200] UPSTREAM: pinctrl: sophgo: generalize shareable code
  of cv18xx pinctrl driver
 
 With generic data structure, it is possible to generalize vddio

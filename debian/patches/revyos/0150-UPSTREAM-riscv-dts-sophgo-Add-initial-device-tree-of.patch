@@ -1,7 +1,7 @@
 From 319ba5a913e906974fe6d8f31729c396f1e357da Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:35:04 +0800
-Subject: [PATCH 150/197] UPSTREAM: riscv: dts: sophgo: Add initial device tree
+Subject: [PATCH 150/200] UPSTREAM: riscv: dts: sophgo: Add initial device tree
  of Sophgo SRD3-10
 
 Sophgo SG2044 SRD3-10 board bases on Sophgo SG2044 SoC.

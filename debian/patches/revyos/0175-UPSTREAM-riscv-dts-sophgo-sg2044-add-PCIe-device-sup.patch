@@ -1,7 +1,7 @@
 From be426fd748ae5ac6bf70d51b2c3d7d4d22d370bb Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Wed, 18 Jun 2025 09:58:49 +0800
-Subject: [PATCH 175/197] UPSTREAM: riscv: dts: sophgo: sg2044: add PCIe device
+Subject: [PATCH 175/200] UPSTREAM: riscv: dts: sophgo: sg2044: add PCIe device
  support for SG2044
 
 Add PCIe device node for SG2044 and configuration for Sophgo SRD3-10.

@@ -1,7 +1,7 @@
-From 13655edf12f51cf80cd5b5588b3b7a04e7651558 Mon Sep 17 00:00:00 2001
+From d5cbbd80a5fddbd9b88333baca6066b6e8812712 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Sun, 19 Nov 2023 21:13:32 +0800
-Subject: [PATCH 195/197] SOPHGO: nvmem: Add Sophgo SG2044 eFuse driver
+Subject: [PATCH 198/200] SOPHGO: nvmem: Add Sophgo SG2044 eFuse driver
 
 Sophgo SoCs such as SG2044 contain eFuses used to store
 factory-programmed data.

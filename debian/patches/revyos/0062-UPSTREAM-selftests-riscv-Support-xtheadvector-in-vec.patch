@@ -1,7 +1,7 @@
 From 34be8d930c471f91fe368af44b0fa373fe1699d9 Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:19 -0800
-Subject: [PATCH 062/197] UPSTREAM: selftests: riscv: Support xtheadvector in
+Subject: [PATCH 062/200] UPSTREAM: selftests: riscv: Support xtheadvector in
  vector tests
 
 Extend existing vector tests to be compatible with the xtheadvector

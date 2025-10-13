@@ -1,7 +1,7 @@
 From 64395e7a619c047e946e30b87029821e577d5657 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 13 Feb 2025 08:38:47 +0800
-Subject: [PATCH 140/197] UPSTREAM: riscv: hwprobe: export bfloat16 ISA
+Subject: [PATCH 140/200] UPSTREAM: riscv: hwprobe: export bfloat16 ISA
  extension
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

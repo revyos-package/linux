@@ -1,7 +1,7 @@
 From 8b724d3ce5a22bebe708a4b88e426dc8c11d583c Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:34:57 +0800
-Subject: [PATCH 143/197] UPSTREAM: dt-bindings: interrupt-controller: Add
+Subject: [PATCH 143/200] UPSTREAM: dt-bindings: interrupt-controller: Add
  Sophgo SG2044 CLINT mswi
 
 As SG2044 also implements an enhanced ACLINT as SG2042, add necessary

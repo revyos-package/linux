@@ -1,7 +1,7 @@
 From eba8f7bbb8d16d10688326e5db86de7c0e35a519 Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Thu, 27 Feb 2025 09:17:04 +0000
-Subject: [PATCH 093/197] UPSTREAM: net: stmmac: ipq806x: switch to use
+Subject: [PATCH 093/200] UPSTREAM: net: stmmac: ipq806x: switch to use
  set_clk_tx_rate() hook
 
 Switch from using the fix_mac_speed() hook to set_clk_tx_rate() to

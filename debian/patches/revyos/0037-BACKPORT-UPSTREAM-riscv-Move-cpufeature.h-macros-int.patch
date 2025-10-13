@@ -1,7 +1,7 @@
 From ee89402120e76390b140303d72f417ebf59cf91d Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:41 +0100
-Subject: [PATCH 037/197] BACKPORT: UPSTREAM: riscv: Move cpufeature.h macros
+Subject: [PATCH 037/200] BACKPORT: UPSTREAM: riscv: Move cpufeature.h macros
  into their own header
 
 asm/cmpxchg.h will soon need riscv_has_extension_unlikely() macros and

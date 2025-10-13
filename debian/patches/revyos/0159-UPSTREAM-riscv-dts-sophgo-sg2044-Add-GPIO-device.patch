@@ -1,7 +1,7 @@
 From 0137022256b84ca1d8142c5c81e49cf46354f627 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:27 +0800
-Subject: [PATCH 159/197] UPSTREAM: riscv: dts: sophgo: sg2044: Add GPIO device
+Subject: [PATCH 159/200] UPSTREAM: riscv: dts: sophgo: sg2044: Add GPIO device
 
 The GPIO controller is a standard Synopsys IP, which is already
 supported by the kernel.

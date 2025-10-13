@@ -1,7 +1,7 @@
 From b251b4aa6d3901f72afe63378bfd4a355cca112f Mon Sep 17 00:00:00 2001
 From: Longbin Li <looong.bin@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:35 +0800
-Subject: [PATCH 170/197] UPSTREAM: riscv: dts: sophgo: add pwm controller for
+Subject: [PATCH 170/200] UPSTREAM: riscv: dts: sophgo: add pwm controller for
  SG2044
 
 Add pwm device node for SG2044.

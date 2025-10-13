@@ -1,7 +1,7 @@
 From 73265adfe098d0564e82985e03819454d3f22264 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 11 Feb 2025 13:17:53 +0800
-Subject: [PATCH 033/197] UPSTREAM: dt-bindings: pinctrl: Add pinctrl for
+Subject: [PATCH 033/200] UPSTREAM: dt-bindings: pinctrl: Add pinctrl for
  Sophgo SG2042 series SoC
 
 SG2042 introduces a simple pinctrl device for all configurable pins.

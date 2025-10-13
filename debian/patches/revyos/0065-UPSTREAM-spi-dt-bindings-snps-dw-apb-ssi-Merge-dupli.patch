@@ -1,7 +1,7 @@
 From beab4468538bb7e54ec2a4086bb3ccf90b20807b Mon Sep 17 00:00:00 2001
 From: Zixian Zeng <sycamoremoon376@gmail.com>
 Date: Fri, 25 Apr 2025 10:28:12 +0800
-Subject: [PATCH 065/197] UPSTREAM: spi: dt-bindings: snps,dw-apb-ssi: Merge
+Subject: [PATCH 065/200] UPSTREAM: spi: dt-bindings: snps,dw-apb-ssi: Merge
  duplicate compatible entry
 
 Microsemi Ocelot/Jaguar2, Renesas RZ/N1 and T-HEAD TH1520

@@ -1,7 +1,7 @@
 From 9f8113377d7c3bb173be309df0fd769c2a902d07 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:32 +0800
-Subject: [PATCH 164/197] UPSTREAM: riscv: dts: sophgo: sg2044: Add ethernet
+Subject: [PATCH 164/200] UPSTREAM: riscv: dts: sophgo: sg2044: Add ethernet
  control device
 
 Add ethernet control node for sg2044.

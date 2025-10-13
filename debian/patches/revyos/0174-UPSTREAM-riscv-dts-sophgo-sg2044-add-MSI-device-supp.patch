@@ -1,7 +1,7 @@
 From 818da2d8d1b8c0a2de24afcb9b879a10c38e5732 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Wed, 18 Jun 2025 09:58:48 +0800
-Subject: [PATCH 174/197] UPSTREAM: riscv: dts: sophgo: sg2044: add MSI device
+Subject: [PATCH 174/200] UPSTREAM: riscv: dts: sophgo: sg2044: add MSI device
  support for SG2044
 
 Add MSI device tree node for SG2044.

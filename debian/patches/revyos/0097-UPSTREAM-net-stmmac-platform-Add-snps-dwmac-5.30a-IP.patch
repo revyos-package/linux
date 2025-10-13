@@ -1,7 +1,7 @@
 From 41a7c5831113cb95e39320d3264d9d82744d642d Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 7 Mar 2025 09:16:16 +0800
-Subject: [PATCH 097/197] UPSTREAM: net: stmmac: platform: Add snps,dwmac-5.30a
+Subject: [PATCH 097/200] UPSTREAM: net: stmmac: platform: Add snps,dwmac-5.30a
  IP compatible string
 
 Add "snps,dwmac-5.30a" compatible string for 5.30a version that can avoid

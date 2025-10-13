@@ -1,7 +1,7 @@
 From 80aac0ab0e3bb3ac8a9bd632538dd9d86aac50c3 Mon Sep 17 00:00:00 2001
 From: Heiko Stuebner <heiko@sntech.de>
 Date: Wed, 13 Nov 2024 18:21:12 -0800
-Subject: [PATCH 055/197] UPSTREAM: RISC-V: define the elements of the VCSR
+Subject: [PATCH 055/200] UPSTREAM: RISC-V: define the elements of the VCSR
  vector CSR
 
 The VCSR CSR contains two elements VXRM[2:1] and VXSAT[0].

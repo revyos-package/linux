@@ -1,7 +1,7 @@
 From c18a2eb153003ca3a6c9639e1b114a10c18fa137 Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:43:01 +0100
-Subject: [PATCH 071/197] UPSTREAM: net: phy: Add helper for mapping RGMII link
+Subject: [PATCH 071/200] UPSTREAM: net: phy: Add helper for mapping RGMII link
  speed to clock rate
 
 The RGMII interface supports three data rates: 10/100 Mbps

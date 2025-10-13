@@ -1,7 +1,7 @@
-From 63ed3714f7e86cb26c1fbe4a989bea9d38f0ebe1 Mon Sep 17 00:00:00 2001
+From 161e23b512eb9689b355c63de1a95195c30ff2f5 Mon Sep 17 00:00:00 2001
 From: Icenowy Zheng <uwu@icenowy.me>
 Date: Tue, 22 Jul 2025 19:20:50 +0800
-Subject: [PATCH 179/197] FROMLIST: drm/ttm: add pgprot handling for RISC-V
+Subject: [PATCH 182/200] FROMLIST: drm/ttm: add pgprot handling for RISC-V
 
 The RISC-V Svpbmt privileged extension provides support for overriding
 page memory coherency attributes, and, along with vendor extensions like

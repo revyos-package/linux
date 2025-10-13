@@ -1,7 +1,7 @@
 From b12040efff2e241da305f52190c4d12716c374be Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Sun, 4 May 2025 08:44:19 +0800
-Subject: [PATCH 173/197] UPSTREAM: PCI: dwc: Add Sophgo SG2044 PCIe controller
+Subject: [PATCH 173/200] UPSTREAM: PCI: dwc: Add Sophgo SG2044 PCIe controller
  driver in Root Complex mode
 
 Add driver support for DesignWare based PCIe controller in SG2044 SoC. The

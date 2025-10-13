@@ -1,7 +1,7 @@
 From 09b3366376b3b92362d543245a97829e7386de7d Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:28 +0800
-Subject: [PATCH 160/197] UPSTREAM: riscv: dts: sophgo: sg2044: Add I2C device
+Subject: [PATCH 160/200] UPSTREAM: riscv: dts: sophgo: sg2044: Add I2C device
 
 The I2C controller of SG2044 is a standard Synopsys IP, with one
 the ref clock is need.

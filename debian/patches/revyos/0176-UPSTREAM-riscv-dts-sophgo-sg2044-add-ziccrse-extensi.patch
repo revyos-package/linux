@@ -1,7 +1,7 @@
 From d42d4fa2fd6ab5d17cc39a94a9ef18a0cf5e2ec9 Mon Sep 17 00:00:00 2001
 From: Han Gao <rabenda.cn@gmail.com>
 Date: Mon, 7 Jul 2025 11:15:18 +0800
-Subject: [PATCH 176/197] UPSTREAM: riscv: dts: sophgo: sg2044: add ziccrse
+Subject: [PATCH 176/200] UPSTREAM: riscv: dts: sophgo: sg2044: add ziccrse
  extension
 
 sg2044 support ziccrse extension.

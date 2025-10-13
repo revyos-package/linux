@@ -1,7 +1,7 @@
 From 76d7b982805667d6bec271e75438b455e961de2c Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Thu, 27 Feb 2025 09:16:39 +0000
-Subject: [PATCH 089/197] UPSTREAM: net: stmmac: starfive: use generic
+Subject: [PATCH 089/200] UPSTREAM: net: stmmac: starfive: use generic
  stmmac_set_clk_tx_rate()
 
 Use the generic stmmac_set_clk_tx_rate() to configure the MAC transmit

@@ -1,7 +1,7 @@
 From bf1263e88fbefb9968040b3d073c3d1fd33e3dfc Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:34:55 +0800
-Subject: [PATCH 141/197] UPSTREAM: dt-bindings: i2c: dw: merge duplicate
+Subject: [PATCH 141/200] UPSTREAM: dt-bindings: i2c: dw: merge duplicate
  compatible entry.
 
 Each vendor have an items entry of its own compatible, It is needless

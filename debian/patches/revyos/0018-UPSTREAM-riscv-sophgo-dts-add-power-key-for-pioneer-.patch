@@ -1,7 +1,7 @@
 From 7c1376a781380525e51298742faa31462e816f4f Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Tue, 8 Oct 2024 09:43:52 +0800
-Subject: [PATCH 018/197] UPSTREAM: riscv: sophgo: dts: add power key for
+Subject: [PATCH 018/200] UPSTREAM: riscv: sophgo: dts: add power key for
  pioneer box
 
 There is a power button on the front panel of the pioneer box.

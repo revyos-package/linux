@@ -1,7 +1,7 @@
 From 34002b873beaf621cb4909c6bceb7a2aa53c554b Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:07 -0800
-Subject: [PATCH 051/197] UPSTREAM: dt-bindings: riscv: Add xtheadvector ISA
+Subject: [PATCH 051/200] UPSTREAM: dt-bindings: riscv: Add xtheadvector ISA
  extension description
 
 The xtheadvector ISA extension is described on the T-Head extension spec

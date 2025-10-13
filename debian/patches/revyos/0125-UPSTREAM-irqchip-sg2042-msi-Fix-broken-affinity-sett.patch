@@ -1,7 +1,7 @@
 From 97da0468dcb5295993e714c39255c79bf93979a7 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 14 Aug 2025 07:28:33 +0800
-Subject: [PATCH 125/197] UPSTREAM: irqchip/sg2042-msi: Fix broken affinity
+Subject: [PATCH 125/200] UPSTREAM: irqchip/sg2042-msi: Fix broken affinity
  setting
 
 When using NVME on SG2044, the NVME drvier always complains about "I/O tag

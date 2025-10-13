@@ -1,7 +1,7 @@
 From 5a18325d46d6a384c7e3da321d50893e8083208d Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:42:58 +0100
-Subject: [PATCH 068/197] UPSTREAM: net: stmmac: Fix CSR divider comment
+Subject: [PATCH 068/200] UPSTREAM: net: stmmac: Fix CSR divider comment
 
 The comment in declaration of STMMAC_CSR_250_300M
 incorrectly describes the constant as '/* MDC = clk_scr_i/122 */'

@@ -1,7 +1,7 @@
 From 22939dbed165eec0a4ec39b2cc0b4fafb6a96ea8 Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Thu, 27 Feb 2025 09:16:28 +0000
-Subject: [PATCH 087/197] BACKPORT: UPSTREAM: net: stmmac: provide generic
+Subject: [PATCH 087/200] BACKPORT: UPSTREAM: net: stmmac: provide generic
  implementation for set_clk_tx_rate method
 
 Provide a generic implementation for the set_clk_tx_rate method

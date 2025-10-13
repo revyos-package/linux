@@ -1,7 +1,7 @@
 From 4671ef0e9fc34245f61ead9741f47fbcb911a200 Mon Sep 17 00:00:00 2001
 From: Zixian Zeng <sycamoremoon376@gmail.com>
 Date: Sun, 20 Jul 2025 16:31:45 +0800
-Subject: [PATCH 118/197] UPSTREAM: spi: spi-sg2044-nor: Add SPI-NOR controller
+Subject: [PATCH 118/200] UPSTREAM: spi: spi-sg2044-nor: Add SPI-NOR controller
  for SG2042
 
 Add support for SOPHGO SG2042 SPI-NOR flash controller.

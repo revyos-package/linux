@@ -1,7 +1,7 @@
 From c9b93cfd8212a4632694e5f8f2aad0dfd4b30c51 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 11 Aug 2025 08:26:32 +0800
-Subject: [PATCH 122/197] UPSTREAM: irqchip/sifive-plic: Respect mask state
+Subject: [PATCH 122/200] UPSTREAM: irqchip/sifive-plic: Respect mask state
  when setting affinity
 
 plic_set_affinity() always calls plic_irq_enable(), which clears up the

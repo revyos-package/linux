@@ -1,7 +1,7 @@
 From c82b9c31c192f5880845aceac73e264a8c32a7a7 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Wed, 26 Feb 2025 10:15:37 +0800
-Subject: [PATCH 024/197] UPSTREAM: riscv: sophgo: dts: Add msi controller for
+Subject: [PATCH 024/200] UPSTREAM: riscv: sophgo: dts: Add msi controller for
  SG2042
 
 Add msi-controller node to dts for SG2042.

@@ -1,7 +1,7 @@
 From 78a271b18d433d43e773356e93eb9b0feb114662 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 7 Mar 2025 09:16:14 +0800
-Subject: [PATCH 095/197] UPSTREAM: dt-bindings: net: Add support for Sophgo
+Subject: [PATCH 095/200] UPSTREAM: dt-bindings: net: Add support for Sophgo
  SG2044 dwmac
 
 The GMAC IP on SG2044 is almost a standard Synopsys DesignWare

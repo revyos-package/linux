@@ -1,7 +1,7 @@
-From a22804b00ef484b7cdb07d81ca8e45d602add540 Mon Sep 17 00:00:00 2001
+From 33834348eaf6ef16b40eeb7497a1873225ffd2ba Mon Sep 17 00:00:00 2001
 From: Zixian Zeng <sycamoremoon376@gmail.com>
 Date: Tue, 16 Sep 2025 21:22:52 +0800
-Subject: [PATCH 190/197] FROMLIST: riscv: dts: sophgo: Enable SPI NOR node for
+Subject: [PATCH 193/200] FROMLIST: riscv: dts: sophgo: Enable SPI NOR node for
  SG2042_EVB_V1
 
 Enable SPI NOR node for SG2042_EVB_V1 device tree

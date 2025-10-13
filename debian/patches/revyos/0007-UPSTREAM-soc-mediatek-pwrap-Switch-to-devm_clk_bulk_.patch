@@ -1,7 +1,7 @@
 From 9ecc86abd34216319478c086df2f915aecadcdf5 Mon Sep 17 00:00:00 2001
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Date: Tue, 17 Dec 2024 23:41:51 +0200
-Subject: [PATCH 007/197] UPSTREAM: soc: mediatek: pwrap: Switch to
+Subject: [PATCH 007/200] UPSTREAM: soc: mediatek: pwrap: Switch to
  devm_clk_bulk_get_all_enabled()
 
 The helper devm_clk_bulk_get_all_enable() missed to return the number of

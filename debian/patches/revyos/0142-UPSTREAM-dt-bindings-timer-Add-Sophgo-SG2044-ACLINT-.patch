@@ -1,7 +1,7 @@
 From 85b3529e47c0bacfa4992147b049c069ea4b43e5 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:34:56 +0800
-Subject: [PATCH 142/197] UPSTREAM: dt-bindings: timer: Add Sophgo SG2044
+Subject: [PATCH 142/200] UPSTREAM: dt-bindings: timer: Add Sophgo SG2044
  ACLINT timer
 
 Like SG2042, SG2044 implements an enhanced ACLINT, so add necessary

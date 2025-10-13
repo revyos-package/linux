@@ -1,7 +1,7 @@
 From 2f7821ddaeb342047c82e5562edff7d2ff839c6a Mon Sep 17 00:00:00 2001
 From: Longbin Li <looong.bin@gmail.com>
 Date: Wed, 28 May 2025 18:11:36 +0800
-Subject: [PATCH 166/197] UPSTREAM: dt-bindings: pwm: sophgo: Add pwm
+Subject: [PATCH 166/200] UPSTREAM: dt-bindings: pwm: sophgo: Add pwm
  controller for SG2044
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

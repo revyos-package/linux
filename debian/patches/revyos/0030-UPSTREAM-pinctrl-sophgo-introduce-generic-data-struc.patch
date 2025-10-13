@@ -1,7 +1,7 @@
 From 3b0ca1f7375a0ec45c0684ce661242d4f95f2ad7 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 11 Feb 2025 13:17:50 +0800
-Subject: [PATCH 030/197] UPSTREAM: pinctrl: sophgo: introduce generic data
+Subject: [PATCH 030/200] UPSTREAM: pinctrl: sophgo: introduce generic data
  structure for cv18xx pinctrl driver
 
 To share DT parsing and vddio code, it is necessary to introduce
