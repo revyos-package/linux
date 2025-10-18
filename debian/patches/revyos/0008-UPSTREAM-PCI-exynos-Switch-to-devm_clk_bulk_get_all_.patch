@@ -1,7 +1,7 @@
 From b465368e2bbbe5ed64069e92a48e5a57e6c2d1a8 Mon Sep 17 00:00:00 2001
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Date: Tue, 17 Dec 2024 23:41:52 +0200
-Subject: [PATCH 008/200] UPSTREAM: PCI: exynos: Switch to
+Subject: [PATCH 008/202] UPSTREAM: PCI: exynos: Switch to
  devm_clk_bulk_get_all_enabled()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

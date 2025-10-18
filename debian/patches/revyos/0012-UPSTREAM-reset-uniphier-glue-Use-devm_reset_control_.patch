@@ -1,7 +1,7 @@
 From f2c7dd750156d0242837dcbf52f5c73125435f95 Mon Sep 17 00:00:00 2001
 From: Philipp Zabel <p.zabel@pengutronix.de>
 Date: Wed, 25 Sep 2024 18:40:11 +0200
-Subject: [PATCH 012/200] UPSTREAM: reset: uniphier-glue: Use
+Subject: [PATCH 012/202] UPSTREAM: reset: uniphier-glue: Use
  devm_reset_control_bulk_get_shared_deasserted()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

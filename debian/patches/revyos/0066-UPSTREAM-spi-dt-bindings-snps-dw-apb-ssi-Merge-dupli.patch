@@ -1,0 +1,65 @@
+From 151febe2a484d6718ecb3082078d73bf17c5e9f5 Mon Sep 17 00:00:00 2001
+From: Zixian Zeng <sycamoremoon376@gmail.com>
+Date: Fri, 25 Apr 2025 10:28:12 +0800
+Subject: [PATCH 066/202] UPSTREAM: spi: dt-bindings: snps,dw-apb-ssi: Merge
+ duplicate compatible entry
+
+Microsemi Ocelot/Jaguar2, Renesas RZ/N1 and T-HEAD TH1520
+SoC-specific compatibles, which eventually fallback to the
+generic DW ssi compatible, it's better to combine them in single entry
+
+Suggested-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20250425-sfg-spi-v6-1-2dbe7bb46013@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+(cherry picked from commit 71cfb1f88f772fb92a68a4ab85b16ccd5cc8535d)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../bindings/spi/snps,dw-apb-ssi.yaml          | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
+index bccd00a1ddd0..a43d2fb9942d 100644
+--- a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
++++ b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
+@@ -56,19 +56,17 @@ properties:
+         enum:
+           - snps,dw-apb-ssi
+           - snps,dwc-ssi-1.01a
+-      - description: Microsemi Ocelot/Jaguar2 SoC SPI Controller
+-        items:
+-          - enum:
+-              - mscc,ocelot-spi
+-              - mscc,jaguar2-spi
+-          - const: snps,dw-apb-ssi
+       - description: Microchip Sparx5 SoC SPI Controller
+         const: microchip,sparx5-spi
+       - description: Amazon Alpine SPI Controller
+         const: amazon,alpine-dw-apb-ssi
+-      - description: Renesas RZ/N1 SPI Controller
++      - description: Vendor controllers which use snps,dw-apb-ssi as fallback
+         items:
+-          - const: renesas,rzn1-spi
++          - enum:
++              - mscc,ocelot-spi
++              - mscc,jaguar2-spi
++              - renesas,rzn1-spi
++              - thead,th1520-spi
+           - const: snps,dw-apb-ssi
+       - description: Intel Keem Bay SPI Controller
+         const: intel,keembay-ssi
+@@ -88,10 +86,6 @@ properties:
+               - renesas,r9a06g032-spi # RZ/N1D
+               - renesas,r9a06g033-spi # RZ/N1S
+           - const: renesas,rzn1-spi   # RZ/N1
+-      - description: T-HEAD TH1520 SoC SPI Controller
+-        items:
+-          - const: thead,th1520-spi
+-          - const: snps,dw-apb-ssi
+ 
+   reg:
+     minItems: 1
+-- 
+2.47.3
+

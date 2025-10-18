@@ -1,0 +1,344 @@
+From de71b5f54987c254a55a2bbaa64a9379a5161951 Mon Sep 17 00:00:00 2001
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Date: Tue, 18 Feb 2025 10:24:39 +0000
+Subject: [PATCH 084/202] BACKPORT: UPSTREAM: net: stmmac: "speed" passed to
+ fix_mac_speed is an int
+
+priv->plat->fix_mac_speed() is called from stmmac_mac_link_up(), which
+is passed the speed as an "int". However, fix_mac_speed() implicitly
+casts this to an unsigned int. Some platform glue code print this value
+using %u, others with %d. Some implicitly cast it back to an int, and
+others to u32.
+
+Good practice is to use one type and only one type to represent a value
+being passed around a driver.
+
+Switch all of these over to consistently use "int" when dealing with a
+speed passed from stmmac_mac_link_up(), even though the speed will
+always be positive.
+
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Acked-by: Chen-Yu Tsai <wens@csie.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Link: https://patch.msgid.link/E1tkKmN-004ObM-Ge@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit ac9a8587edc78f3a66fdf6a99973ef151cbff72a)
+[ Han Gao: remove dwmac-thead.c ]
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-dwc-qos-eth.c | 4 ++--
+ drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c         | 8 ++++----
+ drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c  | 4 ++--
+ drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c     | 8 ++++----
+ drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c    | 3 +--
+ drivers/net/ethernet/stmicro/stmmac/dwmac-meson.c       | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 6 +++---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c          | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c     | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c    | 4 ++--
+ drivers/net/ethernet/stmicro/stmmac/dwmac-sti.c         | 8 ++++----
+ drivers/net/ethernet/stmicro/stmmac/dwmac-sunxi.c       | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c    | 2 +-
+ include/linux/stmmac.h                                  | 2 +-
+ 14 files changed, 28 insertions(+), 29 deletions(-)
+
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-dwc-qos-eth.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-dwc-qos-eth.c
+index 82681301dc96..c5e05a1d7672 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-dwc-qos-eth.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-dwc-qos-eth.c
+@@ -141,7 +141,7 @@ static int dwc_qos_probe(struct platform_device *pdev,
+ #define AUTO_CAL_STATUS 0x880c
+ #define  AUTO_CAL_STATUS_ACTIVE BIT(31)
+ 
+-static void tegra_eqos_fix_speed(void *priv, unsigned int speed, unsigned int mode)
++static void tegra_eqos_fix_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct tegra_eqos *eqos = priv;
+ 	bool needs_calibration = false;
+@@ -160,7 +160,7 @@ static void tegra_eqos_fix_speed(void *priv, unsigned int speed, unsigned int mo
+ 		break;
+ 
+ 	default:
+-		dev_err(eqos->dev, "invalid speed %u\n", speed);
++		dev_err(eqos->dev, "invalid speed %d\n", speed);
+ 		break;
+ 	}
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
+index 4147b56d40e1..f08e9bfd0091 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-imx.c
+@@ -49,7 +49,7 @@ struct imx_dwmac_ops {
+ 
+ 	int (*fix_soc_reset)(void *priv, void __iomem *ioaddr);
+ 	int (*set_intf_mode)(struct plat_stmmacenet_data *plat_dat);
+-	void (*fix_mac_speed)(void *priv, unsigned int speed, unsigned int mode);
++	void (*fix_mac_speed)(void *priv, int speed, unsigned int mode);
+ };
+ 
+ struct imx_priv_data {
+@@ -182,7 +182,7 @@ static void imx_dwmac_exit(struct platform_device *pdev, void *priv)
+ 	/* nothing to do now */
+ }
+ 
+-static void imx_dwmac_fix_speed(void *priv, unsigned int speed, unsigned int mode)
++static void imx_dwmac_fix_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct plat_stmmacenet_data *plat_dat;
+ 	struct imx_priv_data *dwmac = priv;
+@@ -198,7 +198,7 @@ static void imx_dwmac_fix_speed(void *priv, unsigned int speed, unsigned int mod
+ 
+ 	rate = rgmii_clock(speed);
+ 	if (rate < 0) {
+-		dev_err(dwmac->dev, "invalid speed %u\n", speed);
++		dev_err(dwmac->dev, "invalid speed %d\n", speed);
+ 		return;
+ 	}
+ 
+@@ -207,7 +207,7 @@ static void imx_dwmac_fix_speed(void *priv, unsigned int speed, unsigned int mod
+ 		dev_err(dwmac->dev, "failed to set tx rate %lu\n", rate);
+ }
+ 
+-static void imx93_dwmac_fix_speed(void *priv, unsigned int speed, unsigned int mode)
++static void imx93_dwmac_fix_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct imx_priv_data *dwmac = priv;
+ 	unsigned int iface;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
+index 8ca1976a74b5..4cd0fc04697f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel-plat.c
+@@ -22,13 +22,13 @@ struct intel_dwmac {
+ };
+ 
+ struct intel_dwmac_data {
+-	void (*fix_mac_speed)(void *priv, unsigned int speed, unsigned int mode);
++	void (*fix_mac_speed)(void *priv, int speed, unsigned int mode);
+ 	unsigned long ptp_ref_clk_rate;
+ 	unsigned long tx_clk_rate;
+ 	bool tx_clk_en;
+ };
+ 
+-static void kmb_eth_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
++static void kmb_eth_fix_mac_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct intel_dwmac *dwmac = priv;
+ 	long rate;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
+index 4ba15873d5b1..181bd8488017 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-ipq806x.c
+@@ -112,7 +112,7 @@ struct ipq806x_gmac {
+ 	phy_interface_t phy_mode;
+ };
+ 
+-static int get_clk_div_sgmii(struct ipq806x_gmac *gmac, unsigned int speed)
++static int get_clk_div_sgmii(struct ipq806x_gmac *gmac, int speed)
+ {
+ 	struct device *dev = &gmac->pdev->dev;
+ 	int div;
+@@ -138,7 +138,7 @@ static int get_clk_div_sgmii(struct ipq806x_gmac *gmac, unsigned int speed)
+ 	return div;
+ }
+ 
+-static int get_clk_div_rgmii(struct ipq806x_gmac *gmac, unsigned int speed)
++static int get_clk_div_rgmii(struct ipq806x_gmac *gmac, int speed)
+ {
+ 	struct device *dev = &gmac->pdev->dev;
+ 	int div;
+@@ -164,7 +164,7 @@ static int get_clk_div_rgmii(struct ipq806x_gmac *gmac, unsigned int speed)
+ 	return div;
+ }
+ 
+-static int ipq806x_gmac_set_speed(struct ipq806x_gmac *gmac, unsigned int speed)
++static int ipq806x_gmac_set_speed(struct ipq806x_gmac *gmac, int speed)
+ {
+ 	uint32_t clk_bits, val;
+ 	int div;
+@@ -260,7 +260,7 @@ static int ipq806x_gmac_of_parse(struct ipq806x_gmac *gmac)
+ 	return PTR_ERR_OR_ZERO(gmac->qsgmii_csr);
+ }
+ 
+-static void ipq806x_gmac_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
++static void ipq806x_gmac_fix_mac_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct ipq806x_gmac *gmac = priv;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+index 702ea5a00b56..f1c62f237e58 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+@@ -151,8 +151,7 @@ static struct stmmac_pci_info loongson_gmac_pci_info = {
+ 	.setup = loongson_gmac_data,
+ };
+ 
+-static void loongson_gnet_fix_speed(void *priv, unsigned int speed,
+-				    unsigned int mode)
++static void loongson_gnet_fix_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct loongson_data *ld = (struct loongson_data *)priv;
+ 	struct net_device *ndev = dev_get_drvdata(ld->dev);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson.c
+index a16bfa9089ea..d5fb7f655d2b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-meson.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-meson.c
+@@ -22,7 +22,7 @@ struct meson_dwmac {
+ 	void __iomem	*reg;
+ };
+ 
+-static void meson6_dwmac_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
++static void meson6_dwmac_fix_mac_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct meson_dwmac *dwmac = priv;
+ 	unsigned int val;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 2a5b38723635..192f270197c8 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -111,7 +111,7 @@ struct qcom_ethqos {
+ 	unsigned int link_clk_rate;
+ 	struct clk *link_clk;
+ 	struct phy *serdes_phy;
+-	unsigned int speed;
++	int speed;
+ 	int serdes_speed;
+ 	phy_interface_t phy_mode;
+ 
+@@ -175,7 +175,7 @@ static void rgmii_dump(void *priv)
+ #define RGMII_ID_MODE_10_LOW_SVS_CLK_FREQ	  (5 * 1000 * 1000UL)
+ 
+ static void
+-ethqos_update_link_clk(struct qcom_ethqos *ethqos, unsigned int speed)
++ethqos_update_link_clk(struct qcom_ethqos *ethqos, int speed)
+ {
+ 	if (!phy_interface_mode_is_rgmii(ethqos->phy_mode))
+ 		return;
+@@ -699,7 +699,7 @@ static int ethqos_configure(struct qcom_ethqos *ethqos)
+ 	return ethqos->configure_func(ethqos);
+ }
+ 
+-static void ethqos_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
++static void ethqos_fix_mac_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct qcom_ethqos *ethqos = priv;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+index dda3a2925613..66df399b492e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+@@ -1937,7 +1937,7 @@ static void rk_gmac_powerdown(struct rk_priv_data *gmac)
+ 	gmac_clk_enable(gmac, false);
+ }
+ 
+-static void rk_fix_speed(void *priv, unsigned int speed, unsigned int mode)
++static void rk_fix_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct rk_priv_data *bsp_priv = priv;
+ 	struct device *dev = &bsp_priv->pdev->dev;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
+index e897b49aa9e0..51ceed486207 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
+@@ -61,7 +61,7 @@ struct socfpga_dwmac {
+ 	struct mdio_device *pcs_mdiodev;
+ };
+ 
+-static void socfpga_dwmac_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
++static void socfpga_dwmac_fix_mac_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct socfpga_dwmac *dwmac = (struct socfpga_dwmac *)priv;
+ 	void __iomem *splitter_base = dwmac->splitter_base;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
+index d80461a721c1..93d3d9c8e5ae 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-starfive.c
+@@ -31,7 +31,7 @@ struct starfive_dwmac {
+ 	const struct starfive_dwmac_data *data;
+ };
+ 
+-static void starfive_dwmac_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
++static void starfive_dwmac_fix_mac_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct starfive_dwmac *dwmac = priv;
+ 	long rate;
+@@ -39,7 +39,7 @@ static void starfive_dwmac_fix_mac_speed(void *priv, unsigned int speed, unsigne
+ 
+ 	rate = rgmii_clock(speed);
+ 	if (rate < 0) {
+-		dev_err(dwmac->dev, "invalid speed %u\n", speed);
++		dev_err(dwmac->dev, "invalid speed %d\n", speed);
+ 		return;
+ 	}
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sti.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sti.c
+index 0b02d079360d..6d9e89240807 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sti.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sti.c
+@@ -99,12 +99,12 @@ struct sti_dwmac {
+ 	int clk_sel_reg;	/* GMAC ext clk selection register */
+ 	struct regmap *regmap;
+ 	bool gmac_en;
+-	u32 speed;
+-	void (*fix_retime_src)(void *priv, unsigned int speed, unsigned int mode);
++	int speed;
++	void (*fix_retime_src)(void *priv, int speed, unsigned int mode);
+ };
+ 
+ struct sti_dwmac_of_data {
+-	void (*fix_retime_src)(void *priv, unsigned int speed, unsigned int mode);
++	void (*fix_retime_src)(void *priv, int speed, unsigned int mode);
+ };
+ 
+ static u32 phy_intf_sels[] = {
+@@ -132,7 +132,7 @@ static u32 stih4xx_tx_retime_val[] = {
+ 				 | STIH4XX_ETH_SEL_INTERNAL_NOTEXT_PHYCLK,
+ };
+ 
+-static void stih4xx_fix_retime_src(void *priv, u32 spd, unsigned int mode)
++static void stih4xx_fix_retime_src(void *priv, int spd, unsigned int mode)
+ {
+ 	struct sti_dwmac *dwmac = priv;
+ 	u32 src = dwmac->tx_retime_src;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sunxi.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sunxi.c
+index 2653a9f0958c..141935973a3b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sunxi.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sunxi.c
+@@ -72,7 +72,7 @@ static void sun7i_gmac_exit(struct platform_device *pdev, void *priv)
+ 		regulator_disable(gmac->regulator);
+ }
+ 
+-static void sun7i_fix_speed(void *priv, unsigned int speed, unsigned int mode)
++static void sun7i_fix_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct sunxi_priv_data *gmac = priv;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c
+index a5a5cfa989c6..1c3fa999e17b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-visconti.c
+@@ -54,7 +54,7 @@ struct visconti_eth {
+ 	spinlock_t lock; /* lock to protect register update */
+ };
+ 
+-static void visconti_eth_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
++static void visconti_eth_fix_mac_speed(void *priv, int speed, unsigned int mode)
+ {
+ 	struct visconti_eth *dwmac = priv;
+ 	struct net_device *netdev = dev_get_drvdata(dwmac->dev);
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index 24422ac4e417..6d2aa77ea963 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -231,7 +231,7 @@ struct plat_stmmacenet_data {
+ 	u8 tx_sched_algorithm;
+ 	struct stmmac_rxq_cfg rx_queues_cfg[MTL_MAX_RX_QUEUES];
+ 	struct stmmac_txq_cfg tx_queues_cfg[MTL_MAX_TX_QUEUES];
+-	void (*fix_mac_speed)(void *priv, unsigned int speed, unsigned int mode);
++	void (*fix_mac_speed)(void *priv, int speed, unsigned int mode);
+ 	int (*fix_soc_reset)(void *priv, void __iomem *ioaddr);
+ 	int (*serdes_powerup)(struct net_device *ndev, void *priv);
+ 	void (*serdes_powerdown)(struct net_device *ndev, void *priv);
+-- 
+2.47.3
+

@@ -1,7 +1,7 @@
 From 9e8baefbf32e7bb67608f62df1d12fbf9c4bb48e Mon Sep 17 00:00:00 2001
 From: Junhui Liu <junhui.liu@pigmoral.tech>
 Date: Tue, 22 Jul 2025 00:53:11 +0800
-Subject: [PATCH 014/200] UPSTREAM: riscv: mm: Use mmu-type from FDT to limit
+Subject: [PATCH 014/202] UPSTREAM: riscv: mm: Use mmu-type from FDT to limit
  SATP mode
 
 Some RISC-V implementations may hang when attempting to write an

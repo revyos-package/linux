@@ -1,0 +1,60 @@
+From 2b9eed481845bad8c3b95cc8da81d2c66c76f85a Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Wed, 18 Jun 2025 09:58:48 +0800
+Subject: [PATCH 175/202] UPSTREAM: riscv: dts: sophgo: sg2044: add MSI device
+ support for SG2044
+
+Add MSI device tree node for SG2044.
+
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Link: https://lore.kernel.org/r/20250618015851.272188-2-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit 7cc925594c10e18a6d99688aa008a8bc8b1e25d7)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts |  4 ++++
+ arch/riscv/boot/dts/sophgo/sg2044.dtsi               | 11 +++++++++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts b/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
+index b50c3a872d8b..c97bd62e5f06 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
++++ b/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
+@@ -63,6 +63,10 @@ mcu: syscon@17 {
+ 	};
+ };
+ 
++&msi {
++	status = "okay";
++};
++
+ &pwm {
+ 	status = "okay";
+ };
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044.dtsi b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+index f88cabe75790..aae4539dea98 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+@@ -32,6 +32,17 @@ soc {
+ 		#size-cells = <2>;
+ 		ranges;
+ 
++		msi: msi-controller@6d50000000 {
++			compatible = "sophgo,sg2044-msi";
++			reg = <0x6d 0x50000000 0x0 0x800>,
++			      <0x0 0x7ee00000 0x0 0x40>;
++			reg-names = "clr", "doorbell";
++			#msi-cells = <0>;
++			msi-controller;
++			msi-ranges = <&intc 352 IRQ_TYPE_LEVEL_HIGH 512>;
++			status = "disabled";
++		};
++
+ 		spifmc0: spi@7001000000 {
+ 			compatible = "sophgo,sg2044-spifmc-nor";
+ 			reg = <0x70 0x01000000 0x0 0x4000000>;
+-- 
+2.47.3
+

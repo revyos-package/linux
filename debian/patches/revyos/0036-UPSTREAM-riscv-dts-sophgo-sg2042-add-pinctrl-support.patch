@@ -1,0 +1,151 @@
+From 8573235def15b0faeafb573ccd7d2f2974d60a74 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Tue, 11 Feb 2025 13:17:56 +0800
+Subject: [PATCH 036/202] UPSTREAM: riscv: dts: sophgo: sg2042: add pinctrl
+ support
+
+Add pinctrl node and related pin configuration for SG2042 SoC.
+
+Link: https://lore.kernel.org/r/20250211051801.470800-9-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit 1cb666ec5a216c12d5aa1fb5225802b6090c4c57)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../boot/dts/sophgo/sg2042-milkv-pioneer.dts  | 72 +++++++++++++++++++
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi        |  6 ++
+ 2 files changed, 78 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
+index be596d01ff8d..a36e8843ab0e 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
++++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
+@@ -42,6 +42,8 @@ &cgi_dpll1 {
+ };
+ 
+ &emmc {
++	pinctrl-0 = <&emmc_cfg>;
++	pinctrl-names = "default";
+ 	bus-width = <4>;
+ 	no-sdio;
+ 	no-sd;
+@@ -51,6 +53,8 @@ &emmc {
+ };
+ 
+ &i2c1 {
++	pinctrl-0 = <&i2c1_cfg>;
++	pinctrl-names = "default";
+ 	status = "okay";
+ 
+ 	mcu: syscon@17 {
+@@ -60,7 +64,73 @@ mcu: syscon@17 {
+ 	};
+ };
+ 
++&pinctrl {
++	emmc_cfg: sdhci-emmc-cfg {
++		sdhci-emmc-wp-pins {
++			pinmux = <PINMUX(PIN_EMMC_WP, 0)>;
++			bias-disable;
++			drive-strength-microamp = <26800>;
++			input-schmitt-disable;
++		};
++
++		sdhci-emmc-cd-pins {
++			pinmux = <PINMUX(PIN_EMMC_CD, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <26800>;
++			input-schmitt-enable;
++		};
++
++		sdhci-emmc-rst-pwr-pins {
++			pinmux = <PINMUX(PIN_EMMC_RST, 0)>,
++				 <PINMUX(PIN_EMMC_PWR_EN, 0)>;
++			bias-disable;
++			drive-strength-microamp = <26800>;
++			input-schmitt-disable;
++		};
++	};
++
++	i2c1_cfg: i2c1-cfg {
++		i2c1-pins {
++			pinmux = <PINMUX(PIN_IIC1_SDA, 0)>,
++				 <PINMUX(PIN_IIC1_SCL, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <26800>;
++			input-schmitt-enable;
++		};
++	};
++
++	sd_cfg: sdhci-sd-cfg {
++		sdhci-sd-cd-wp-pins {
++			pinmux = <PINMUX(PIN_SDIO_CD, 0)>,
++				 <PINMUX(PIN_SDIO_WP, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <26800>;
++			input-schmitt-enable;
++		};
++
++		sdhci-sd-rst-pwr-pins {
++			pinmux = <PINMUX(PIN_SDIO_RST, 0)>,
++				 <PINMUX(PIN_SDIO_PWR_EN, 0)>;
++			bias-disable;
++			drive-strength-microamp = <26800>;
++			input-schmitt-disable;
++		};
++	};
++
++	uart0_cfg: uart0-cfg {
++		uart0-rx-pins {
++			pinmux = <PINMUX(PIN_UART0_TX, 0)>,
++				 <PINMUX(PIN_UART0_RX, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <26800>;
++			input-schmitt-enable;
++		};
++	};
++};
++
+ &sd {
++	pinctrl-0 = <&sd_cfg>;
++	pinctrl-names = "default";
+ 	bus-width = <4>;
+ 	no-sdio;
+ 	no-mmc;
+@@ -69,6 +139,8 @@ &sd {
+ };
+ 
+ &uart0 {
++	pinctrl-0 = <&uart0_cfg>;
++	pinctrl-names = "default";
+ 	status = "okay";
+ };
+ 
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+index aa8b7fcc125d..f61de4788475 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/clock/sophgo,sg2042-pll.h>
+ #include <dt-bindings/clock/sophgo,sg2042-rpgate.h>
+ #include <dt-bindings/interrupt-controller/irq.h>
++#include <dt-bindings/pinctrl/pinctrl-sg2042.h>
+ #include <dt-bindings/reset/sophgo,sg2042-reset.h>
+ 
+ #include "sg2042-cpus.dtsi"
+@@ -200,6 +201,11 @@ rpgate: clock-controller@7030010368 {
+ 			#clock-cells = <1>;
+ 		};
+ 
++		pinctrl: pinctrl@7030011000 {
++			compatible = "sophgo,sg2042-pinctrl";
++			reg = <0x70 0x30011000 0x0 0x1000>;
++		};
++
+ 		clkgen: clock-controller@7030012000 {
+ 			compatible = "sophgo,sg2042-clkgen";
+ 			reg = <0x70 0x30012000 0x0 0x1000>;
+-- 
+2.47.3
+

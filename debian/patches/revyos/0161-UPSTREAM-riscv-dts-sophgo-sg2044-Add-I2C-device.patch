@@ -1,0 +1,90 @@
+From 201e42469923fa7d9cbf120a5c1e3d6c0602832c Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 9 Jun 2025 07:28:28 +0800
+Subject: [PATCH 161/202] UPSTREAM: riscv: dts: sophgo: sg2044: Add I2C device
+
+The I2C controller of SG2044 is a standard Synopsys IP, with one
+the ref clock is need.
+
+Add I2C DT node for SG2044 SoC.
+
+Link: https://lore.kernel.org/r/20250608232836.784737-5-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit 11350d2f88641c9108b82f64a4d57556a0429b67)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2044.dtsi | 56 ++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044.dtsi b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+index 70d1096f959f..a25cbb78913d 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+@@ -91,6 +91,62 @@ uart3: serial@7030003000 {
+ 			status = "disabled";
+ 		};
+ 
++		i2c0: i2c@7040005000 {
++			compatible = "sophgo,sg2044-i2c", "snps,designware-i2c";
++			reg = <0x70 0x40005000 0x0 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clock-frequency = <100000>;
++			clocks = <&clk CLK_GATE_APB_I2C>;
++			clock-names = "ref";
++			interrupt-parent = <&intc>;
++			interrupts = <31 IRQ_TYPE_LEVEL_HIGH>;
++			resets = <&rst RST_I2C0>;
++			status = "disabled";
++		};
++
++		i2c1: i2c@7040006000 {
++			compatible = "sophgo,sg2044-i2c", "snps,designware-i2c";
++			reg = <0x70 0x40006000 0x0 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clock-frequency = <100000>;
++			clocks = <&clk CLK_GATE_APB_I2C>;
++			clock-names = "ref";
++			interrupt-parent = <&intc>;
++			interrupts = <32 IRQ_TYPE_LEVEL_HIGH>;
++			resets = <&rst RST_I2C1>;
++			status = "disabled";
++		};
++
++		i2c2: i2c@7040007000 {
++			compatible = "sophgo,sg2044-i2c", "snps,designware-i2c";
++			reg = <0x70 0x40007000 0x0 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clock-frequency = <100000>;
++			clocks = <&clk CLK_GATE_APB_I2C>;
++			clock-names = "ref";
++			interrupt-parent = <&intc>;
++			interrupts = <33 IRQ_TYPE_LEVEL_HIGH>;
++			resets = <&rst RST_I2C2>;
++			status = "disabled";
++		};
++
++		i2c3: i2c@7040008000 {
++			compatible = "sophgo,sg2044-i2c", "snps,designware-i2c";
++			reg = <0x70 0x40008000 0x0 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clock-frequency = <100000>;
++			clocks = <&clk CLK_GATE_APB_I2C>;
++			clock-names = "ref";
++			interrupt-parent = <&intc>;
++			interrupts = <34 IRQ_TYPE_LEVEL_HIGH>;
++			resets = <&rst RST_I2C3>;
++			status = "disabled";
++		};
++
+ 		gpio0: gpio@7040009000 {
+ 			compatible = "snps,dw-apb-gpio";
+ 			reg = <0x70 0x40009000 0x0 0x1000>;
+-- 
+2.47.3
+

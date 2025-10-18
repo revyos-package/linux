@@ -1,0 +1,40 @@
+From 391c920b3e89b98cdbe482a0de459f5adb26ef95 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Tue, 22 Apr 2025 08:38:03 +0800
+Subject: [PATCH 157/202] UPSTREAM: irqchip/sg2042-msi: Fix wrong type cast in
+ sg2044_msi_irq_ack()
+
+The type cast in sg2044_msi_irq_ack() lost the __iomem attribute, which
+makes the pointer type incorrect.
+
+Add it back.
+
+Fixes: e96b93a97c90 ("irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Link: https://lore.kernel.org/all/20250422003804.214264-1-inochiama@gmail.com
+Closes: https://lore.kernel.org/oe-kbuild-all/202504211251.B3aesulq-lkp@intel.com/
+(cherry picked from commit 76b66e8c9d159eb3d1699e0fa80ceacf9a9ae627)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/irqchip/irq-sg2042-msi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
+index 685bbcf2384b..25c005bd569b 100644
+--- a/drivers/irqchip/irq-sg2042-msi.c
++++ b/drivers/irqchip/irq-sg2042-msi.c
+@@ -100,7 +100,7 @@ static void sg2044_msi_irq_ack(struct irq_data *d)
+ {
+ 	struct sg204x_msi_chipdata *data = irq_data_get_irq_chip_data(d);
+ 
+-	writel(0, (u32 *)data->reg_clr + d->hwirq);
++	writel(0, (u32 __iomem *)data->reg_clr + d->hwirq);
+ 	irq_chip_ack_parent(d);
+ }
+ 
+-- 
+2.47.3
+

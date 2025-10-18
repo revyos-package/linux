@@ -1,0 +1,192 @@
+From 7306361d1766cebee586928da5f84fd1a0bbc0fd Mon Sep 17 00:00:00 2001
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
+Date: Sun, 3 Nov 2024 15:51:45 +0100
+Subject: [PATCH 042/202] UPSTREAM: riscv: Implement cmpxchg8/16() using Zabha
+
+This adds runtime support for Zabha in cmpxchg8/16() operations.
+
+Note that in the absence of Zacas support in the toolchain, CAS
+instructions from Zabha won't be used.
+
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://lore.kernel.org/r/20241103145153.105097-6-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+(cherry picked from commit 1658ef4314b37ff4858a6c207646ff9d280ca4f7)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/Kconfig               | 18 ++++++++
+ arch/riscv/Makefile              |  3 ++
+ arch/riscv/include/asm/cmpxchg.h | 78 ++++++++++++++++++++------------
+ arch/riscv/include/asm/hwcap.h   |  1 +
+ arch/riscv/kernel/cpufeature.c   |  1 +
+ 5 files changed, 72 insertions(+), 29 deletions(-)
+
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index dcb68e2d3819..7508d8f36c21 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -632,6 +632,24 @@ config RISCV_ISA_ZAWRS
+ 	  use of these instructions in the kernel when the Zawrs extension is
+ 	  detected at boot.
+ 
++config TOOLCHAIN_HAS_ZABHA
++	bool
++	default y
++	depends on !64BIT || $(cc-option,-mabi=lp64 -march=rv64ima_zabha)
++	depends on !32BIT || $(cc-option,-mabi=ilp32 -march=rv32ima_zabha)
++	depends on AS_HAS_OPTION_ARCH
++
++config RISCV_ISA_ZABHA
++	bool "Zabha extension support for atomic byte/halfword operations"
++	depends on TOOLCHAIN_HAS_ZABHA
++	depends on RISCV_ALTERNATIVE
++	default y
++	help
++	  Enable the use of the Zabha ISA-extension to implement kernel
++	  byte/halfword atomic memory operations when it is detected at boot.
++
++	  If you don't know what to do here, say Y.
++
+ config TOOLCHAIN_HAS_ZACAS
+ 	bool
+ 	default y
+diff --git a/arch/riscv/Makefile b/arch/riscv/Makefile
+index 3700a1574413..9fe1ee740dda 100644
+--- a/arch/riscv/Makefile
++++ b/arch/riscv/Makefile
+@@ -85,6 +85,9 @@ endif
+ # Check if the toolchain supports Zacas
+ riscv-march-$(CONFIG_TOOLCHAIN_HAS_ZACAS) := $(riscv-march-y)_zacas
+ 
++# Check if the toolchain supports Zabha
++riscv-march-$(CONFIG_TOOLCHAIN_HAS_ZABHA) := $(riscv-march-y)_zabha
++
+ # Remove F,D,V from isa string for all. Keep extensions between "fd" and "v" by
+ # matching non-v and non-multi-letter extensions out with the filter ([^v_]*)
+ KBUILD_CFLAGS += -march=$(shell echo $(riscv-march-y) | sed -E 's/(rv32ima|rv64ima)fd([^v_]*)v?/\1\2/')
+diff --git a/arch/riscv/include/asm/cmpxchg.h b/arch/riscv/include/asm/cmpxchg.h
+index 359d85d1080a..c61edf6144e2 100644
+--- a/arch/riscv/include/asm/cmpxchg.h
++++ b/arch/riscv/include/asm/cmpxchg.h
+@@ -108,34 +108,49 @@
+  * indicated by comparing RETURN with OLD.
+  */
+ 
+-#define __arch_cmpxchg_masked(sc_sfx, prepend, append, r, p, o, n)	\
+-({									\
+-	u32 *__ptr32b = (u32 *)((ulong)(p) & ~0x3);			\
+-	ulong __s = ((ulong)(p) & (0x4 - sizeof(*p))) * BITS_PER_BYTE;	\
+-	ulong __mask = GENMASK(((sizeof(*p)) * BITS_PER_BYTE) - 1, 0)	\
+-			<< __s;						\
+-	ulong __newx = (ulong)(n) << __s;				\
+-	ulong __oldx = (ulong)(o) << __s;				\
+-	ulong __retx;							\
+-	ulong __rc;							\
+-									\
+-	__asm__ __volatile__ (						\
+-		prepend							\
+-		"0:	lr.w %0, %2\n"					\
+-		"	and  %1, %0, %z5\n"				\
+-		"	bne  %1, %z3, 1f\n"				\
+-		"	and  %1, %0, %z6\n"				\
+-		"	or   %1, %1, %z4\n"				\
+-		"	sc.w" sc_sfx " %1, %1, %2\n"			\
+-		"	bnez %1, 0b\n"					\
+-		append							\
+-		"1:\n"							\
+-		: "=&r" (__retx), "=&r" (__rc), "+A" (*(__ptr32b))	\
+-		: "rJ" ((long)__oldx), "rJ" (__newx),			\
+-		  "rJ" (__mask), "rJ" (~__mask)				\
+-		: "memory");						\
+-									\
+-	r = (__typeof__(*(p)))((__retx & __mask) >> __s);		\
++#define __arch_cmpxchg_masked(sc_sfx, cas_sfx, prepend, append, r, p, o, n)	\
++({										\
++	if (IS_ENABLED(CONFIG_RISCV_ISA_ZABHA) &&				\
++	    IS_ENABLED(CONFIG_RISCV_ISA_ZACAS) &&				\
++	    riscv_has_extension_unlikely(RISCV_ISA_EXT_ZABHA) &&		\
++	    riscv_has_extension_unlikely(RISCV_ISA_EXT_ZACAS)) {		\
++		r = o;								\
++										\
++		__asm__ __volatile__ (						\
++			prepend							\
++			"	amocas" cas_sfx " %0, %z2, %1\n"		\
++			append							\
++			: "+&r" (r), "+A" (*(p))				\
++			: "rJ" (n)						\
++			: "memory");						\
++	} else {								\
++		u32 *__ptr32b = (u32 *)((ulong)(p) & ~0x3);			\
++		ulong __s = ((ulong)(p) & (0x4 - sizeof(*p))) * BITS_PER_BYTE;	\
++		ulong __mask = GENMASK(((sizeof(*p)) * BITS_PER_BYTE) - 1, 0)	\
++			       << __s;						\
++		ulong __newx = (ulong)(n) << __s;				\
++		ulong __oldx = (ulong)(o) << __s;				\
++		ulong __retx;							\
++		ulong __rc;							\
++										\
++		__asm__ __volatile__ (						\
++			prepend							\
++			"0:	lr.w %0, %2\n"					\
++			"	and  %1, %0, %z5\n"				\
++			"	bne  %1, %z3, 1f\n"				\
++			"	and  %1, %0, %z6\n"				\
++			"	or   %1, %1, %z4\n"				\
++			"	sc.w" sc_sfx " %1, %1, %2\n"			\
++			"	bnez %1, 0b\n"					\
++			append							\
++			"1:\n"							\
++			: "=&r" (__retx), "=&r" (__rc), "+A" (*(__ptr32b))	\
++			: "rJ" ((long)__oldx), "rJ" (__newx),			\
++			  "rJ" (__mask), "rJ" (~__mask)				\
++			: "memory");						\
++										\
++		r = (__typeof__(*(p)))((__retx & __mask) >> __s);		\
++	}									\
+ })
+ 
+ #define __arch_cmpxchg(lr_sfx, sc_cas_sfx, prepend, append, r, p, co, o, n)	\
+@@ -177,8 +192,13 @@
+ 									\
+ 	switch (sizeof(*__ptr)) {					\
+ 	case 1:								\
++		__arch_cmpxchg_masked(sc_cas_sfx, ".b" sc_cas_sfx,	\
++					prepend, append,		\
++					__ret, __ptr, __old, __new);    \
++		break;							\
+ 	case 2:								\
+-		__arch_cmpxchg_masked(sc_cas_sfx, prepend, append,	\
++		__arch_cmpxchg_masked(sc_cas_sfx, ".h" sc_cas_sfx,	\
++					prepend, append,		\
+ 					__ret, __ptr, __old, __new);	\
+ 		break;							\
+ 	case 4:								\
+diff --git a/arch/riscv/include/asm/hwcap.h b/arch/riscv/include/asm/hwcap.h
+index 46d9de54179e..74bcb0e2bd1f 100644
+--- a/arch/riscv/include/asm/hwcap.h
++++ b/arch/riscv/include/asm/hwcap.h
+@@ -93,6 +93,7 @@
+ #define RISCV_ISA_EXT_ZCMOP		84
+ #define RISCV_ISA_EXT_ZAWRS		85
+ #define RISCV_ISA_EXT_SVVPTC		86
++#define RISCV_ISA_EXT_ZABHA		87
+ 
+ #define RISCV_ISA_EXT_XLINUXENVCFG	127
+ 
+diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
+index 308430af3e8f..9814ce285353 100644
+--- a/arch/riscv/kernel/cpufeature.c
++++ b/arch/riscv/kernel/cpufeature.c
+@@ -322,6 +322,7 @@ const struct riscv_isa_ext_data riscv_isa_ext[] = {
+ 	__RISCV_ISA_EXT_DATA(zihintpause, RISCV_ISA_EXT_ZIHINTPAUSE),
+ 	__RISCV_ISA_EXT_DATA(zihpm, RISCV_ISA_EXT_ZIHPM),
+ 	__RISCV_ISA_EXT_DATA(zimop, RISCV_ISA_EXT_ZIMOP),
++	__RISCV_ISA_EXT_DATA(zabha, RISCV_ISA_EXT_ZABHA),
+ 	__RISCV_ISA_EXT_DATA(zacas, RISCV_ISA_EXT_ZACAS),
+ 	__RISCV_ISA_EXT_DATA(zawrs, RISCV_ISA_EXT_ZAWRS),
+ 	__RISCV_ISA_EXT_DATA(zfa, RISCV_ISA_EXT_ZFA),
+-- 
+2.47.3
+

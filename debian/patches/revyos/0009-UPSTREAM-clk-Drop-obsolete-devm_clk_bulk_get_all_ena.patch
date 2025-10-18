@@ -1,7 +1,7 @@
 From 8912bdc214541958a5603c5b7ff9ecea1ce3659e Mon Sep 17 00:00:00 2001
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Date: Tue, 17 Dec 2024 23:41:53 +0200
-Subject: [PATCH 009/200] UPSTREAM: clk: Drop obsolete
+Subject: [PATCH 009/202] UPSTREAM: clk: Drop obsolete
  devm_clk_bulk_get_all_enable() helper
 
 Commit 265b07df758a ("clk: Provide managed helper to get and enable bulk

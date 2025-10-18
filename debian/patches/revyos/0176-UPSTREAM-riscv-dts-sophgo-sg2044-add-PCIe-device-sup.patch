@@ -1,0 +1,249 @@
+From 443418806ca62e74266a090711337acf68992d0f Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Wed, 18 Jun 2025 09:58:49 +0800
+Subject: [PATCH 176/202] UPSTREAM: riscv: dts: sophgo: sg2044: add PCIe device
+ support for SG2044
+
+Add PCIe device node for SG2044 and configuration for Sophgo SRD3-10.
+
+Link: https://lore.kernel.org/r/20250618015851.272188-3-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit 3309df45e6b5f1c1a9e91019054b7662d56ef31a)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../boot/dts/sophgo/sg2044-sophgo-srd3-10.dts |  30 +++
+ arch/riscv/boot/dts/sophgo/sg2044.dtsi        | 175 ++++++++++++++++++
+ 2 files changed, 205 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts b/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
+index c97bd62e5f06..1ca5fb707061 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
++++ b/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
+@@ -67,6 +67,36 @@ &msi {
+ 	status = "okay";
+ };
+ 
++&pcie0 {
++	bus-range = <0x00 0xff>;
++	linux,pci-domain = <1>;
++	status = "okay";
++};
++
++&pcie1 {
++	bus-range = <0x00 0xff>;
++	linux,pci-domain = <0>;
++	status = "okay";
++};
++
++&pcie2 {
++	bus-range = <0x00 0xff>;
++	linux,pci-domain = <3>;
++	status = "okay";
++};
++
++&pcie3 {
++	bus-range = <0x00 0xff>;
++	linux,pci-domain = <2>;
++	status = "okay";
++};
++
++&pcie4 {
++	bus-range = <0x00 0xff>;
++	linux,pci-domain = <4>;
++	status = "okay";
++};
++
+ &pwm {
+ 	status = "okay";
+ };
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044.dtsi b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+index aae4539dea98..6ec955744b0c 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+@@ -32,6 +32,181 @@ soc {
+ 		#size-cells = <2>;
+ 		ranges;
+ 
++		pcie0: pcie@6c00000000 {
++			compatible = "sophgo,sg2044-pcie";
++			reg = <0x6c 0x00000000 0x0 0x00001000>,
++			      <0x6c 0x00300000 0x0 0x00004000>,
++			      <0x48 0x00000000 0x0 0x00001000>,
++			      <0x6c 0x000c0000 0x0 0x00001000>;
++			reg-names = "dbi", "atu", "config", "app";
++			#address-cells = <3>;
++			#size-cells = <2>;
++			#interrupt-cells = <1>;
++			clocks = <&clk CLK_GATE_PCIE_1G>;
++			clock-names = "core";
++			device_type = "pci";
++			interrupt-map-mask = <0 0 0 7>;
++			interrupt-map = <0 0 0 1 &pcie_intc0 0>,
++					<0 0 0 2 &pcie_intc0 1>,
++					<0 0 0 3 &pcie_intc0 2>,
++					<0 0 0 4 &pcie_intc0 3>;
++			msi-parent = <&msi>;
++			ranges = <0x01000000 0x0  0x00000000  0x48 0x10000000  0x0 0x00200000>,
++				 <0x42000000 0x0  0x10000000  0x0  0x10000000  0x0 0x04000000>,
++				 <0x02000000 0x0  0x14000000  0x0  0x14000000  0x0 0x04000000>,
++				 <0x43000000 0x4a 0x00000000  0x4a 0x00000000  0x2 0x00000000>,
++				 <0x03000000 0x49 0x00000000  0x49 0x00000000  0x1 0x00000000>;
++			status = "disabled";
++
++			pcie_intc0: interrupt-controller {
++				#address-cells = <0>;
++				#interrupt-cells = <1>;
++				interrupt-parent = <&intc>;
++				interrupts = <65 IRQ_TYPE_LEVEL_HIGH>;
++				interrupt-controller;
++			};
++		};
++
++		pcie1: pcie@6c00400000 {
++			compatible = "sophgo,sg2044-pcie";
++			reg = <0x6c 0x00400000 0x0 0x00001000>,
++			      <0x6c 0x00700000 0x0 0x00004000>,
++			      <0x40 0x00000000 0x0 0x00001000>,
++			      <0x6c 0x00780000 0x0 0x00001000>;
++			reg-names = "dbi", "atu", "config", "app";
++			#address-cells = <3>;
++			#size-cells = <2>;
++			#interrupt-cells = <1>;
++			clocks = <&clk CLK_GATE_PCIE_1G>;
++			clock-names = "core";
++			device_type = "pci";
++			interrupt-map-mask = <0 0 0 7>;
++			interrupt-map = <0 0 0 1 &pcie_intc1 0>,
++					<0 0 0 2 &pcie_intc1 1>,
++					<0 0 0 3 &pcie_intc1 2>,
++					<0 0 0 4 &pcie_intc1 3>;
++			msi-parent = <&msi>;
++			ranges = <0x01000000 0x0  0x00000000  0x40 0x10000000  0x0 0x00200000>,
++				 <0x42000000 0x0  0x00000000  0x0  0x00000000  0x0 0x04000000>,
++				 <0x02000000 0x0  0x04000000  0x0  0x04000000  0x0 0x04000000>,
++				 <0x43000000 0x42 0x00000000  0x42 0x00000000  0x2 0x00000000>,
++				 <0x03000000 0x41 0x00000000  0x41 0x00000000  0x1 0x00000000>;
++			status = "disabled";
++
++			pcie_intc1: interrupt-controller {
++				#address-cells = <0>;
++				#interrupt-cells = <1>;
++				interrupt-parent = <&intc>;
++				interrupts = <64 IRQ_TYPE_LEVEL_HIGH>;
++				interrupt-controller;
++			};
++		};
++
++		pcie2: pcie@6c04000000 {
++			compatible = "sophgo,sg2044-pcie";
++			reg = <0x6c 0x04000000 0x0 0x00001000>,
++			      <0x6c 0x04300000 0x0 0x00004000>,
++			      <0x58 0x00000000 0x0 0x00001000>,
++			      <0x6c 0x040c0000 0x0 0x00001000>;
++			reg-names = "dbi", "atu", "config", "app";
++			#address-cells = <3>;
++			#size-cells = <2>;
++			#interrupt-cells = <1>;
++			clocks = <&clk CLK_GATE_PCIE_1G>;
++			clock-names = "core";
++			device_type = "pci";
++			interrupt-map-mask = <0 0 0 7>;
++			interrupt-map = <0 0 0 1 &pcie_intc2 0>,
++					<0 0 0 2 &pcie_intc2 1>,
++					<0 0 0 3 &pcie_intc2 2>,
++					<0 0 0 4 &pcie_intc2 3>;
++			msi-parent = <&msi>;
++			ranges = <0x01000000 0x0  0x00000000  0x58 0x10000000  0x0 0x00200000>,
++				 <0x42000000 0x0  0x30000000  0x0  0x30000000  0x0 0x04000000>,
++				 <0x02000000 0x0  0x34000000  0x0  0x34000000  0x0 0x04000000>,
++				 <0x43000000 0x5a 0x00000000  0x5a 0x00000000  0x2 0x00000000>,
++				 <0x03000000 0x59 0x00000000  0x59 0x00000000  0x1 0x00000000>;
++			status = "disabled";
++
++			pcie_intc2: interrupt-controller {
++				#address-cells = <0>;
++				#interrupt-cells = <1>;
++				interrupt-parent = <&intc>;
++				interrupts = <74 IRQ_TYPE_LEVEL_HIGH>;
++				interrupt-controller;
++			};
++		};
++
++		pcie3: pcie@6c04400000 {
++			compatible = "sophgo,sg2044-pcie";
++			reg = <0x6c 0x04400000 0x0 0x00001000>,
++			      <0x6c 0x04700000 0x0 0x00004000>,
++			      <0x50 0x00000000 0x0 0x00001000>,
++			      <0x6c 0x04780000 0x0 0x00001000>;
++			reg-names = "dbi", "atu", "config", "app";
++			#address-cells = <3>;
++			#size-cells = <2>;
++			#interrupt-cells = <1>;
++			clocks = <&clk CLK_GATE_PCIE_1G>;
++			clock-names = "core";
++			device_type = "pci";
++			interrupt-map-mask = <0 0 0 7>;
++			interrupt-map = <0 0 0 1 &pcie_intc3 0>,
++					<0 0 0 2 &pcie_intc3 1>,
++					<0 0 0 3 &pcie_intc3 2>,
++					<0 0 0 4 &pcie_intc3 3>;
++			msi-parent = <&msi>;
++			ranges = <0x01000000 0x0  0x00000000  0x50 0x10000000  0x0 0x00200000>,
++				 <0x42000000 0x0  0x20000000  0x0  0x20000000  0x0 0x04000000>,
++				 <0x02000000 0x0  0x24000000  0x0  0x24000000  0x0 0x04000000>,
++				 <0x43000000 0x52 0x00000000  0x52 0x00000000  0x2 0x00000000>,
++				 <0x03000000 0x51 0x00000000  0x51 0x00000000  0x1 0x00000000>;
++			status = "disabled";
++
++			pcie_intc3: interrupt-controller {
++				#address-cells = <0>;
++				#interrupt-cells = <1>;
++				interrupt-parent = <&intc>;
++				interrupts = <73 IRQ_TYPE_LEVEL_HIGH>;
++				interrupt-controller;
++			};
++		};
++
++		pcie4: pcie@6c08400000 {
++			compatible = "sophgo,sg2044-pcie";
++			reg = <0x6c 0x08400000 0x0 0x00001000>,
++			      <0x6c 0x08700000 0x0 0x00004000>,
++			      <0x60 0x00000000 0x0 0x00001000>,
++			      <0x6c 0x08780000 0x0 0x00001000>;
++			reg-names = "dbi", "atu", "config", "app";
++			#address-cells = <3>;
++			#size-cells = <2>;
++			#interrupt-cells = <1>;
++			clocks = <&clk CLK_GATE_PCIE_1G>;
++			clock-names = "core";
++			device_type = "pci";
++			interrupt-map-mask = <0 0 0 7>;
++			interrupt-map = <0 0 0 1 &pcie_intc4 0>,
++					<0 0 0 2 &pcie_intc4 1>,
++					<0 0 0 3 &pcie_intc4 2>,
++					<0 0 0 4 &pcie_intc4 3>;
++			msi-parent = <&msi>;
++			ranges = <0x01000000 0x0  0x00000000  0x60 0x10000000  0x0 0x00200000>,
++				 <0x42000000 0x0  0x40000000  0x0  0x40000000  0x0 0x04000000>,
++				 <0x02000000 0x0  0x44000000  0x0  0x44000000  0x0 0x04000000>,
++				 <0x43000000 0x62 0x00000000  0x62 0x00000000  0x2 0x00000000>,
++				 <0x03000000 0x61 0x00000000  0x61 0x00000000  0x1 0x00000000>;
++			status = "disabled";
++
++			pcie_intc4: interrupt-controller {
++				#address-cells = <0>;
++				#interrupt-cells = <1>;
++				interrupt-parent = <&intc>;
++				interrupts = <125 IRQ_TYPE_LEVEL_HIGH>;
++				interrupt-controller;
++			};
++		};
++
+ 		msi: msi-controller@6d50000000 {
+ 			compatible = "sophgo,sg2044-msi";
+ 			reg = <0x6d 0x50000000 0x0 0x800>,
+-- 
+2.47.3
+
