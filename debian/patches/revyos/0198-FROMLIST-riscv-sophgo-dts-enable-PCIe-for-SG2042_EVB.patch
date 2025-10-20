@@ -1,21 +1,21 @@
-From 4ac0e6d439a711821ded927a095fa3b310396069 Mon Sep 17 00:00:00 2001
+From ebf04e74cbfe961033244dd1cf99eee8671bb5f5 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
-Date: Fri, 12 Sep 2025 10:37:54 +0800
-Subject: [PATCH 191/202] FROMLIST: riscv: sophgo: dts: enable PCIe for
+Date: Mon, 20 Oct 2025 11:40:09 +0800
+Subject: [PATCH 198/205] FROMLIST: riscv: sophgo: dts: enable PCIe for
  SG2042_EVB_V2.0
 
 Enable PCIe controllers for Sophgo SG2042_EVB_V2.0 board,
 which uses SG2042 SoC.
 
 Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-Link: https://lore.kernel.org/r/16831a3277a6c8c19436a17ac199d2f9b80f9ce5.1757643388.git.unicorn_wang@outlook.com
+Link: https://lore.kernel.org/r/50a753f9b8cbd5a90b5b2df737f87fc77a9b33a7.1760929111.git.unicorn_wang@outlook.com
 Signed-off-by: Han Gao <rabenda.cn@gmail.com>
 ---
  arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
 diff --git a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-index 46980e41b886..0cd0dc0f537c 100644
+index 78460b2851a2..b2ceae2d8829 100644
 --- a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
 +++ b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
 @@ -152,6 +152,18 @@ phy0: phy@0 {

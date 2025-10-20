@@ -1,7 +1,7 @@
 From e45346bd4af3d5155086d219cb915583d4302321 Mon Sep 17 00:00:00 2001
 From: Philipp Zabel <p.zabel@pengutronix.de>
 Date: Wed, 25 Sep 2024 18:40:10 +0200
-Subject: [PATCH 011/202] UPSTREAM: reset: Add devres helpers to request
+Subject: [PATCH 011/205] UPSTREAM: reset: Add devres helpers to request
  pre-deasserted reset controls
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

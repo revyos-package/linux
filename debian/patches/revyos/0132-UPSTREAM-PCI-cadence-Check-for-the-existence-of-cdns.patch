@@ -1,7 +1,7 @@
 From c39ddf96b119c93d473f8438472fc877f2599634 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Fri, 12 Sep 2025 10:36:01 +0800
-Subject: [PATCH 132/202] UPSTREAM: PCI: cadence: Check for the existence of
+Subject: [PATCH 132/205] UPSTREAM: PCI: cadence: Check for the existence of
  cdns_pcie::ops before using it
 
 cdns_pcie::ops might not be populated by all the Cadence glue drivers. This

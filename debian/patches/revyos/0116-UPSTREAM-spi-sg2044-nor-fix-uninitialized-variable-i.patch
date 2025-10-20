@@ -1,7 +1,7 @@
 From 6988e7e57dd7296f2260145dcb6c8b61081de6d4 Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@linaro.org>
 Date: Fri, 14 Mar 2025 13:10:26 +0300
-Subject: [PATCH 116/202] UPSTREAM: spi: sg2044-nor: fix uninitialized variable
+Subject: [PATCH 116/205] UPSTREAM: spi: sg2044-nor: fix uninitialized variable
  in probe
 
 The "base" pointer is uninitialized.  It should be "spifmc->io_base"

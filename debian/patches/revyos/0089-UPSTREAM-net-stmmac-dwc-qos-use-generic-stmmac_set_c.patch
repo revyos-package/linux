@@ -1,7 +1,7 @@
 From 177797d0c6db8e204e7b0fa46e70e15abfe121d8 Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Thu, 27 Feb 2025 09:16:33 +0000
-Subject: [PATCH 089/202] UPSTREAM: net: stmmac: dwc-qos: use generic
+Subject: [PATCH 089/205] UPSTREAM: net: stmmac: dwc-qos: use generic
  stmmac_set_clk_tx_rate()
 
 Use the generic stmmac_set_clk_tx_rate() to configure the MAC transmit

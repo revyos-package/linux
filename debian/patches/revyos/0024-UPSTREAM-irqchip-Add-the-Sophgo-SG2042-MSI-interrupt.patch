@@ -1,7 +1,7 @@
 From 8a7270748cce232d0feeb3e12017a6b4fb0a7894 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Wed, 26 Feb 2025 10:15:19 +0800
-Subject: [PATCH 024/202] UPSTREAM: irqchip: Add the Sophgo SG2042 MSI
+Subject: [PATCH 024/205] UPSTREAM: irqchip: Add the Sophgo SG2042 MSI
  interrupt controller
 
 Add driver for Sophgo SG2042 MSI interrupt controller.

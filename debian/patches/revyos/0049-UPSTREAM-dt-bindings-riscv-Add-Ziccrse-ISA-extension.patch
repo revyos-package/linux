@@ -1,7 +1,7 @@
 From c7b4e2c7db6e57efed5eb7f78c9cad31bb09d958 Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:52 +0100
-Subject: [PATCH 049/202] UPSTREAM: dt-bindings: riscv: Add Ziccrse ISA
+Subject: [PATCH 049/205] UPSTREAM: dt-bindings: riscv: Add Ziccrse ISA
  extension description
 
 Add description for the Ziccrse ISA extension which was ratified in

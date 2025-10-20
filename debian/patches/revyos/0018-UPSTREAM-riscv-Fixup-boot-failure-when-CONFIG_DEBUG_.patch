@@ -1,7 +1,7 @@
 From 437ffcf81667100fb04b81dbf74f5bd20ba4ce8f Mon Sep 17 00:00:00 2001
 From: Guo Ren <guoren@linux.alibaba.com>
 Date: Sat, 30 Nov 2024 10:33:10 -0500
-Subject: [PATCH 018/202] UPSTREAM: riscv: Fixup boot failure when
+Subject: [PATCH 018/205] UPSTREAM: riscv: Fixup boot failure when
  CONFIG_DEBUG_RT_MUTEXES=y
 
 When CONFIG_DEBUG_RT_MUTEXES=y, mutex_lock->rt_mutex_try_acquire

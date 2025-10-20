@@ -1,7 +1,7 @@
 From 7609491683dc3bfe203dfb3ab6f34505fd19bf7d Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 3 Jul 2025 08:40:23 +0800
-Subject: [PATCH 179/202] UPSTREAM: riscv: dts: sophgo: sophgo-srd3-10: reserve
+Subject: [PATCH 179/205] UPSTREAM: riscv: dts: sophgo: sophgo-srd3-10: reserve
  uart0 device
 
 As the uart0 is already occupied by the firmware, reserve it

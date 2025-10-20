@@ -1,7 +1,7 @@
 From d6dbd244e0bc945be8cb5f7e9f8a86326ff80347 Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:42 +0100
-Subject: [PATCH 039/202] UPSTREAM: riscv: Do not fail to build on
+Subject: [PATCH 039/205] UPSTREAM: riscv: Do not fail to build on
  byte/halfword operations with Zawrs
 
 riscv does not have lr instructions on byte and halfword but the

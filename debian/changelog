@@ -1,3 +1,9 @@
+linux (6.12.48-1.5) trixie; urgency=medium
+
+  * Update backport patchset for sg2042/sg2044
+
+ -- Han Gao <rabenda.cn@gmail.com>  Mon, 20 Oct 2025 18:22:47 +0800
+
 linux (6.12.48-1.4) trixie; urgency=medium
 
   * Update backport patchset for sg2042/sg2044

@@ -1,7 +1,7 @@
 From 96bb25346afdae3891db39566060ece1c9cd795b Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 24 Oct 2024 14:21:02 +0800
-Subject: [PATCH 135/202] UPSTREAM: dt-bindings: serial: snps-dw-apb-uart: Add
+Subject: [PATCH 135/205] UPSTREAM: dt-bindings: serial: snps-dw-apb-uart: Add
  Sophgo SG2044 uarts
 
 The UART of SG2044 is modified version of the standard Synopsys

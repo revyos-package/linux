@@ -1,7 +1,7 @@
 From 8860324d4e776ba4d7554e869877900f2fb8791e Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 18 Apr 2025 10:03:21 +0800
-Subject: [PATCH 153/202] UPSTREAM: soc: sophgo: sg2044: Add support for SG2044
+Subject: [PATCH 153/205] UPSTREAM: soc: sophgo: sg2044: Add support for SG2044
  TOP syscon device
 
 The SG2044 TOP device provide PLL clock function in its area.

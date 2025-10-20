@@ -1,7 +1,7 @@
 From f3981be05a94eae61ad46972d7410841dd33f3a2 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 11 Feb 2025 13:17:54 +0800
-Subject: [PATCH 035/202] UPSTREAM: pinctrl: sophgo: add support for SG2042 SoC
+Subject: [PATCH 035/205] UPSTREAM: pinctrl: sophgo: add support for SG2042 SoC
 
 Add base driver for SG2042 SoC and pin definition.
 

@@ -1,7 +1,7 @@
 From cf98485c24c2a2b96ed947d1831c7d16409abf0a Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 31 Oct 2024 14:08:58 +0800
-Subject: [PATCH 137/202] UPSTREAM: irqchip: Add T-HEAD C900 ACLINT SSWI driver
+Subject: [PATCH 137/205] UPSTREAM: irqchip: Add T-HEAD C900 ACLINT SSWI driver
 
 Add a driver for the T-HEAD C900 ACLINT SSWI device. This device allows
 the system with T-HEAD cpus to send ipi via fast device interface.

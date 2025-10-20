@@ -1,7 +1,7 @@
 From a3fcea93625e29e0ad46124a341193d5061f4679 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:34:59 +0800
-Subject: [PATCH 146/202] UPSTREAM: dt-bindings: reset: sophgo: Add SG2044
+Subject: [PATCH 146/205] UPSTREAM: dt-bindings: reset: sophgo: Add SG2044
  bindings.
 
 The SG2044 shares the same reset controller as SG2042, so it

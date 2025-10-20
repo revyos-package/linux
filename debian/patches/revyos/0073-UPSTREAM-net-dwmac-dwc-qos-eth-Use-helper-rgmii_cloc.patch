@@ -1,7 +1,7 @@
 From 1c466b5adeec25679aa9021cc44b9bb094823ead Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:43:02 +0100
-Subject: [PATCH 073/202] UPSTREAM: net: dwmac-dwc-qos-eth: Use helper
+Subject: [PATCH 073/205] UPSTREAM: net: dwmac-dwc-qos-eth: Use helper
  rgmii_clock
 
 Utilize a new helper function rgmii_clock().

@@ -1,7 +1,7 @@
 From 3a9ef6a0ef73963d8bf29a48488ea62afdc6fbec Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:15 -0800
-Subject: [PATCH 059/202] BACKPORT: UPSTREAM: riscv: vector: Support
+Subject: [PATCH 059/205] BACKPORT: UPSTREAM: riscv: vector: Support
  xtheadvector save/restore
 
 Use alternatives to add support for xtheadvector vector save/restore

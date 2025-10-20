@@ -1,7 +1,7 @@
 From b35e7552806fe52487a51fa8e80f803394482b03 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 3 Jul 2025 08:38:43 +0800
-Subject: [PATCH 178/202] UPSTREAM: riscv: dts: sophgo: sg2044: add pmu
+Subject: [PATCH 178/205] UPSTREAM: riscv: dts: sophgo: sg2044: add pmu
  configuration
 
 Add PMU configuration for the cpu of sg2044, which is the V2

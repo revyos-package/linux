@@ -1,7 +1,7 @@
 From 3475414ca88d8649e97e9f48accbd5f6a34d0cb3 Mon Sep 17 00:00:00 2001
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Date: Thu, 13 Mar 2025 13:13:00 +0200
-Subject: [PATCH 114/202] UPSTREAM: spi: sg2044-nor: Convert to dev_err_probe()
+Subject: [PATCH 114/205] UPSTREAM: spi: sg2044-nor: Convert to dev_err_probe()
 
 One of the cases in sg2044_spifmc_probe() may be converted to use
 dev_err_probe(). Do it.

@@ -1,7 +1,7 @@
 From 30d3ba587aa17d2a230347b646176a5b94e3a3d8 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Wed, 5 Feb 2025 15:00:47 +0800
-Subject: [PATCH 020/202] UPSTREAM: dt-bindings: pwm: sophgo: add PWM
+Subject: [PATCH 020/205] UPSTREAM: dt-bindings: pwm: sophgo: add PWM
  controller for SG2042
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

@@ -1,7 +1,7 @@
 From bdd7975c95150d5254e954819eeda2089e6b4a95 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:26 +0800
-Subject: [PATCH 159/202] UPSTREAM: riscv: dts: sophgo: sg2044: Add clock
+Subject: [PATCH 159/205] UPSTREAM: riscv: dts: sophgo: sg2044: Add clock
  controller device
 
 Add clock controller and pll clock node for sg2044.

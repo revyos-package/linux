@@ -1,7 +1,7 @@
 From cda44e230896005e5b09ce2d933628df75223ad3 Mon Sep 17 00:00:00 2001
 From: Yunhui Cui <cuiyunhui@bytedance.com>
 Date: Tue, 22 Jul 2025 17:15:04 +0800
-Subject: [PATCH 017/202] BACKPORT: UPSTREAM: riscv: introduce ioremap_wc()
+Subject: [PATCH 017/205] BACKPORT: UPSTREAM: riscv: introduce ioremap_wc()
 
 Compared with IO attributes, NC attributes can improve performance,
 specifically in these aspects: Relaxed Order, Gathering, Supports Read

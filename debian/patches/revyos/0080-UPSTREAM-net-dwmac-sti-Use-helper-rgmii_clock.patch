@@ -1,7 +1,7 @@
 From b3871bbd7b6c5747f31e98a83742e59880169062 Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:43:09 +0100
-Subject: [PATCH 080/202] UPSTREAM: net: dwmac-sti: Use helper rgmii_clock
+Subject: [PATCH 080/205] UPSTREAM: net: dwmac-sti: Use helper rgmii_clock
 
 Utilize a new helper function rgmii_clock().
 

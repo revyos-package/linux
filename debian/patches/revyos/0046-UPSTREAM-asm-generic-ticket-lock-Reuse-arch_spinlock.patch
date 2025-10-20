@@ -1,7 +1,7 @@
 From 28c9231d14d5e2f8b414b616bbf2c90770181866 Mon Sep 17 00:00:00 2001
 From: Guo Ren <guoren@linux.alibaba.com>
 Date: Sun, 3 Nov 2024 15:51:49 +0100
-Subject: [PATCH 046/202] UPSTREAM: asm-generic: ticket-lock: Reuse
+Subject: [PATCH 046/205] UPSTREAM: asm-generic: ticket-lock: Reuse
  arch_spinlock_t of qspinlock
 
 The arch_spinlock_t of qspinlock has contained the atomic_t val, which

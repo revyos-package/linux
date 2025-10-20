@@ -1,7 +1,7 @@
 From e0ba0b4562d375633d9aea9cd4eddd7e276d4765 Mon Sep 17 00:00:00 2001
 From: Zixian Zeng <sycamoremoon376@gmail.com>
 Date: Fri, 25 Apr 2025 10:28:13 +0800
-Subject: [PATCH 067/202] UPSTREAM: spi: dt-bindings: snps,dw-apb-ssi: Add
+Subject: [PATCH 067/205] UPSTREAM: spi: dt-bindings: snps,dw-apb-ssi: Add
  compatible for SOPHGO SG2042 SoC
 
 Sophgo SG2042 ships an SPI controller [1] compatible with the Synopsys

@@ -1,7 +1,7 @@
 From bb958cff2a9c20d45c59bd5dd4238a8299bbdcae Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:48 +0100
-Subject: [PATCH 045/202] UPSTREAM: riscv: Implement xchg8/16() using Zabha
+Subject: [PATCH 045/205] UPSTREAM: riscv: Implement xchg8/16() using Zabha
 
 This adds runtime support for Zabha in xchg8/16() operations.
 

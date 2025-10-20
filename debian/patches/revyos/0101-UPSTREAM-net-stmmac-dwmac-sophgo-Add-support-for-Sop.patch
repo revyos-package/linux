@@ -1,7 +1,7 @@
 From 453ef3b3a9c194d1454a583b577523803eff1b1c Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 8 Jul 2025 14:40:50 +0800
-Subject: [PATCH 101/202] UPSTREAM: net: stmmac: dwmac-sophgo: Add support for
+Subject: [PATCH 101/205] UPSTREAM: net: stmmac: dwmac-sophgo: Add support for
  Sophgo SG2042 SoC
 
 Adds device id of the ethernet controller on the Sophgo SG2042 SoC.

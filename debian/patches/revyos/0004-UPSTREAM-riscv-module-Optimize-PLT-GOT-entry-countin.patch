@@ -1,7 +1,7 @@
 From a992f4c2b293a03ed16ee2373c7ab27b09e66775 Mon Sep 17 00:00:00 2001
 From: Samuel Holland <samuel.holland@sifive.com>
 Date: Wed, 9 Apr 2025 10:14:51 -0700
-Subject: [PATCH 004/202] UPSTREAM: riscv: module: Optimize PLT/GOT entry
+Subject: [PATCH 004/205] UPSTREAM: riscv: module: Optimize PLT/GOT entry
  counting
 
 perf reports that 99.63% of the cycles from `modprobe amdgpu` are spent

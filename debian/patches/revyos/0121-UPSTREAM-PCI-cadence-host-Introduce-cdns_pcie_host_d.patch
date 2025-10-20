@@ -1,7 +1,7 @@
 From 9c9f61b89a606a298e9b12f96d6ec9856bf7360c Mon Sep 17 00:00:00 2001
 From: Siddharth Vadapalli <s-vadapalli@ti.com>
 Date: Thu, 17 Apr 2025 18:14:06 +0530
-Subject: [PATCH 121/202] UPSTREAM: PCI: cadence-host: Introduce
+Subject: [PATCH 121/205] UPSTREAM: PCI: cadence-host: Introduce
  cdns_pcie_host_disable() helper for cleanup
 
 Introduce the helper function cdns_pcie_host_disable() which will undo

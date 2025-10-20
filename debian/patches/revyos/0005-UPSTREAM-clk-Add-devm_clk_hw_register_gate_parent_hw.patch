@@ -1,7 +1,7 @@
 From fbfa0172720d44bbfd369689e9e5160dfd2b9248 Mon Sep 17 00:00:00 2001
 From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Date: Fri, 1 Nov 2024 11:57:13 +0200
-Subject: [PATCH 005/202] UPSTREAM: clk: Add
+Subject: [PATCH 005/205] UPSTREAM: clk: Add
  devm_clk_hw_register_gate_parent_hw()
 
 Add devm_clk_hw_register_gate_parent_hw() macro to allow registering

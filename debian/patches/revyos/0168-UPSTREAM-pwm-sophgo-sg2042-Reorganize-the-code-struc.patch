@@ -1,7 +1,7 @@
 From a562da6e67ed0a7c66bc139d19c7e79e036e2e23 Mon Sep 17 00:00:00 2001
 From: Longbin Li <looong.bin@gmail.com>
 Date: Wed, 28 May 2025 18:11:37 +0800
-Subject: [PATCH 168/202] UPSTREAM: pwm: sophgo-sg2042: Reorganize the code
+Subject: [PATCH 168/205] UPSTREAM: pwm: sophgo-sg2042: Reorganize the code
  structure
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

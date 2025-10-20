@@ -1,7 +1,7 @@
 From 92f29741dca717db5a1e201616df6e757d680354 Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:08 -0800
-Subject: [PATCH 053/202] UPSTREAM: dt-bindings: cpus: add a thead vlen
+Subject: [PATCH 053/205] UPSTREAM: dt-bindings: cpus: add a thead vlen
  register length property
 
 Add a property analogous to the vlenb CSR so that software can detect

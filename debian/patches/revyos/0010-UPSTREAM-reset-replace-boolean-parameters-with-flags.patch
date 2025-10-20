@@ -1,7 +1,7 @@
 From 4022abb12840efc02163358b55d6f5570ea81479 Mon Sep 17 00:00:00 2001
 From: Philipp Zabel <p.zabel@pengutronix.de>
 Date: Wed, 25 Sep 2024 18:40:09 +0200
-Subject: [PATCH 010/202] UPSTREAM: reset: replace boolean parameters with
+Subject: [PATCH 010/205] UPSTREAM: reset: replace boolean parameters with
  flags parameter
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

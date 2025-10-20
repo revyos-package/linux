@@ -1,7 +1,7 @@
 From 3a04f6a39fb9f71b706e3f5ea1bfae648ac2d209 Mon Sep 17 00:00:00 2001
 From: Han Gao <rabenda.cn@gmail.com>
 Date: Sat, 5 Jul 2025 15:00:14 +0800
-Subject: [PATCH 106/202] UPSTREAM: riscv: dts: sophgo: add zfh for sg2042
+Subject: [PATCH 106/205] UPSTREAM: riscv: dts: sophgo: add zfh for sg2042
 
 sg2042 support Zfh ISA extension [1].
 

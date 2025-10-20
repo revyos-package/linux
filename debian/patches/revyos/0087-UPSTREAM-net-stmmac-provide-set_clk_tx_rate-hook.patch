@@ -1,7 +1,7 @@
 From 3ceca585b5a2408ae61b5296c1342558d71e281f Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Thu, 27 Feb 2025 09:16:23 +0000
-Subject: [PATCH 087/202] UPSTREAM: net: stmmac: provide set_clk_tx_rate() hook
+Subject: [PATCH 087/205] UPSTREAM: net: stmmac: provide set_clk_tx_rate() hook
 
 Several stmmac sub-drivers which support RGMII follow the same pattern.
 They calculate the transmit clock rate, and then call clk_set_rate().

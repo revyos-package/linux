@@ -1,7 +1,7 @@
 From 17d3c9ba222f0618ca94472cdd8a60fce266bd09 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Sat, 5 Apr 2025 13:56:24 +0800
-Subject: [PATCH 026/202] UPSTREAM: irqchip/sg2042-msi: Add missing chip flags
+Subject: [PATCH 026/205] UPSTREAM: irqchip/sg2042-msi: Add missing chip flags
 
 The sg2042-msi driver uses the fallback callbacks set by
 msi_lib_init_dev_msi_info(). commit 1c000dcaad2b ("irqchip/irq-msi-lib:

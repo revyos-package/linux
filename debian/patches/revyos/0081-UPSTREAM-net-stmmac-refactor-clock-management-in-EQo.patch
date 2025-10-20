@@ -1,7 +1,7 @@
 From fcc92b950bf84184cd23afe22608f4c4698f7877 Mon Sep 17 00:00:00 2001
 From: Swathi K S <swathi.ks@samsung.com>
 Date: Thu, 13 Feb 2025 09:45:59 +0530
-Subject: [PATCH 081/202] UPSTREAM: net: stmmac: refactor clock management in
+Subject: [PATCH 081/205] UPSTREAM: net: stmmac: refactor clock management in
  EQoS driver
 
 Refactor clock management in EQoS driver for code reuse and to avoid

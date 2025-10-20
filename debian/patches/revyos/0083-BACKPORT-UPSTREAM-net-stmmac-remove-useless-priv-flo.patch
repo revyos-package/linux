@@ -1,7 +1,7 @@
 From 0118525c8756fc2f8cfe5823cbaeb5bc49f11566 Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Tue, 18 Feb 2025 10:24:34 +0000
-Subject: [PATCH 083/202] BACKPORT: UPSTREAM: net: stmmac: remove useless
+Subject: [PATCH 083/205] BACKPORT: UPSTREAM: net: stmmac: remove useless
  priv->flow_ctrl
 
 priv->flow_ctrl is only accessed by stmmac_main.c, and the only place

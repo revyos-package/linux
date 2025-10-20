@@ -1,7 +1,7 @@
 From 682c11021bf2447f13c9bdb70a276d3d4243072a Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 13 Feb 2025 08:38:45 +0800
-Subject: [PATCH 139/202] UPSTREAM: dt-bindings: riscv: add bfloat16 ISA
+Subject: [PATCH 139/205] UPSTREAM: dt-bindings: riscv: add bfloat16 ISA
  extension description
 
 Add description for the BFloat16 precision Floating-Point ISA extension,

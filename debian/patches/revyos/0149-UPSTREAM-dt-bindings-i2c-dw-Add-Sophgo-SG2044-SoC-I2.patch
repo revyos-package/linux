@@ -1,7 +1,7 @@
 From 76d40adea5e7a3ca5543a99290780f5d6ab0a228 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:35:02 +0800
-Subject: [PATCH 149/202] UPSTREAM: dt-bindings: i2c: dw: Add Sophgo SG2044 SoC
+Subject: [PATCH 149/205] UPSTREAM: dt-bindings: i2c: dw: Add Sophgo SG2044 SoC
  I2C controller
 
 Add compatible string for Sophgo SG2044 SoC I2C controller which can be

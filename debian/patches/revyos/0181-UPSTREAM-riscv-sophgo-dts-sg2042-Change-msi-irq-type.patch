@@ -1,7 +1,7 @@
 From c7e0dd26d7a1d1de61e3beb10fd648310027e8eb Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Thu, 4 Sep 2025 11:00:37 +0800
-Subject: [PATCH 181/202] UPSTREAM: riscv: sophgo: dts: sg2042: Change msi irq
+Subject: [PATCH 181/205] UPSTREAM: riscv: sophgo: dts: sg2042: Change msi irq
  type to IRQ_TYPE_EDGE_RISING
 
 Fix msi irq type to be the correct type, although this field is not used yet.

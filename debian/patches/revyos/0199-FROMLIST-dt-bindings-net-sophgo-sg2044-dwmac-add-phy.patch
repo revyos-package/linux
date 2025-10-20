@@ -1,0 +1,57 @@
+From da9d970f91e906350275b6becb3b4b82b8ddc172 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 20 Oct 2025 17:54:57 +0800
+Subject: [PATCH 199/205] FROMLIST: dt-bindings: net: sophgo,sg2044-dwmac: add
+ phy mode restriction
+
+As the ethernet controller of SG2044 and SG2042 only supports
+RGMII phy. Add phy-mode property to restrict the value.
+
+Also, since SG2042 has internal rx delay in its mac, make
+only "rgmii-txid" and "rgmii-id" valid for phy-mode.
+
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Link: https://lore.kernel.org/r/20251020095500.1330057-2-inochiama@gmail.com
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../bindings/net/sophgo,sg2044-dwmac.yaml       | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+index 112b0b2a1524..db8da1afdd6d 100644
+--- a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
++++ b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+@@ -52,6 +52,13 @@ properties:
+   interrupt-names:
+     maxItems: 1
+ 
++  phy-mode:
++    enum:
++      - rgmii
++      - rgmii-rxid
++      - rgmii-txid
++      - rgmii-id
++
+   resets:
+     maxItems: 1
+ 
+@@ -70,6 +77,16 @@ required:
+ 
+ allOf:
+   - $ref: snps,dwmac.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: sophgo,sg2042-dwmac
++    then:
++      phy-mode:
++        enum:
++          - rgmii-txid
++          - rgmii-id
+ 
+ unevaluatedProperties: false
+ 
+-- 
+2.47.3
+

@@ -1,7 +1,7 @@
 From 68751cc2c0cb4b22f4b24fda58197e0f2b222654 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Wed, 5 Feb 2025 15:01:34 +0800
-Subject: [PATCH 022/202] UPSTREAM: riscv: sophgo: dts: add pwm controller for
+Subject: [PATCH 022/205] UPSTREAM: riscv: sophgo: dts: add pwm controller for
  SG2042 SoC
 
 SG2042 has one PWM controller, which has 4 pwm output channels.

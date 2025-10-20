@@ -1,7 +1,7 @@
-From 69b8388e6beb0da39800c308ef7a4697c0842145 Mon Sep 17 00:00:00 2001
+From c5c3b38fecbdd48e736af5cea3c3bd8c3b4b43fe Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 5 Dec 2024 13:24:13 +0800
-Subject: [PATCH 201/202] SOPHGO: riscv: dts: sophgo: sg2044: Add eFUSE device
+Subject: [PATCH 204/205] SOPHGO: riscv: dts: sophgo: sg2044: Add eFUSE device
 
 Add eFUSE controller node for SG2044.
 

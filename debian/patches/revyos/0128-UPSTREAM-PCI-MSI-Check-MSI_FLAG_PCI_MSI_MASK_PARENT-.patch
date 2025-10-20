@@ -1,7 +1,7 @@
 From b44561e793975187299b844f971a97f4d5b9b98b Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 28 Aug 2025 07:09:42 +0800
-Subject: [PATCH 128/202] UPSTREAM: PCI/MSI: Check MSI_FLAG_PCI_MSI_MASK_PARENT
+Subject: [PATCH 128/205] UPSTREAM: PCI/MSI: Check MSI_FLAG_PCI_MSI_MASK_PARENT
  in cond_[startup|shutdown]_parent()
 
 For MSI controllers which only support MSI_FLAG_PCI_MSI_MASK_PARENT, the

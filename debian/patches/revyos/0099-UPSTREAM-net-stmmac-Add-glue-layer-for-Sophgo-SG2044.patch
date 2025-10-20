@@ -1,7 +1,7 @@
 From ce632526896c7447b6ac1e46f9a3676218887404 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 7 Mar 2025 09:16:17 +0800
-Subject: [PATCH 099/202] UPSTREAM: net: stmmac: Add glue layer for Sophgo
+Subject: [PATCH 099/205] UPSTREAM: net: stmmac: Add glue layer for Sophgo
  SG2044 SoC
 
 Adds Sophgo dwmac driver support on the Sophgo SG2044 SoC.

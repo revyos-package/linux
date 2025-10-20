@@ -1,7 +1,7 @@
 From c36726b9ffa82eb1cbe62112a441bbc60896f75d Mon Sep 17 00:00:00 2001
 From: Longbin Li <looong.bin@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:34 +0800
-Subject: [PATCH 170/202] UPSTREAM: riscv: dts: sophgo: add SG2044 SPI NOR
+Subject: [PATCH 170/205] UPSTREAM: riscv: dts: sophgo: add SG2044 SPI NOR
  controller driver
 
 Add SPI NOR device node for SG2044.

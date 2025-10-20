@@ -1,7 +1,7 @@
 From 0d916bb54f047589eb326beecd7e78e79fc346b1 Mon Sep 17 00:00:00 2001
 From: Chen Wang <unicorn_wang@outlook.com>
 Date: Thu, 4 Sep 2025 11:01:19 +0800
-Subject: [PATCH 180/202] UPSTREAM: irqchip/sg2042-msi: Set irq type according
+Subject: [PATCH 180/205] UPSTREAM: irqchip/sg2042-msi: Set irq type according
  to DT configuration
 
 Read the device tree configuration and use it to set the interrupt type.

@@ -1,7 +1,7 @@
 From 518e7ab3fd58d4e53c2adcde3a990cb64f58e80a Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 11 Feb 2025 13:17:55 +0800
-Subject: [PATCH 037/202] UPSTREAM: pinctrl: sophgo: add support for SG2044 SoC
+Subject: [PATCH 037/205] UPSTREAM: pinctrl: sophgo: add support for SG2044 SoC
 
 SG2044 share the share common control logic with SG2042. So
 only pin definition is needed.

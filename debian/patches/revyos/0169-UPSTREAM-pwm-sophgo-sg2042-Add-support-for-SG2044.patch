@@ -1,7 +1,7 @@
 From 97db922b91fd5f47c57c7f9b0c61b67793b93c37 Mon Sep 17 00:00:00 2001
 From: Longbin Li <looong.bin@gmail.com>
 Date: Wed, 28 May 2025 18:11:38 +0800
-Subject: [PATCH 169/202] UPSTREAM: pwm: sophgo-sg2042: Add support for SG2044
+Subject: [PATCH 169/205] UPSTREAM: pwm: sophgo-sg2042: Add support for SG2044
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

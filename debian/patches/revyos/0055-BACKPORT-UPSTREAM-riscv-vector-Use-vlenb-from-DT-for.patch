@@ -1,7 +1,7 @@
 From d849ec07acc6dce4026ce22805966cb77023555f Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:11 -0800
-Subject: [PATCH 055/202] BACKPORT: UPSTREAM: riscv: vector: Use vlenb from DT
+Subject: [PATCH 055/205] BACKPORT: UPSTREAM: riscv: vector: Use vlenb from DT
  for thead
 
 If thead,vlenb is provided in the device tree, prefer that over reading

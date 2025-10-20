@@ -1,7 +1,7 @@
 From 5e56cb1ff376c1159f1ccf8993a0145f299cf695 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:31 +0800
-Subject: [PATCH 164/202] UPSTREAM: riscv: dts: sophgo: sophgo-srd3-10: add
+Subject: [PATCH 164/205] UPSTREAM: riscv: dts: sophgo: sophgo-srd3-10: add
  HWMON MCU device
 
 Add MCU devicetree node for Sophgo SRD3-10 board. This is used to

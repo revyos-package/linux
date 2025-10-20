@@ -1,7 +1,7 @@
 From 801b9d862b81e7afd2173210454bb23eb8cff34a Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:49:15 +0800
-Subject: [PATCH 030/202] UPSTREAM: irqchip/sg2042-msi: Add the Sophgo SG2044
+Subject: [PATCH 030/205] UPSTREAM: irqchip/sg2042-msi: Add the Sophgo SG2044
  MSI interrupt controller
 
 Add support for Sophgo SG2044 MSI interrupt controller.

@@ -1,7 +1,7 @@
 From f689fb005f051a9f0f89753b34c4da3ba4dde6ce Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Thu, 31 Oct 2024 14:08:57 +0800
-Subject: [PATCH 136/202] UPSTREAM: dt-bindings: interrupt-controller: Add
+Subject: [PATCH 136/205] UPSTREAM: dt-bindings: interrupt-controller: Add
  T-HEAD C900 ACLINT SSWI device
 
 Sophgo SG2044 has a new version of T-HEAD C920, which implement a fully

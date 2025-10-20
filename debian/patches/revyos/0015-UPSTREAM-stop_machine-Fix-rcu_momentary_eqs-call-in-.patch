@@ -1,7 +1,7 @@
 From d002a7d27a063376b3657d2d843ed1d551c71b5e Mon Sep 17 00:00:00 2001
 From: Mukesh Ojha <quic_mojha@quicinc.com>
 Date: Wed, 11 Dec 2024 13:36:11 -0800
-Subject: [PATCH 015/202] UPSTREAM: stop_machine: Fix rcu_momentary_eqs() call
+Subject: [PATCH 015/205] UPSTREAM: stop_machine: Fix rcu_momentary_eqs() call
  in multi_cpu_stop()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

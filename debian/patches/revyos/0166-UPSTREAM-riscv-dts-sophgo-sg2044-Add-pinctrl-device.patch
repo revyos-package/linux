@@ -1,7 +1,7 @@
 From e42ca89b3fb0dd290a05828fe8c0bc8bc99cbbdc Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:33 +0800
-Subject: [PATCH 166/202] UPSTREAM: riscv: dts: sophgo: sg2044: Add pinctrl
+Subject: [PATCH 166/205] UPSTREAM: riscv: dts: sophgo: sg2044: Add pinctrl
  device
 
 Add pinctrl DT node and configuration for SG2044.

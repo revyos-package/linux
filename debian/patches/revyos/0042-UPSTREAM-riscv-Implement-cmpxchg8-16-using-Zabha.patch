@@ -1,7 +1,7 @@
 From 7306361d1766cebee586928da5f84fd1a0bbc0fd Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:45 +0100
-Subject: [PATCH 042/202] UPSTREAM: riscv: Implement cmpxchg8/16() using Zabha
+Subject: [PATCH 042/205] UPSTREAM: riscv: Implement cmpxchg8/16() using Zabha
 
 This adds runtime support for Zabha in cmpxchg8/16() operations.
 

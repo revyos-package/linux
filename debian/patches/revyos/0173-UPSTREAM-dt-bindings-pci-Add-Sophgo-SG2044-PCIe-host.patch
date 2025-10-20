@@ -1,7 +1,7 @@
 From 391b94128c2413e309ed027ac5f83aa5c16c0b5c Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Sun, 4 May 2025 08:44:18 +0800
-Subject: [PATCH 173/202] UPSTREAM: dt-bindings: pci: Add Sophgo SG2044 PCIe
+Subject: [PATCH 173/205] UPSTREAM: dt-bindings: pci: Add Sophgo SG2044 PCIe
  host
 
 The PCIe controller on the SG2044 is Designware based with custom app

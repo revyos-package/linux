@@ -1,7 +1,7 @@
 From 391c920b3e89b98cdbe482a0de459f5adb26ef95 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 22 Apr 2025 08:38:03 +0800
-Subject: [PATCH 157/202] UPSTREAM: irqchip/sg2042-msi: Fix wrong type cast in
+Subject: [PATCH 157/205] UPSTREAM: irqchip/sg2042-msi: Fix wrong type cast in
  sg2044_msi_irq_ack()
 
 The type cast in sg2044_msi_irq_ack() lost the __iomem attribute, which

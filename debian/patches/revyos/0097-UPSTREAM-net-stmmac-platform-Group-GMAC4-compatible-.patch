@@ -1,7 +1,7 @@
 From 3af34246bcb86fbd9a35836c6d8237096d1e091a Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 7 Mar 2025 09:16:15 +0800
-Subject: [PATCH 097/202] UPSTREAM: net: stmmac: platform: Group GMAC4
+Subject: [PATCH 097/205] UPSTREAM: net: stmmac: platform: Group GMAC4
  compatible check
 
 Use of_device_compatible_match to group existing compatible

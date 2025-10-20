@@ -1,7 +1,7 @@
 From 69487692498a1f3bac1d815c20211b45eb688dea Mon Sep 17 00:00:00 2001
 From: Zixian Zeng <sycamoremoon376@gmail.com>
 Date: Fri, 25 Apr 2025 10:28:14 +0800
-Subject: [PATCH 068/202] UPSTREAM: riscv: sophgo: dts: Add spi controller for
+Subject: [PATCH 068/205] UPSTREAM: riscv: sophgo: dts: Add spi controller for
  SG2042
 
 Add spi controllers for SG2042.

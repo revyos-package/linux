@@ -1,7 +1,7 @@
-From 38ea5cae1e4c2fb8fb1b12f2e7112e8acac1ca27 Mon Sep 17 00:00:00 2001
+From 7eedbdec446704bc87c95473102c664cc9ee9274 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Sun, 19 Nov 2023 21:13:31 +0800
-Subject: [PATCH 199/202] SOPHGO: dt-bindings: nvmem: Add SG2044 eFuse
+Subject: [PATCH 202/205] SOPHGO: dt-bindings: nvmem: Add SG2044 eFuse
  controller
 
 Sophgo SG2044 uses eFuses used to store factory-programmed data

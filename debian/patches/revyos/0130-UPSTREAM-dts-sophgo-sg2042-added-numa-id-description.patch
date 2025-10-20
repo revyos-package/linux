@@ -1,7 +1,7 @@
 From 94d06aa6f3ca89cce394a233b1281d2aac19a7a4 Mon Sep 17 00:00:00 2001
 From: Han Gao <rabenda.cn@gmail.com>
 Date: Wed, 10 Sep 2025 18:55:31 +0800
-Subject: [PATCH 130/202] UPSTREAM: dts: sophgo: sg2042: added numa id
+Subject: [PATCH 130/205] UPSTREAM: dts: sophgo: sg2042: added numa id
  description
 
 According to the description of [1], sg2042 is divided into 4 numa.

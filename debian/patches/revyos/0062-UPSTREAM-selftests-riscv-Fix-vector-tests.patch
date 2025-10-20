@@ -1,7 +1,7 @@
 From bbbb4d9689734d8c99532f6847c5be19d22030f4 Mon Sep 17 00:00:00 2001
 From: Charlie Jenkins <charlie@rivosinc.com>
 Date: Wed, 13 Nov 2024 18:21:18 -0800
-Subject: [PATCH 062/202] UPSTREAM: selftests: riscv: Fix vector tests
+Subject: [PATCH 062/205] UPSTREAM: selftests: riscv: Fix vector tests
 
 Overhaul the riscv vector tests to use kselftest_harness to help the
 test cases correctly report the results and decouple the individual test

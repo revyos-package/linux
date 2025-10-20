@@ -1,7 +1,7 @@
 From 535cd14496b1cc7171d963ec2ba240ccdd6aea75 Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:43:00 +0100
-Subject: [PATCH 071/202] UPSTREAM: net: stmmac: Fix clock rate variables size
+Subject: [PATCH 071/205] UPSTREAM: net: stmmac: Fix clock rate variables size
 
 The clock API clk_get_rate() returns unsigned long value.
 Expand affected members of stmmac platform data and

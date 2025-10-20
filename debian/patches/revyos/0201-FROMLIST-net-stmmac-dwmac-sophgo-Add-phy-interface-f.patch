@@ -1,0 +1,72 @@
+From 42e9d3c751a8ffd1ddeafaf0969f7f59a03285d9 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 20 Oct 2025 17:54:59 +0800
+Subject: [PATCH 201/205] FROMLIST: net: stmmac: dwmac-sophgo: Add phy
+ interface filter
+
+As the SG2042 has an internal rx delay, the delay should be remove
+when init the mac, otherwise the phy will be misconfigurated.
+
+Fixes: 543009e2d4cd ("net: stmmac: dwmac-sophgo: Add support for Sophgo SG2042 SoC")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Tested-by: Han Gao <rabenda.cn@gmail.com>
+Link: https://lore.kernel.org/r/20251020095500.1330057-4-inochiama@gmail.com
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../net/ethernet/stmicro/stmmac/dwmac-sophgo.c  | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+index 3b7947a7a7ba..960357d6e282 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+@@ -7,11 +7,16 @@
+ 
+ #include <linux/clk.h>
+ #include <linux/module.h>
++#include <linux/property.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
+ 
+ #include "stmmac_platform.h"
+ 
++struct sophgo_dwmac_data {
++	bool has_internal_rx_delay;
++};
++
+ static int sophgo_sg2044_dwmac_init(struct platform_device *pdev,
+ 				    struct plat_stmmacenet_data *plat_dat,
+ 				    struct stmmac_resources *stmmac_res)
+@@ -32,6 +37,7 @@ static int sophgo_sg2044_dwmac_init(struct platform_device *pdev,
+ static int sophgo_dwmac_probe(struct platform_device *pdev)
+ {
+ 	struct plat_stmmacenet_data *plat_dat;
++	const struct sophgo_dwmac_data *data;
+ 	struct stmmac_resources stmmac_res;
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+@@ -50,11 +56,20 @@ static int sophgo_dwmac_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	data = device_get_match_data(&pdev->dev);
++	if (data && data->has_internal_rx_delay)
++		plat_dat->phy_interface = phy_fix_phy_mode_for_mac_delays(plat_dat->phy_interface,
++									  false, true);
++
+ 	return stmmac_dvr_probe(dev, plat_dat, &stmmac_res);
+ }
+ 
++static struct sophgo_dwmac_data sg2042_dwmac_data = {
++	.has_internal_rx_delay = true,
++};
++
+ static const struct of_device_id sophgo_dwmac_match[] = {
+-	{ .compatible = "sophgo,sg2042-dwmac" },
++	{ .compatible = "sophgo,sg2042-dwmac", .data = &sg2042_dwmac_data },
+ 	{ .compatible = "sophgo,sg2044-dwmac" },
+ 	{ /* sentinel */ }
+ };
+-- 
+2.47.3
+

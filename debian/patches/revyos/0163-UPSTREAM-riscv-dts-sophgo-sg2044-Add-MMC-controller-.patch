@@ -1,7 +1,7 @@
 From 840d1a7220b935643e1b81b5c22dd30a3c88be6b Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:30 +0800
-Subject: [PATCH 163/202] UPSTREAM: riscv: dts: sophgo: sg2044: Add MMC
+Subject: [PATCH 163/205] UPSTREAM: riscv: dts: sophgo: sg2044: Add MMC
  controller device
 
 Add emmc controller and sd controller DT node for SG2044.

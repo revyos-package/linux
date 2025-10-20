@@ -1,7 +1,7 @@
 From 73b15193c47743dfff6d2d4786b6379104b83c9a Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:43 +0100
-Subject: [PATCH 040/202] BACKPORT: UPSTREAM: riscv: Implement cmpxchg32/64()
+Subject: [PATCH 040/205] BACKPORT: UPSTREAM: riscv: Implement cmpxchg32/64()
  using Zacas
 
 This adds runtime support for Zacas in cmpxchg operations.

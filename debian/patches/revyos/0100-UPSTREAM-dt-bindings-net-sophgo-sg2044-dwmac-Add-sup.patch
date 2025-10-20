@@ -1,7 +1,7 @@
 From 30b9cacc5ee7a951b8a54a52f614c25dcb2c0efa Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 8 Jul 2025 14:40:49 +0800
-Subject: [PATCH 100/202] UPSTREAM: dt-bindings: net: sophgo,sg2044-dwmac: Add
+Subject: [PATCH 100/205] UPSTREAM: dt-bindings: net: sophgo,sg2044-dwmac: Add
  support for Sophgo SG2042 dwmac
 
 The GMAC IP on SG2042 is a standard Synopsys DesignWare MAC

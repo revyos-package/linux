@@ -1,7 +1,7 @@
 From c9d47afdd59a84dccbb4cc0d4c807c57320aa8ad Mon Sep 17 00:00:00 2001
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 Date: Thu, 27 Feb 2025 09:16:49 +0000
-Subject: [PATCH 091/202] BACKPORT: UPSTREAM: net: stmmac: intel: use generic
+Subject: [PATCH 091/205] BACKPORT: UPSTREAM: net: stmmac: intel: use generic
  stmmac_set_clk_tx_rate()
 
 Use the generic stmmac_set_clk_tx_rate() to configure the MAC transmit

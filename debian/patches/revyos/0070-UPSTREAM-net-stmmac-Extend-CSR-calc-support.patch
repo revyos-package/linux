@@ -1,7 +1,7 @@
 From 18387d4f941aaccd03494eeadd9b691a5b8e55ae Mon Sep 17 00:00:00 2001
 From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
 Date: Thu, 5 Dec 2024 17:42:59 +0100
-Subject: [PATCH 070/202] UPSTREAM: net: stmmac: Extend CSR calc support
+Subject: [PATCH 070/205] UPSTREAM: net: stmmac: Extend CSR calc support
 
 Add support for CSR clock range up to 800 MHz.
 

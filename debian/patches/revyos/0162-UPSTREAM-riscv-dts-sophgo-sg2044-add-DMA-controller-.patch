@@ -1,7 +1,7 @@
 From fa39b60b1b5ed81454c1a8d7b131bc766592fb46 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:29 +0800
-Subject: [PATCH 162/202] UPSTREAM: riscv: dts: sophgo: sg2044: add DMA
+Subject: [PATCH 162/205] UPSTREAM: riscv: dts: sophgo: sg2044: add DMA
  controller device
 
 The DMA controller of SG2044 is a standard Synopsys IP, which is

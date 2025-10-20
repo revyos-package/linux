@@ -1,7 +1,7 @@
 From e9d43f73c76056ad1244ce538302191a96d089a3 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:34:58 +0800
-Subject: [PATCH 145/202] UPSTREAM: dt-bindings: interrupt-controller: Add
+Subject: [PATCH 145/205] UPSTREAM: dt-bindings: interrupt-controller: Add
  Sophgo SG2044 PLIC
 
 The SG2044 implement a standard T-HEAD C900 PLIC, which is

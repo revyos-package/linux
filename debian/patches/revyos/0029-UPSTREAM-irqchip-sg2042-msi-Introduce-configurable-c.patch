@@ -1,7 +1,7 @@
 From bff382715788176dcbcdbf5fd3c9a190ad043c26 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:49:14 +0800
-Subject: [PATCH 029/202] UPSTREAM: irqchip/sg2042-msi: Introduce configurable
+Subject: [PATCH 029/205] UPSTREAM: irqchip/sg2042-msi: Introduce configurable
  chipinfo for SG2042
 
 As the controller on SG2044 uses different msi_parent_ops and a difffernt

@@ -1,7 +1,7 @@
 From 753ccf0458292e9ecccf53895be0d689c1936775 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 18 Apr 2025 10:03:24 +0800
-Subject: [PATCH 156/202] UPSTREAM: clk: sophgo: Add clock controller support
+Subject: [PATCH 156/205] UPSTREAM: clk: sophgo: Add clock controller support
  for SG2044 SoC
 
 Add clock driver and clock definition for SG2044 SoC.

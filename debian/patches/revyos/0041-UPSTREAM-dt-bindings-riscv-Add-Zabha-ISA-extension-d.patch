@@ -1,7 +1,7 @@
 From e001f6473d37a266e9221e7164f6608d9e0a14d1 Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:44 +0100
-Subject: [PATCH 041/202] UPSTREAM: dt-bindings: riscv: Add Zabha ISA extension
+Subject: [PATCH 041/205] UPSTREAM: dt-bindings: riscv: Add Zabha ISA extension
  description
 
 Add description for the Zabha ISA extension which was ratified in April

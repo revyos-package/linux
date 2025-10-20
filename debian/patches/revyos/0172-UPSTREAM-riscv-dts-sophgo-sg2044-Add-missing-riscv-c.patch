@@ -1,7 +1,7 @@
 From 9fa64b549ed1c1e7417f1f620869c304874046b3 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Fri, 13 Jun 2025 15:45:12 +0800
-Subject: [PATCH 172/202] UPSTREAM: riscv: dts: sophgo: sg2044: Add missing
+Subject: [PATCH 172/205] UPSTREAM: riscv: dts: sophgo: sg2044: Add missing
  riscv,cbop-block-size property
 
 The kernel complains no "riscv,cbop-block-size" and disables the Zicbop

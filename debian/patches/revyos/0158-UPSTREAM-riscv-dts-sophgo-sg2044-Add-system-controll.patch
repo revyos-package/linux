@@ -1,7 +1,7 @@
 From 28a08859ffa91ba5cf0c823287244b710656d2a3 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 9 Jun 2025 07:28:25 +0800
-Subject: [PATCH 158/202] UPSTREAM: riscv: dts: sophgo: sg2044: Add system
+Subject: [PATCH 158/205] UPSTREAM: riscv: dts: sophgo: sg2044: Add system
  controller device
 
 The TOP system controller device is necessary for the SG2044 clock

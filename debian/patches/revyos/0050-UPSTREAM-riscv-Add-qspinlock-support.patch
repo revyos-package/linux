@@ -1,7 +1,7 @@
 From b3d3e23ee24fd588ed98fc4d3e77b365baa50d27 Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:53 +0100
-Subject: [PATCH 050/202] UPSTREAM: riscv: Add qspinlock support
+Subject: [PATCH 050/205] UPSTREAM: riscv: Add qspinlock support
 
 In order to produce a generic kernel, a user can select
 CONFIG_COMBO_SPINLOCKS which will fallback at runtime to the ticket

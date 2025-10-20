@@ -1,7 +1,7 @@
-From 2696f0587f97ee848d28c6974c2264b683482e7c Mon Sep 17 00:00:00 2001
+From 112fefe6af31137e0273c7cb7d2909497df04925 Mon Sep 17 00:00:00 2001
 From: Zixian Zeng <sycamoremoon376@gmail.com>
 Date: Tue, 16 Sep 2025 21:22:50 +0800
-Subject: [PATCH 192/202] FROMLIST: riscv: dts: sophgo: Add SPI NOR node for
+Subject: [PATCH 191/205] FROMLIST: riscv: dts: sophgo: Add SPI NOR node for
  SG2042
 
 Add SPI NOR controller node for SG2042
@@ -16,7 +16,7 @@ Signed-off-by: Han Gao <rabenda.cn@gmail.com>
  1 file changed, 24 insertions(+)
 
 diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-index e3497b5cad1d..e0e805c86b32 100644
+index c5e49709b308..f471b51ec7b0 100644
 --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
 +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
 @@ -68,6 +68,30 @@ soc: soc {

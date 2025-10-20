@@ -1,7 +1,7 @@
 From 4337f91ef459e088a6294da929a3296b427b42e0 Mon Sep 17 00:00:00 2001
 From: Longbin Li <looong.bin@gmail.com>
 Date: Tue, 4 Mar 2025 16:35:43 +0800
-Subject: [PATCH 111/202] UPSTREAM: spi: sophgo: add SG2044 SPI NOR controller
+Subject: [PATCH 111/205] UPSTREAM: spi: sophgo: add SG2044 SPI NOR controller
  driver
 
 Add support for SG2044 SPI NOR controller in Sophgo SoC.

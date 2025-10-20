@@ -1,7 +1,7 @@
 From 31ff5189b55355fe93fbbae4351fe4408dd73fa2 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Tue, 11 Feb 2025 13:17:52 +0800
-Subject: [PATCH 033/202] UPSTREAM: pinctrl: sophgo: introduce generic probe
+Subject: [PATCH 033/205] UPSTREAM: pinctrl: sophgo: introduce generic probe
  function
 
 Since different series of the Sophgo chip share a common pinctrl data

@@ -1,7 +1,7 @@
 From 73074bcba332c1a0068cdd101b43d116d5c51732 Mon Sep 17 00:00:00 2001
 From: Alexandre Ghiti <alexghiti@rivosinc.com>
 Date: Sun, 3 Nov 2024 15:51:46 +0100
-Subject: [PATCH 043/202] BACKPORT: UPSTREAM: riscv: Improve zacas
+Subject: [PATCH 043/205] BACKPORT: UPSTREAM: riscv: Improve zacas
  fully-ordered cmpxchg()
 
 The current fully-ordered cmpxchgXX() implementation results in:

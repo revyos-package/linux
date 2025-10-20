@@ -1,7 +1,7 @@
 From cae1a3f50846c21e9226063bf93ed03787d4aa24 Mon Sep 17 00:00:00 2001
 From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
 Date: Sun, 13 Jul 2025 11:53:20 -0400
-Subject: [PATCH 129/202] UPSTREAM: riscv: Move vendor errata definitions to
+Subject: [PATCH 129/205] UPSTREAM: riscv: Move vendor errata definitions to
  new header
 
 Move vendor errata definitions into errata_list_vendors.h.

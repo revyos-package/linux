@@ -1,7 +1,7 @@
 From 462a2318719bd12ba9cc5d06df24e92a7443754d Mon Sep 17 00:00:00 2001
 From: Kishon Vijay Abraham I <kishon@ti.com>
 Date: Thu, 17 Apr 2025 18:14:05 +0530
-Subject: [PATCH 120/202] UPSTREAM: PCI: cadence: Add support to build
+Subject: [PATCH 120/205] UPSTREAM: PCI: cadence: Add support to build
  pcie-cadence library as a kernel module
 
 Currently, the Cadence PCIe controller driver can be built as a built-in

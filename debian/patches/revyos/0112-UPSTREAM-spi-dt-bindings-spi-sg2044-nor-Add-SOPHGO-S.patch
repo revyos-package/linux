@@ -1,7 +1,7 @@
 From 9e5a573dd6c0433534e8a9f80a8b639753c39edb Mon Sep 17 00:00:00 2001
 From: Zixian Zeng <sycamoremoon376@gmail.com>
 Date: Sun, 25 May 2025 22:58:41 +0800
-Subject: [PATCH 112/202] UPSTREAM: spi: dt-bindings: spi-sg2044-nor: Add
+Subject: [PATCH 112/205] UPSTREAM: spi: dt-bindings: spi-sg2044-nor: Add
  SOPHGO SG2042
 
 Add bindings for the SOPHGO SG2042 SPI-NOR flash controller,

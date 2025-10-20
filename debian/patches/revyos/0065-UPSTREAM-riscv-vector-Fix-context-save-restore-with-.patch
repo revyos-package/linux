@@ -1,7 +1,7 @@
 From 22dcb71b4896b6aa306282dc0e709f478e148b96 Mon Sep 17 00:00:00 2001
 From: Han Gao <rabenda.cn@gmail.com>
 Date: Fri, 23 May 2025 18:25:56 +0800
-Subject: [PATCH 065/202] UPSTREAM: riscv: vector: Fix context save/restore
+Subject: [PATCH 065/205] UPSTREAM: riscv: vector: Fix context save/restore
  with xtheadvector
 
 Previously only v0-v7 were correctly saved/restored,

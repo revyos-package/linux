@@ -1,7 +1,7 @@
 From 1de3131bf8b237b6be1e636959f7f433dc6e2ce3 Mon Sep 17 00:00:00 2001
 From: Inochi Amaoto <inochiama@gmail.com>
 Date: Mon, 14 Apr 2025 06:35:01 +0800
-Subject: [PATCH 148/202] UPSTREAM: dt-bindings: mmc: sdhci-of-dwcmhsc: Add
+Subject: [PATCH 148/205] UPSTREAM: dt-bindings: mmc: sdhci-of-dwcmhsc: Add
  Sophgo SG2044 support
 
 The sdhci IP of SG2044 is similar to it of SG2042. They
