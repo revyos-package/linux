@@ -1,0 +1,57 @@
+From 85ba7073d646aec2d302b2e0df0bc152ff120129 Mon Sep 17 00:00:00 2001
+From: Longbin Li <looong.bin@gmail.com>
+Date: Mon, 9 Jun 2025 07:28:34 +0800
+Subject: [PATCH 170/204] UPSTREAM: riscv: dts: sophgo: add SG2044 SPI NOR
+ controller driver
+
+Add SPI NOR device node for SG2044.
+
+Signed-off-by: Longbin Li <looong.bin@gmail.com>
+Link: https://lore.kernel.org/r/20250608232836.784737-11-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit 162b265ce05ec02e0909ef5e1de6483f1e1c78f4)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2044.dtsi | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044.dtsi b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+index be20efd8e2ac..b65e491deb8f 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+@@ -32,6 +32,30 @@ soc {
+ 		#size-cells = <2>;
+ 		ranges;
+ 
++		spifmc0: spi@7001000000 {
++			compatible = "sophgo,sg2044-spifmc-nor";
++			reg = <0x70 0x01000000 0x0 0x4000000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&clk CLK_GATE_AHB_SPIFMC>;
++			interrupt-parent = <&intc>;
++			interrupts = <37 IRQ_TYPE_LEVEL_HIGH>;
++			resets = <&rst RST_SPIFMC0>;
++			status = "disabled";
++		};
++
++		spifmc1: spi@7005000000 {
++			compatible = "sophgo,sg2044-spifmc-nor";
++			reg = <0x70 0x05000000 0x0 0x4000000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&clk CLK_GATE_AHB_SPIFMC>;
++			interrupt-parent = <&intc>;
++			interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
++			resets = <&rst RST_SPIFMC1>;
++			status = "disabled";
++		};
++
+ 		dmac0: dma-controller@7020000000 {
+ 			compatible = "snps,axi-dma-1.01a";
+ 			reg = <0x70 0x20000000 0x0 0x10000>;
+-- 
+2.47.3
+

@@ -1,0 +1,45 @@
+From 3b30bf8a804125d7e5a1fd6d954aa0f1bb1f8bd5 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 9 Jun 2025 07:28:33 +0800
+Subject: [PATCH 166/204] UPSTREAM: riscv: dts: sophgo: sg2044: Add pinctrl
+ device
+
+Add pinctrl DT node and configuration for SG2044.
+
+Link: https://lore.kernel.org/r/20250608232836.784737-10-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit c20e152a08681e6bb5dfefed9acc768ecc859c41)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2044.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044.dtsi b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+index bbf4191fb87d..be20efd8e2ac 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+@@ -7,6 +7,7 @@
+ #include <dt-bindings/clock/sophgo,sg2044-clk.h>
+ #include <dt-bindings/interrupt-controller/irq.h>
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/pinctrl/pinctrl-sg2044.h>
+ 
+ #include "sg2044-cpus.dtsi"
+ #include "sg2044-reset.h"
+@@ -329,6 +330,11 @@ syscon: syscon@7050000000 {
+ 			clocks = <&osc>;
+ 		};
+ 
++		pinctrl: pinctrl@7050001000 {
++			compatible = "sophgo,sg2044-pinctrl";
++			reg = <0x70 0x50001000 0x0 0x1000>;
++		};
++
+ 		clk: clock-controller@7050002000 {
+ 			compatible = "sophgo,sg2044-clk";
+ 			reg = <0x70 0x50002000 0x0 0x1000>;
+-- 
+2.47.3
+

@@ -1,0 +1,92 @@
+From ab7ed150305eb4656421168ba7a965899961a391 Mon Sep 17 00:00:00 2001
+From: Guo Ren <guoren@linux.alibaba.com>
+Date: Sat, 30 Nov 2024 10:33:10 -0500
+Subject: [PATCH 018/204] UPSTREAM: riscv: Fixup boot failure when
+ CONFIG_DEBUG_RT_MUTEXES=y
+
+When CONFIG_DEBUG_RT_MUTEXES=y, mutex_lock->rt_mutex_try_acquire
+would change from rt_mutex_cmpxchg_acquire to
+rt_mutex_slowtrylock():
+	raw_spin_lock_irqsave(&lock->wait_lock, flags);
+	ret = __rt_mutex_slowtrylock(lock);
+	raw_spin_unlock_irqrestore(&lock->wait_lock, flags);
+
+Because queued_spin_#ops to ticket_#ops is changed one by one by
+jump_label, raw_spin_lock/unlock would cause a deadlock during the
+changing.
+
+That means in arch/riscv/kernel/jump_label.c:
+1.
+arch_jump_label_transform_queue() ->
+mutex_lock(&text_mutex); +-> raw_spin_lock  -> queued_spin_lock
+			 |-> raw_spin_unlock -> queued_spin_unlock
+patch_insn_write -> change the raw_spin_lock to ticket_lock
+mutex_unlock(&text_mutex);
+...
+
+2. /* Dirty the lock value */
+arch_jump_label_transform_queue() ->
+mutex_lock(&text_mutex); +-> raw_spin_lock -> *ticket_lock*
+                         |-> raw_spin_unlock -> *queued_spin_unlock*
+			  /* BUG: ticket_lock with queued_spin_unlock */
+patch_insn_write  ->  change the raw_spin_unlock to ticket_unlock
+mutex_unlock(&text_mutex);
+...
+
+3. /* Dead lock */
+arch_jump_label_transform_queue() ->
+mutex_lock(&text_mutex); +-> raw_spin_lock -> ticket_lock /* deadlock! */
+                         |-> raw_spin_unlock -> ticket_unlock
+patch_insn_write -> change other raw_spin_#op -> ticket_#op
+mutex_unlock(&text_mutex);
+
+So, the solution is to disable mutex usage of
+arch_jump_label_transform_queue() during early_boot_irqs_disabled, just
+like we have done for stop_machine.
+
+Reported-by: Conor Dooley <conor@kernel.org>
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Fixes: ab83647fadae ("riscv: Add qspinlock support")
+Link: https://lore.kernel.org/linux-riscv/CAJF2gTQwYTGinBmCSgVUoPv0_q4EPt_+WiyfUA1HViAKgUzxAg@mail.gmail.com/T/#mf488e6347817fca03bb93a7d34df33d8615b3775
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Nam Cao <namcao@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20241130153310.3349484-1-guoren@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+(cherry picked from commit b3134b8c1a1cf5779a74df902c75fa185083006e)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/kernel/jump_label.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/arch/riscv/kernel/jump_label.c b/arch/riscv/kernel/jump_label.c
+index 11ad789c60c6..4a702cc8d942 100644
+--- a/arch/riscv/kernel/jump_label.c
++++ b/arch/riscv/kernel/jump_label.c
+@@ -36,9 +36,15 @@ bool arch_jump_label_transform_queue(struct jump_entry *entry,
+ 		insn = RISCV_INSN_NOP;
+ 	}
+ 
+-	mutex_lock(&text_mutex);
+-	patch_insn_write(addr, &insn, sizeof(insn));
+-	mutex_unlock(&text_mutex);
++	if (early_boot_irqs_disabled) {
++		riscv_patch_in_stop_machine = 1;
++		patch_insn_write(addr, &insn, sizeof(insn));
++		riscv_patch_in_stop_machine = 0;
++	} else {
++		mutex_lock(&text_mutex);
++		patch_insn_write(addr, &insn, sizeof(insn));
++		mutex_unlock(&text_mutex);
++	}
+ 
+ 	return true;
+ }
+-- 
+2.47.3
+

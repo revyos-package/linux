@@ -1,0 +1,40 @@
+From c216254ade5e197c272e886c09c9e06ae9000521 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 9 Jun 2025 07:28:25 +0800
+Subject: [PATCH 158/204] UPSTREAM: riscv: dts: sophgo: sg2044: Add system
+ controller device
+
+The TOP system controller device is necessary for the SG2044 clock
+controller. Add it to the SoC device tree.
+
+Link: https://lore.kernel.org/r/20250608232836.784737-2-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit 95f119e36443b0028d78986f01f382024c811ddb)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2044.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044.dtsi b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+index d67e45f77d6e..a0c13d8d26af 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
+@@ -76,6 +76,13 @@ uart3: serial@7030003000 {
+ 			status = "disabled";
+ 		};
+ 
++		syscon: syscon@7050000000 {
++			compatible = "sophgo,sg2044-top-syscon", "syscon";
++			reg = <0x70 0x50000000 0x0 0x1000>;
++			#clock-cells = <1>;
++			clocks = <&osc>;
++		};
++
+ 		rst: reset-controller@7050003000 {
+ 			compatible = "sophgo,sg2044-reset",
+ 				     "sophgo,sg2042-reset";
+-- 
+2.47.3
+

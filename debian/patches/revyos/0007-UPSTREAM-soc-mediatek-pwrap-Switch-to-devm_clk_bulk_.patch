@@ -1,0 +1,48 @@
+From db03757d08a1f806a90bc1d08cfd7668a29c5a93 Mon Sep 17 00:00:00 2001
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Date: Tue, 17 Dec 2024 23:41:51 +0200
+Subject: [PATCH 007/204] UPSTREAM: soc: mediatek: pwrap: Switch to
+ devm_clk_bulk_get_all_enabled()
+
+The helper devm_clk_bulk_get_all_enable() missed to return the number of
+clocks stored in the clk_bulk_data table referenced by the clks
+argument and, therefore, will be dropped.
+
+Use the newly introduced devm_clk_bulk_get_all_enabled() variant
+instead, which is consistent with devm_clk_bulk_get_all() in terms of
+the returned value:
+
+ > 0 if one or more clocks have been stored
+ = 0 if there are no clocks
+ < 0 if an error occurred
+
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20241217-clk_bulk_ena_fix-v5-1-aafbbb245155@collabora.com
+Acked-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+(cherry picked from commit dc924c24feb50530d0d379221460e279af5669bd)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/soc/mediatek/mtk-pmic-wrap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/mediatek/mtk-pmic-wrap.c b/drivers/soc/mediatek/mtk-pmic-wrap.c
+index 9fdc0ef79202..0bcd85826375 100644
+--- a/drivers/soc/mediatek/mtk-pmic-wrap.c
++++ b/drivers/soc/mediatek/mtk-pmic-wrap.c
+@@ -2518,8 +2518,8 @@ static int pwrap_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	ret = devm_clk_bulk_get_all_enable(wrp->dev, &clk);
+-	if (ret)
++	ret = devm_clk_bulk_get_all_enabled(wrp->dev, &clk);
++	if (ret < 0)
+ 		return dev_err_probe(wrp->dev, ret,
+ 				     "failed to get clocks\n");
+ 
+-- 
+2.47.3
+

@@ -1,0 +1,37 @@
+From 7ebe45b1448c81d8584ad8917da9e342e6b4b7d6 Mon Sep 17 00:00:00 2001
+From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+Date: Thu, 5 Dec 2024 17:42:58 +0100
+Subject: [PATCH 069/204] UPSTREAM: net: stmmac: Fix CSR divider comment
+
+The comment in declaration of STMMAC_CSR_250_300M
+incorrectly describes the constant as '/* MDC = clk_scr_i/122 */'
+but the DWC Ether QOS Handbook version 5.20a says it is
+CSR clock/124.
+
+Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20241205-upstream_s32cc_gmac-v8-1-ec1d180df815@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit 31cdd8418234e70043abd26894b57eb201489cba)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ include/linux/stmmac.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index d79ff252cfdc..75cbfb576358 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -33,7 +33,7 @@
+ #define	STMMAC_CSR_20_35M	0x2	/* MDC = clk_scr_i/16 */
+ #define	STMMAC_CSR_35_60M	0x3	/* MDC = clk_scr_i/26 */
+ #define	STMMAC_CSR_150_250M	0x4	/* MDC = clk_scr_i/102 */
+-#define	STMMAC_CSR_250_300M	0x5	/* MDC = clk_scr_i/122 */
++#define	STMMAC_CSR_250_300M	0x5	/* MDC = clk_scr_i/124 */
+ 
+ /* MTL algorithms identifiers */
+ #define MTL_TX_ALGORITHM_WRR	0x0
+-- 
+2.47.3
+

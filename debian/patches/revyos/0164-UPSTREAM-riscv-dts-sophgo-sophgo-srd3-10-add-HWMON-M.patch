@@ -1,0 +1,43 @@
+From 800d661a287cf32dce012fd98497a162c22dbc1b Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 9 Jun 2025 07:28:31 +0800
+Subject: [PATCH 164/204] UPSTREAM: riscv: dts: sophgo: sophgo-srd3-10: add
+ HWMON MCU device
+
+Add MCU devicetree node for Sophgo SRD3-10 board. This is used to
+provide SUSP function for the board.
+
+Link: https://lore.kernel.org/r/20250608232836.784737-8-inochiama@gmail.com
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Signed-off-by: Chen Wang <wangchen20@iscas.ac.cn>
+(cherry picked from commit 2b09dad74e5ab2e20772a9a7293c40ea64bcd936)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts b/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
+index d077923097e8..75564b2719cd 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
++++ b/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
+@@ -36,6 +36,16 @@ &emmc {
+ 	status = "okay";
+ };
+ 
++&i2c1 {
++	status = "okay";
++
++	mcu: syscon@17 {
++		compatible = "sophgo,sg2044-hwmon-mcu", "sophgo,sg2042-hwmon-mcu";
++		reg = <0x17>;
++		#thermal-sensor-cells = <1>;
++	};
++};
++
+ &sd {
+ 	bus-width = <4>;
+ 	no-sdio;
+-- 
+2.47.3
+

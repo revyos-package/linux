@@ -1,0 +1,42 @@
+From d6fd3ffe9514a767010dd8d90e435a2ec47a3355 Mon Sep 17 00:00:00 2001
+From: Charlie Jenkins <charlie@rivosinc.com>
+Date: Wed, 13 Nov 2024 18:21:17 -0800
+Subject: [PATCH 061/204] BACKPORT: UPSTREAM: riscv: hwprobe: Document thead
+ vendor extensions and xtheadvector extension
+
+Document support for thead vendor extensions using the key
+RISCV_HWPROBE_KEY_VENDOR_EXT_THEAD_0 and xtheadvector extension using
+the key RISCV_HWPROBE_VENDOR_EXT_XTHEADVECTOR.
+
+Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>
+Reviewed-by: Evan Green <evan@rivosinc.com>
+Tested-by: Yangyu Chen <cyy@cyyself.name>
+Link: https://lore.kernel.org/r/20241113-xtheadvector-v11-11-236c22791ef9@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+(cherry picked from commit 7fa00fd6ff5366b50dcba2525b9743e1612da2aa)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ Documentation/arch/riscv/hwprobe.rst | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/Documentation/arch/riscv/hwprobe.rst b/Documentation/arch/riscv/hwprobe.rst
+index 85b709257918..b4f46578927d 100644
+--- a/Documentation/arch/riscv/hwprobe.rst
++++ b/Documentation/arch/riscv/hwprobe.rst
+@@ -274,3 +274,13 @@ The following keys are defined:
+   represent the highest userspace virtual address usable.
+ 
+ * :c:macro:`RISCV_HWPROBE_KEY_TIME_CSR_FREQ`: Frequency (in Hz) of `time CSR`.
++
++* :c:macro:`RISCV_HWPROBE_KEY_VENDOR_EXT_THEAD_0`: A bitmask containing the
++  thead vendor extensions that are compatible with the
++  :c:macro:`RISCV_HWPROBE_BASE_BEHAVIOR_IMA`: base system behavior.
++
++  * T-HEAD
++
++    * :c:macro:`RISCV_HWPROBE_VENDOR_EXT_XTHEADVECTOR`: The xtheadvector vendor
++        extension is supported in the T-Head ISA extensions spec starting from
++	commit a18c801634 ("Add T-Head VECTOR vendor extension. ").
+-- 
+2.47.3
+

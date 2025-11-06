@@ -1,0 +1,142 @@
+From cf8fe4d41f92f725438ca0cf80c053764399f5b3 Mon Sep 17 00:00:00 2001
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Date: Tue, 18 Feb 2025 10:24:34 +0000
+Subject: [PATCH 083/204] BACKPORT: UPSTREAM: net: stmmac: remove useless
+ priv->flow_ctrl
+
+priv->flow_ctrl is only accessed by stmmac_main.c, and the only place
+that it is read is in stmmac_mac_flow_ctrl(). This function is only
+called from stmmac_mac_link_up() which always sets priv->flow_ctrl
+immediately before calling this function.
+
+Therefore, initialising this at probe time is ineffectual because it
+will always be overwritten before it's read. As such, the "flow_ctrl"
+module parameter has been useless for some time. Rather than remove
+the module parameter, which would risk module load failure, change the
+description to indicate that it is obsolete, and warn if it is set by
+userspace.
+
+Moreover, storing the value in the stmmac_priv has no benefit as it's
+set and then immediately read stmmac_mac_flow_ctrl(). Instead, pass it
+as a parameter to this function..
+
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Link: https://patch.msgid.link/E1tkKmI-004ObG-DL@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit bc9d75b0aaed795dcd6009336500fd6094e0c944)
+[ Han Gao: Resovled conflict ]
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  1 -
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 32 +++++++++----------
+ 2 files changed, 15 insertions(+), 18 deletions(-)
+
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+index d80cdd0a6d80..c9ffc6516325 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -291,7 +291,6 @@ struct stmmac_priv {
+ 	struct stmmac_channel channel[STMMAC_CH_MAX];
+ 
+ 	int speed;
+-	unsigned int flow_ctrl;
+ 	unsigned int pause_time;
+ 	struct mii_bus *mii;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index ec489c1746a5..fefd2131b539 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -88,9 +88,9 @@ MODULE_PARM_DESC(phyaddr, "Physical device address");
+ #define STMMAC_XDP_TX		BIT(1)
+ #define STMMAC_XDP_REDIRECT	BIT(2)
+ 
+-static int flow_ctrl = FLOW_AUTO;
++static int flow_ctrl = 0xdead;
+ module_param(flow_ctrl, int, 0644);
+-MODULE_PARM_DESC(flow_ctrl, "Flow control ability [on/off]");
++MODULE_PARM_DESC(flow_ctrl, "Flow control ability [on/off] (obsolete)");
+ 
+ static int pause = PAUSE_TIME;
+ module_param(pause, int, 0644);
+@@ -190,14 +190,12 @@ static void stmmac_verify_args(void)
+ 		watchdog = TX_TIMEO;
+ 	if (unlikely((buf_sz < DEFAULT_BUFSIZE) || (buf_sz > BUF_SIZE_16KiB)))
+ 		buf_sz = DEFAULT_BUFSIZE;
+-	if (unlikely(flow_ctrl > 1))
+-		flow_ctrl = FLOW_AUTO;
+-	else if (likely(flow_ctrl < 0))
+-		flow_ctrl = FLOW_OFF;
+ 	if (unlikely((pause < 0) || (pause > 0xffff)))
+ 		pause = PAUSE_TIME;
+ 	if (eee_timer < 0)
+ 		eee_timer = STMMAC_DEFAULT_LPI_TIMER;
++	if (flow_ctrl != 0xdead)
++		pr_warn("stmmac: module parameter 'flow_ctrl' is obsolete - please remove from your module configuration\n");
+ }
+ 
+ static void __stmmac_disable_all_queues(struct stmmac_priv *priv)
+@@ -928,14 +926,16 @@ static void stmmac_release_ptp(struct stmmac_priv *priv)
+  *  stmmac_mac_flow_ctrl - Configure flow control in all queues
+  *  @priv: driver private structure
+  *  @duplex: duplex passed to the next function
++ *  @flow_ctrl: desired flow control modes
+  *  Description: It is used for configuring the flow control in all queues
+  */
+-static void stmmac_mac_flow_ctrl(struct stmmac_priv *priv, u32 duplex)
++static void stmmac_mac_flow_ctrl(struct stmmac_priv *priv, u32 duplex,
++				 unsigned int flow_ctrl)
+ {
+ 	u32 tx_cnt = priv->plat->tx_queues_to_use;
+ 
+-	stmmac_flow_ctrl(priv, priv->hw, duplex, priv->flow_ctrl,
+-			 priv->pause_time, tx_cnt);
++	stmmac_flow_ctrl(priv, priv->hw, duplex, flow_ctrl, priv->pause_time,
++			 tx_cnt);
+ }
+ 
+ static unsigned long stmmac_mac_get_caps(struct phylink_config *config,
+@@ -1026,6 +1026,7 @@ static void stmmac_mac_link_up(struct phylink_config *config,
+ 			       bool tx_pause, bool rx_pause)
+ {
+ 	struct stmmac_priv *priv = netdev_priv(to_net_dev(config->dev));
++	unsigned int flow_ctrl;
+ 	u32 old_ctrl, ctrl;
+ 
+ 	if ((priv->plat->flags & STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP) &&
+@@ -1106,15 +1107,15 @@ static void stmmac_mac_link_up(struct phylink_config *config,
+ 
+ 	/* Flow Control operation */
+ 	if (rx_pause && tx_pause)
+-		priv->flow_ctrl = FLOW_AUTO;
++		flow_ctrl = FLOW_AUTO;
+ 	else if (rx_pause && !tx_pause)
+-		priv->flow_ctrl = FLOW_RX;
++		flow_ctrl = FLOW_RX;
+ 	else if (!rx_pause && tx_pause)
+-		priv->flow_ctrl = FLOW_TX;
++		flow_ctrl = FLOW_TX;
+ 	else
+-		priv->flow_ctrl = FLOW_OFF;
++		flow_ctrl = FLOW_OFF;
+ 
+-	stmmac_mac_flow_ctrl(priv, duplex);
++	stmmac_mac_flow_ctrl(priv, duplex, flow_ctrl);
+ 
+ 	if (ctrl != old_ctrl)
+ 		writel(ctrl, priv->ioaddr + MAC_CTRL_REG);
+@@ -7741,9 +7742,6 @@ int stmmac_dvr_probe(struct device *device,
+ 			 "%s: warning: maxmtu having invalid value (%d)\n",
+ 			 __func__, priv->plat->maxmtu);
+ 
+-	if (flow_ctrl)
+-		priv->flow_ctrl = FLOW_AUTO;	/* RX/TX pause on */
+-
+ 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
+ 
+ 	/* Setup channels NAPI */
+-- 
+2.47.3
+

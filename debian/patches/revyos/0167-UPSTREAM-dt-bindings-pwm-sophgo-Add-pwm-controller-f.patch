@@ -1,0 +1,42 @@
+From badab8e3f4466eb6346f8ba469c0a8e18e67deb2 Mon Sep 17 00:00:00 2001
+From: Longbin Li <looong.bin@gmail.com>
+Date: Wed, 28 May 2025 18:11:36 +0800
+Subject: [PATCH 167/204] UPSTREAM: dt-bindings: pwm: sophgo: Add pwm
+ controller for SG2044
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Add compatible string for PWM controller on SG2044.
+
+Tested-by: Chen Wang <unicorn_wang@outlook.com>
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Longbin Li <looong.bin@gmail.com>
+Link: https://lore.kernel.org/r/20250528101139.28702-2-looong.bin@gmail.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+(cherry picked from commit 2b66b67530b828ce939c050d7d3366a80ef22d7a)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml b/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
+index bbb6326d47d7..e0e91aa237ec 100644
+--- a/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
++++ b/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
+@@ -17,7 +17,9 @@ allOf:
+ 
+ properties:
+   compatible:
+-    const: sophgo,sg2042-pwm
++    enum:
++      - sophgo,sg2042-pwm
++      - sophgo,sg2044-pwm
+ 
+   reg:
+     maxItems: 1
+-- 
+2.47.3
+

@@ -1,3 +1,10 @@
+linux (6.12.57-1.1) trixie; urgency=medium
+
+  * Apply sg2042 backport patchset
+  * Apply sg2044 backport patchset
+
+ -- Han Gao <rabenda.cn@gmail.com>  Thu, 06 Nov 2025 15:43:39 +0800
+
 linux (6.12.57-1) trixie; urgency=medium
 
   * New upstream stable update:

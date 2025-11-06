@@ -1,0 +1,206 @@
+From 0373ef900ddc562da241f49333ae76a2dc6ec9c2 Mon Sep 17 00:00:00 2001
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
+Date: Thu, 17 Apr 2025 18:14:06 +0530
+Subject: [PATCH 121/204] UPSTREAM: PCI: cadence-host: Introduce
+ cdns_pcie_host_disable() helper for cleanup
+
+Introduce the helper function cdns_pcie_host_disable() which will undo
+the configuration performed by cdns_pcie_host_setup(). Also, export it
+for use by existing callers of cdns_pcie_host_setup(), thereby allowing
+them to cleanup on their exit path.
+
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://patch.msgid.link/20250417124408.2752248-3-s-vadapalli@ti.com
+(cherry picked from commit 47f25da6c5ea55494f4de5ca1ecf6c456b4b3e2a)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../controller/cadence/pcie-cadence-host.c    | 104 ++++++++++++++++++
+ drivers/pci/controller/cadence/pcie-cadence.h |   5 +
+ 2 files changed, 109 insertions(+)
+
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
+index f04623f32d82..59a4631de79f 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-host.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
+@@ -152,6 +152,14 @@ static int cdns_pcie_retrain(struct cdns_pcie *pcie)
+ 	return ret;
+ }
+ 
++static void cdns_pcie_host_disable_ptm_response(struct cdns_pcie *pcie)
++{
++	u32 val;
++
++	val = cdns_pcie_readl(pcie, CDNS_PCIE_LM_PTM_CTRL);
++	cdns_pcie_writel(pcie, CDNS_PCIE_LM_PTM_CTRL, val & ~CDNS_PCIE_LM_TPM_CTRL_PTMRSEN);
++}
++
+ static void cdns_pcie_host_enable_ptm_response(struct cdns_pcie *pcie)
+ {
+ 	u32 val;
+@@ -177,6 +185,26 @@ static int cdns_pcie_host_start_link(struct cdns_pcie_rc *rc)
+ 	return ret;
+ }
+ 
++static void cdns_pcie_host_deinit_root_port(struct cdns_pcie_rc *rc)
++{
++	struct cdns_pcie *pcie = &rc->pcie;
++	u32 value, ctrl;
++
++	cdns_pcie_rp_writew(pcie, PCI_CLASS_DEVICE, 0xffff);
++	cdns_pcie_rp_writeb(pcie, PCI_CLASS_PROG, 0xff);
++	cdns_pcie_rp_writeb(pcie, PCI_CLASS_REVISION, 0xff);
++	cdns_pcie_writel(pcie, CDNS_PCIE_LM_ID, 0xffffffff);
++	cdns_pcie_rp_writew(pcie, PCI_DEVICE_ID, 0xffff);
++	ctrl = CDNS_PCIE_LM_BAR_CFG_CTRL_DISABLED;
++	value = ~(CDNS_PCIE_LM_RC_BAR_CFG_BAR0_CTRL(ctrl) |
++		CDNS_PCIE_LM_RC_BAR_CFG_BAR1_CTRL(ctrl) |
++		CDNS_PCIE_LM_RC_BAR_CFG_PREFETCH_MEM_ENABLE |
++		CDNS_PCIE_LM_RC_BAR_CFG_PREFETCH_MEM_64BITS |
++		CDNS_PCIE_LM_RC_BAR_CFG_IO_ENABLE |
++		CDNS_PCIE_LM_RC_BAR_CFG_IO_32BITS);
++	cdns_pcie_writel(pcie, CDNS_PCIE_LM_RC_BAR_CFG, value);
++}
++
+ static int cdns_pcie_host_init_root_port(struct cdns_pcie_rc *rc)
+ {
+ 	struct cdns_pcie *pcie = &rc->pcie;
+@@ -393,6 +421,32 @@ static int cdns_pcie_host_dma_ranges_cmp(void *priv, const struct list_head *a,
+         return resource_size(entry2->res) - resource_size(entry1->res);
+ }
+ 
++static void cdns_pcie_host_unmap_dma_ranges(struct cdns_pcie_rc *rc)
++{
++	struct cdns_pcie *pcie = &rc->pcie;
++	enum cdns_pcie_rp_bar bar;
++	u32 value;
++
++	/* Reset inbound configuration for all BARs which were being used */
++	for (bar = RP_BAR0; bar <= RP_NO_BAR; bar++) {
++		if (rc->avail_ib_bar[bar])
++			continue;
++
++		cdns_pcie_writel(pcie, CDNS_PCIE_AT_IB_RP_BAR_ADDR0(bar), 0);
++		cdns_pcie_writel(pcie, CDNS_PCIE_AT_IB_RP_BAR_ADDR1(bar), 0);
++
++		if (bar == RP_NO_BAR)
++			continue;
++
++		value = ~(LM_RC_BAR_CFG_CTRL_MEM_64BITS(bar) |
++			  LM_RC_BAR_CFG_CTRL_PREF_MEM_64BITS(bar) |
++			  LM_RC_BAR_CFG_CTRL_MEM_32BITS(bar) |
++			  LM_RC_BAR_CFG_CTRL_PREF_MEM_32BITS(bar) |
++			  LM_RC_BAR_CFG_APERTURE(bar, bar_aperture_mask[bar] + 2));
++		cdns_pcie_writel(pcie, CDNS_PCIE_LM_RC_BAR_CFG, value);
++	}
++}
++
+ static int cdns_pcie_host_map_dma_ranges(struct cdns_pcie_rc *rc)
+ {
+ 	struct cdns_pcie *pcie = &rc->pcie;
+@@ -430,6 +484,29 @@ static int cdns_pcie_host_map_dma_ranges(struct cdns_pcie_rc *rc)
+ 	return 0;
+ }
+ 
++static void cdns_pcie_host_deinit_address_translation(struct cdns_pcie_rc *rc)
++{
++	struct cdns_pcie *pcie = &rc->pcie;
++	struct pci_host_bridge *bridge = pci_host_bridge_from_priv(rc);
++	struct resource_entry *entry;
++	int r;
++
++	cdns_pcie_host_unmap_dma_ranges(rc);
++
++	/*
++	 * Reset outbound region 0 which was reserved for configuration space
++	 * accesses.
++	 */
++	cdns_pcie_reset_outbound_region(pcie, 0);
++
++	/* Reset rest of the outbound regions */
++	r = 1;
++	resource_list_for_each_entry(entry, &bridge->windows) {
++		cdns_pcie_reset_outbound_region(pcie, r);
++		r++;
++	}
++}
++
+ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
+ {
+ 	struct cdns_pcie *pcie = &rc->pcie;
+@@ -487,6 +564,12 @@ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
+ 	return cdns_pcie_host_map_dma_ranges(rc);
+ }
+ 
++static void cdns_pcie_host_deinit(struct cdns_pcie_rc *rc)
++{
++	cdns_pcie_host_deinit_address_translation(rc);
++	cdns_pcie_host_deinit_root_port(rc);
++}
++
+ int cdns_pcie_host_init(struct cdns_pcie_rc *rc)
+ {
+ 	int err;
+@@ -499,6 +582,14 @@ int cdns_pcie_host_init(struct cdns_pcie_rc *rc)
+ }
+ EXPORT_SYMBOL_GPL(cdns_pcie_host_init);
+ 
++static void cdns_pcie_host_link_disable(struct cdns_pcie_rc *rc)
++{
++	struct cdns_pcie *pcie = &rc->pcie;
++
++	cdns_pcie_stop_link(pcie);
++	cdns_pcie_host_disable_ptm_response(pcie);
++}
++
+ int cdns_pcie_host_link_setup(struct cdns_pcie_rc *rc)
+ {
+ 	struct cdns_pcie *pcie = &rc->pcie;
+@@ -524,6 +615,19 @@ int cdns_pcie_host_link_setup(struct cdns_pcie_rc *rc)
+ }
+ EXPORT_SYMBOL_GPL(cdns_pcie_host_link_setup);
+ 
++void cdns_pcie_host_disable(struct cdns_pcie_rc *rc)
++{
++	struct pci_host_bridge *bridge;
++
++	bridge = pci_host_bridge_from_priv(rc);
++	pci_stop_root_bus(bridge->bus);
++	pci_remove_root_bus(bridge->bus);
++
++	cdns_pcie_host_deinit(rc);
++	cdns_pcie_host_link_disable(rc);
++}
++EXPORT_SYMBOL_GPL(cdns_pcie_host_disable);
++
+ int cdns_pcie_host_setup(struct cdns_pcie_rc *rc)
+ {
+ 	struct device *dev = rc->pcie.dev;
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
+index 4b7f295e24e7..0b6bed1ac146 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.h
++++ b/drivers/pci/controller/cadence/pcie-cadence.h
+@@ -523,6 +523,7 @@ static inline bool cdns_pcie_link_up(struct cdns_pcie *pcie)
+ int cdns_pcie_host_link_setup(struct cdns_pcie_rc *rc);
+ int cdns_pcie_host_init(struct cdns_pcie_rc *rc);
+ int cdns_pcie_host_setup(struct cdns_pcie_rc *rc);
++void cdns_pcie_host_disable(struct cdns_pcie_rc *rc);
+ void __iomem *cdns_pci_map_bus(struct pci_bus *bus, unsigned int devfn,
+ 			       int where);
+ #else
+@@ -541,6 +542,10 @@ static inline int cdns_pcie_host_setup(struct cdns_pcie_rc *rc)
+ 	return 0;
+ }
+ 
++static inline void cdns_pcie_host_disable(struct cdns_pcie_rc *rc)
++{
++}
++
+ static inline void __iomem *cdns_pci_map_bus(struct pci_bus *bus, unsigned int devfn,
+ 					     int where)
+ {
+-- 
+2.47.3
+

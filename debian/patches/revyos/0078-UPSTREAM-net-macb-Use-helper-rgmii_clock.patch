@@ -1,0 +1,48 @@
+From 40ab7bac27b8d3b85e36f35f6722d4f95412a427 Mon Sep 17 00:00:00 2001
+From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+Date: Thu, 5 Dec 2024 17:43:07 +0100
+Subject: [PATCH 078/204] UPSTREAM: net: macb: Use helper rgmii_clock
+
+Utilize a new helper function rgmii_clock().
+
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://patch.msgid.link/20241205-upstream_s32cc_gmac-v8-10-ec1d180df815@oss.nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit 04207d28f46870df113112a4afc42458495837d6)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/net/ethernet/cadence/macb_main.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index f7e8c08d8441..c86dd04006ef 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -530,19 +530,9 @@ static void macb_set_tx_clk(struct macb *bp, int speed)
+ 	if (bp->phy_interface == PHY_INTERFACE_MODE_MII)
+ 		return;
+ 
+-	switch (speed) {
+-	case SPEED_10:
+-		rate = 2500000;
+-		break;
+-	case SPEED_100:
+-		rate = 25000000;
+-		break;
+-	case SPEED_1000:
+-		rate = 125000000;
+-		break;
+-	default:
++	rate = rgmii_clock(speed);
++	if (rate < 0)
+ 		return;
+-	}
+ 
+ 	rate_rounded = clk_round_rate(bp->tx_clk, rate);
+ 	if (rate_rounded < 0)
+-- 
+2.47.3
+

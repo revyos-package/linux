@@ -1,0 +1,42 @@
+From db374a3c08dbba2466213e8cc42001f41069c6f3 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Sat, 5 Apr 2025 13:56:24 +0800
+Subject: [PATCH 026/204] UPSTREAM: irqchip/sg2042-msi: Add missing chip flags
+
+The sg2042-msi driver uses the fallback callbacks set by
+msi_lib_init_dev_msi_info(). commit 1c000dcaad2b ("irqchip/irq-msi-lib:
+Optionally set default irq_eoi()/irq_ack()") changed the behavior of the
+fallback mechanism by making it opt-in.
+
+The sg2042-msi was not fixed up for this, which causes a NULL pointer
+dereference due to the missing irq_ack() callback.
+
+Add the missing chip flag to msi_parent_ops.
+
+Fixes: c66741549424 ("irqchip: Add the Sophgo SG2042 MSI interrupt controller")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20250217085657.789309-3-apatel@ventanamicro.com
+Link: https://lore.kernel.org/all/20250405055625.1530180-1-inochiama@gmail.com
+
+(cherry picked from commit 305825d09b15586d2e4311e0c12f10f2a0c18ac5)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/irqchip/irq-sg2042-msi.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
+index ee682e87eb8b..375b55aa0acd 100644
+--- a/drivers/irqchip/irq-sg2042-msi.c
++++ b/drivers/irqchip/irq-sg2042-msi.c
+@@ -151,6 +151,7 @@ static const struct irq_domain_ops sg2042_msi_middle_domain_ops = {
+ static const struct msi_parent_ops sg2042_msi_parent_ops = {
+ 	.required_flags		= SG2042_MSI_FLAGS_REQUIRED,
+ 	.supported_flags	= SG2042_MSI_FLAGS_SUPPORTED,
++	.chip_flags		= MSI_CHIP_FLAG_SET_ACK,
+ 	.bus_select_mask	= MATCH_PCI_MSI,
+ 	.bus_select_token	= DOMAIN_BUS_NEXUS,
+ 	.prefix			= "SG2042-",
+-- 
+2.47.3
+

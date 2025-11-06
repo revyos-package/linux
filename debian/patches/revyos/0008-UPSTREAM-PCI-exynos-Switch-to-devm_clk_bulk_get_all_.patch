@@ -1,0 +1,48 @@
+From 0eeae02112571835a0b807f33fa92f0fab11776e Mon Sep 17 00:00:00 2001
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Date: Tue, 17 Dec 2024 23:41:52 +0200
+Subject: [PATCH 008/204] UPSTREAM: PCI: exynos: Switch to
+ devm_clk_bulk_get_all_enabled()
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The helper devm_clk_bulk_get_all_enable() missed to return the number of
+clocks stored in the clk_bulk_data table referenced by the clks
+argument and, therefore, will be dropped.
+
+Use the newly introduced devm_clk_bulk_get_all_enabled() variant
+instead, which is consistent with devm_clk_bulk_get_all() in terms of
+the returned value:
+
+ > 0 if one or more clocks have been stored
+ = 0 if there are no clocks
+ < 0 if an error occurred
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20241217-clk_bulk_ena_fix-v5-2-aafbbb245155@collabora.com
+Acked-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+(cherry picked from commit 10106d5c1f9cee1a514fc29d711b55601d7241f2)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/pci/controller/dwc/pci-exynos.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/pci/controller/dwc/pci-exynos.c b/drivers/pci/controller/dwc/pci-exynos.c
+index fa45da28a218..056cebd4e0ba 100644
+--- a/drivers/pci/controller/dwc/pci-exynos.c
++++ b/drivers/pci/controller/dwc/pci-exynos.c
+@@ -300,7 +300,7 @@ static int exynos_pcie_probe(struct platform_device *pdev)
+ 	if (IS_ERR(ep->elbi_base))
+ 		return PTR_ERR(ep->elbi_base);
+ 
+-	ret = devm_clk_bulk_get_all_enable(dev, &ep->clks);
++	ret = devm_clk_bulk_get_all_enabled(dev, &ep->clks);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-- 
+2.47.3
+

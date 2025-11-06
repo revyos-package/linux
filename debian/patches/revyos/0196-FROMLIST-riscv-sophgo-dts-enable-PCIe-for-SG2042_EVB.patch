@@ -1,0 +1,42 @@
+From dac87e98a18356d98bdff6b7e9c5d3bb54e89daf Mon Sep 17 00:00:00 2001
+From: Chen Wang <unicorn_wang@outlook.com>
+Date: Mon, 20 Oct 2025 11:39:22 +0800
+Subject: [PATCH 196/204] FROMLIST: riscv: sophgo: dts: enable PCIe for
+ SG2042_EVB_V1.X
+
+Enable PCIe controllers for Sophgo SG2042_EVB_V1.X board,
+which uses SG2042 SoC.
+
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+Link: https://lore.kernel.org/r/1ad96631cc9d9d7403a2bed5585d856fa101a2ef.1760929111.git.unicorn_wang@outlook.com
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts b/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
+index 517943696eb4..b116dfa904cd 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
++++ b/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
+@@ -164,6 +164,18 @@ phy0: phy@0 {
+ 	};
+ };
+ 
++&pcie_rc0 {
++	status = "okay";
++};
++
++&pcie_rc1 {
++	status = "okay";
++};
++
++&pcie_rc2 {
++	status = "okay";
++};
++
+ &pinctrl {
+ 	emmc_cfg: sdhci-emmc-cfg {
+ 		sdhci-emmc-wp-pins {
+-- 
+2.47.3
+

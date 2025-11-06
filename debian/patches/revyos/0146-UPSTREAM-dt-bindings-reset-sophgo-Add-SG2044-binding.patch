@@ -1,0 +1,44 @@
+From 0f72b765c2deb4d00be93b66ee0e05d3873ee0e0 Mon Sep 17 00:00:00 2001
+From: Inochi Amaoto <inochiama@gmail.com>
+Date: Mon, 14 Apr 2025 06:34:59 +0800
+Subject: [PATCH 146/204] UPSTREAM: dt-bindings: reset: sophgo: Add SG2044
+ bindings.
+
+The SG2044 shares the same reset controller as SG2042, so it
+is just enough to use the compatible string of SG2042 as a
+basis.
+
+Add compatible string for the reset controller of SG2044.
+
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Acked-by: "Rob Herring (Arm)" <robh@kernel.org>
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Link: https://lore.kernel.org/r/20250413223507.46480-6-inochiama@gmail.com
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+(cherry picked from commit 1c64de886b8893c0158097edd6ba08d527a2c97a)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ .../devicetree/bindings/reset/sophgo,sg2042-reset.yaml     | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml b/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
+index 76e1931f0908..1d1b84575960 100644
+--- a/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
++++ b/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
+@@ -11,7 +11,12 @@ maintainers:
+ 
+ properties:
+   compatible:
+-    const: sophgo,sg2042-reset
++    oneOf:
++      - items:
++          - enum:
++              - sophgo,sg2044-reset
++          - const: sophgo,sg2042-reset
++      - const: sophgo,sg2042-reset
+ 
+   reg:
+     maxItems: 1
+-- 
+2.47.3
+

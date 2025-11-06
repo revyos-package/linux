@@ -1,0 +1,42 @@
+From 580ad4d92afdf366517d61f17c42b1416511bbe7 Mon Sep 17 00:00:00 2001
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
+Date: Sun, 3 Nov 2024 15:51:52 +0100
+Subject: [PATCH 049/204] UPSTREAM: dt-bindings: riscv: Add Ziccrse ISA
+ extension description
+
+Add description for the Ziccrse ISA extension which was ratified in
+the riscv profiles specification v1.0.
+
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://lore.kernel.org/r/20241103145153.105097-13-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+(cherry picked from commit 447b2afbcde16be43c9459507f48f5c602c121c0)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ Documentation/devicetree/bindings/riscv/extensions.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/Documentation/devicetree/bindings/riscv/extensions.yaml
+index db062107823b..35a9ad1d7e63 100644
+--- a/Documentation/devicetree/bindings/riscv/extensions.yaml
++++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
+@@ -296,6 +296,12 @@ properties:
+             in commit 64074bc ("Update version numbers for Zfh/Zfinx") of
+             riscv-isa-manual.
+ 
++        - const: ziccrse
++          description:
++            The standard Ziccrse extension which provides forward progress
++            guarantee on LR/SC sequences, as ratified in commit b1d806605f87
++            ("Updated to ratified state.") of the riscv profiles specification.
++
+         - const: zk
+           description:
+             The standard Zk Standard Scalar cryptography extension as ratified
+-- 
+2.47.3
+
