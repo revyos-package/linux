@@ -36,7 +36,7 @@ is_test = true
 name = 'none'
 
 [build]
-enable_signed = true
+enable_signed = false
 enable_vdso = true
 kernel_file = 'arch/x86/boot/bzImage'
 kernel_stem = 'vmlinuz'
