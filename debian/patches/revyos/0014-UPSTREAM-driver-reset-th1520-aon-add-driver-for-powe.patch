@@ -1,0 +1,175 @@
+From 6e7fdbd14e939da7db0ee73c135d468ecb0e3560 Mon Sep 17 00:00:00 2001
+From: Icenowy Zheng <uwu@icenowy.me>
+Date: Fri, 19 Sep 2025 01:33:22 +0800
+Subject: [PATCH 14/73] UPSTREAM: driver: reset: th1520-aon: add driver for
+ poweroff/reboot via AON FW
+
+This driver implements poweroff/reboot support for T-Head TH1520 SoCs
+running the AON firmware by sending a message to the AON firmware's WDG
+part.
+
+This is a auxiliary device driver, and expects the AON channel to be
+passed via the platform_data of the auxiliary device.
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Acked-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+(cherry picked from commit 2d81a24a74e577b0d34266059ff95f56150b40f9)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ MAINTAINERS                             |  1 +
+ drivers/power/reset/Kconfig             |  7 ++
+ drivers/power/reset/Makefile            |  1 +
+ drivers/power/reset/th1520-aon-reboot.c | 98 +++++++++++++++++++++++++
+ 4 files changed, 107 insertions(+)
+ create mode 100644 drivers/power/reset/th1520-aon-reboot.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 97d958c945e4..4f09b2bbed56 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -21761,6 +21761,7 @@ F:	drivers/mailbox/mailbox-th1520.c
+ F:	drivers/net/ethernet/stmicro/stmmac/dwmac-thead.c
+ F:	drivers/pinctrl/pinctrl-th1520.c
+ F:	drivers/pmdomain/thead/
++F:	drivers/power/reset/th1520-aon-reboot.c
+ F:	drivers/power/sequencing/pwrseq-thead-gpu.c
+ F:	drivers/reset/reset-th1520.c
+ F:	include/dt-bindings/clock/thead,th1520-clk-ap.h
+diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
+index 77ea3129c708..8248895ca903 100644
+--- a/drivers/power/reset/Kconfig
++++ b/drivers/power/reset/Kconfig
+@@ -225,6 +225,13 @@ config POWER_RESET_ST
+ 	help
+ 	  Reset support for STMicroelectronics boards.
+ 
++config POWER_RESET_TH1520_AON
++	tristate "T-Head TH1520 AON firmware poweroff and reset driver"
++	depends on TH1520_PM_DOMAINS
++	help
++	  This driver supports power-off and reset operations for T-Head
++	  TH1520 SoCs running the AON firmware.
++
+ config POWER_RESET_TORADEX_EC
+ 	tristate "Toradex Embedded Controller power-off and reset driver"
+ 	depends on ARCH_MXC || COMPILE_TEST
+diff --git a/drivers/power/reset/Makefile b/drivers/power/reset/Makefile
+index b7c2b5940be9..51da87e05ce7 100644
+--- a/drivers/power/reset/Makefile
++++ b/drivers/power/reset/Makefile
+@@ -25,6 +25,7 @@ obj-$(CONFIG_POWER_RESET_QNAP) += qnap-poweroff.o
+ obj-$(CONFIG_POWER_RESET_REGULATOR) += regulator-poweroff.o
+ obj-$(CONFIG_POWER_RESET_RESTART) += restart-poweroff.o
+ obj-$(CONFIG_POWER_RESET_ST) += st-poweroff.o
++obj-$(CONFIG_POWER_RESET_TH1520_AON) += th1520-aon-reboot.o
+ obj-$(CONFIG_POWER_RESET_TORADEX_EC) += tdx-ec-poweroff.o
+ obj-$(CONFIG_POWER_RESET_TPS65086) += tps65086-restart.o
+ obj-$(CONFIG_POWER_RESET_VERSATILE) += arm-versatile-reboot.o
+diff --git a/drivers/power/reset/th1520-aon-reboot.c b/drivers/power/reset/th1520-aon-reboot.c
+new file mode 100644
+index 000000000000..ec249667a0ff
+--- /dev/null
++++ b/drivers/power/reset/th1520-aon-reboot.c
+@@ -0,0 +1,98 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * T-HEAD TH1520 AON Firmware Reboot Driver
++ *
++ * Copyright (c) 2025 Icenowy Zheng <uwu@icenowy.me>
++ */
++
++#include <linux/auxiliary_bus.h>
++#include <linux/firmware/thead/thead,th1520-aon.h>
++#include <linux/module.h>
++#include <linux/notifier.h>
++#include <linux/of.h>
++#include <linux/reboot.h>
++#include <linux/slab.h>
++
++#define TH1520_AON_REBOOT_PRIORITY 200
++
++struct th1520_aon_msg_empty_body {
++	struct th1520_aon_rpc_msg_hdr hdr;
++	u16 reserved[12];
++} __packed __aligned(1);
++
++static int th1520_aon_pwroff_handler(struct sys_off_data *data)
++{
++	struct th1520_aon_chan *aon_chan = data->cb_data;
++	struct th1520_aon_msg_empty_body msg = {};
++
++	msg.hdr.svc = TH1520_AON_RPC_SVC_WDG;
++	msg.hdr.func = TH1520_AON_WDG_FUNC_POWER_OFF;
++	msg.hdr.size = TH1520_AON_RPC_MSG_NUM;
++
++	th1520_aon_call_rpc(aon_chan, &msg);
++
++	return NOTIFY_DONE;
++}
++
++static int th1520_aon_restart_handler(struct sys_off_data *data)
++{
++	struct th1520_aon_chan *aon_chan = data->cb_data;
++	struct th1520_aon_msg_empty_body msg = {};
++
++	msg.hdr.svc = TH1520_AON_RPC_SVC_WDG;
++	msg.hdr.func = TH1520_AON_WDG_FUNC_RESTART;
++	msg.hdr.size = TH1520_AON_RPC_MSG_NUM;
++
++	th1520_aon_call_rpc(aon_chan, &msg);
++
++	return NOTIFY_DONE;
++}
++
++static int th1520_aon_reboot_probe(struct auxiliary_device *adev,
++				  const struct auxiliary_device_id *id)
++{
++	struct device *dev = &adev->dev;
++	int ret;
++
++	/* Expect struct th1520_aon_chan to be passed via platform_data */
++	ret = devm_register_sys_off_handler(dev, SYS_OFF_MODE_POWER_OFF,
++					    TH1520_AON_REBOOT_PRIORITY,
++					    th1520_aon_pwroff_handler,
++					    adev->dev.platform_data);
++
++	if (ret) {
++		dev_err(dev, "Failed to register power off handler\n");
++		return ret;
++	}
++
++	ret = devm_register_sys_off_handler(dev, SYS_OFF_MODE_RESTART,
++					    TH1520_AON_REBOOT_PRIORITY,
++					    th1520_aon_restart_handler,
++					    adev->dev.platform_data);
++
++	if (ret) {
++		dev_err(dev, "Failed to register restart handler\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++static const struct auxiliary_device_id th1520_aon_reboot_id_table[] = {
++	{ .name = "th1520_pm_domains.reboot" },
++	{},
++};
++MODULE_DEVICE_TABLE(auxiliary, th1520_aon_reboot_id_table);
++
++static struct auxiliary_driver th1520_aon_reboot_driver = {
++	.driver = {
++		.name = "th1520-aon-reboot",
++	},
++	.probe = th1520_aon_reboot_probe,
++	.id_table = th1520_aon_reboot_id_table,
++};
++module_auxiliary_driver(th1520_aon_reboot_driver);
++
++MODULE_AUTHOR("Icenowy Zheng <uwu@icenowy.me>");
++MODULE_DESCRIPTION("T-HEAD TH1520 AON-firmware-based reboot driver");
++MODULE_LICENSE("GPL");
+-- 
+2.47.3
+

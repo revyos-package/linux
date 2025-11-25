@@ -1,0 +1,56 @@
+From a125dcea80ff1984945eb6745fe25f7e1dbda57a Mon Sep 17 00:00:00 2001
+From: Icenowy Zheng <uwu@icenowy.me>
+Date: Fri, 19 Sep 2025 01:33:23 +0800
+Subject: [PATCH 15/73] UPSTREAM: pmdomain: thead: create auxiliary device for
+ rebooting
+
+The reboot / power off operations require communication with the AON
+firmware too.
+
+As the driver is already present, create an auxiliary device with name
+"reboot" to match that driver, and pass the AON channel by using
+platform_data.
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+(cherry picked from commit 64581f41f4c4aa1845edeee6bb0c8f2a7103d9aa)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/pmdomain/thead/th1520-pm-domains.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/drivers/pmdomain/thead/th1520-pm-domains.c b/drivers/pmdomain/thead/th1520-pm-domains.c
+index 9040b698e7f7..5213994101a5 100644
+--- a/drivers/pmdomain/thead/th1520-pm-domains.c
++++ b/drivers/pmdomain/thead/th1520-pm-domains.c
+@@ -173,6 +173,16 @@ static int th1520_pd_pwrseq_gpu_init(struct device *dev)
+ 					adev);
+ }
+ 
++static int th1520_pd_reboot_init(struct device *dev,
++				 struct th1520_aon_chan *aon_chan)
++{
++	struct auxiliary_device *adev;
++
++	adev = devm_auxiliary_device_create(dev, "reboot", aon_chan);
++
++	return PTR_ERR_OR_ZERO(adev);
++}
++
+ static int th1520_pd_probe(struct platform_device *pdev)
+ {
+ 	struct generic_pm_domain **domains;
+@@ -235,6 +245,10 @@ static int th1520_pd_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_clean_provider;
+ 
++	ret = th1520_pd_reboot_init(dev, aon_chan);
++	if (ret)
++		goto err_clean_provider;
++
+ 	return 0;
+ 
+ err_clean_provider:
+-- 
+2.47.3
+

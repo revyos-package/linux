@@ -1,0 +1,71 @@
+From 3442e56899b94da438bfc465fb35aaf687991065 Mon Sep 17 00:00:00 2001
+From: Michal Wilczynski <m.wilczynski@samsung.com>
+Date: Fri, 22 Aug 2025 00:20:17 +0200
+Subject: [PATCH 17/73] UPSTREAM: riscv: dts: thead: th1520: Add IMG BXM-4-64
+ GPU node
+
+Add a device tree node for the IMG BXM-4-64 GPU present in the T-HEAD
+TH1520 SoC used by the Lichee Pi 4A board. This node enables support for
+the GPU using the drm/imagination driver.
+
+By adding this node, the kernel can recognize and initialize the GPU,
+providing graphics acceleration capabilities on the Lichee Pi 4A and
+other boards based on the TH1520 SoC.
+
+Add fixed clock gpu_mem_clk, as the MEM clock on the T-HEAD SoC can't be
+controlled programatically.
+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Drew Fustini <fustini@kernel.org>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Acked-by: Matt Coster <matt.coster@imgtec.com>
+Signed-off-by: Michal Wilczynski <m.wilczynski@samsung.com>
+Signed-off-by: Drew Fustini <fustini@kernel.org>
+(cherry picked from commit 5052d5cf1359e9057ec311788c12997406fdb2fc)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/thead/th1520.dtsi | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/thead/th1520.dtsi b/arch/riscv/boot/dts/thead/th1520.dtsi
+index 03f1d7319049..e680d1a7c821 100644
+--- a/arch/riscv/boot/dts/thead/th1520.dtsi
++++ b/arch/riscv/boot/dts/thead/th1520.dtsi
+@@ -225,6 +225,13 @@ aonsys_clk: clock-73728000 {
+ 		#clock-cells = <0>;
+ 	};
+ 
++	gpu_mem_clk: mem-clk {
++		compatible = "fixed-clock";
++		clock-frequency = <0>;
++		clock-output-names = "gpu_mem_clk";
++		#clock-cells = <0>;
++	};
++
+ 	stmmac_axi_config: stmmac-axi-config {
+ 		snps,wr_osr_lmt = <15>;
+ 		snps,rd_osr_lmt = <15>;
+@@ -502,6 +509,20 @@ clk: clock-controller@ffef010000 {
+ 			#clock-cells = <1>;
+ 		};
+ 
++		gpu: gpu@ffef400000 {
++			compatible = "thead,th1520-gpu", "img,img-bxm-4-64",
++				     "img,img-rogue";
++			reg = <0xff 0xef400000 0x0 0x100000>;
++			interrupt-parent = <&plic>;
++			interrupts = <102 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk_vo CLK_GPU_CORE>,
++				 <&gpu_mem_clk>,
++				 <&clk_vo CLK_GPU_CFG_ACLK>;
++			clock-names = "core", "mem", "sys";
++			power-domains = <&aon TH1520_GPU_PD>;
++			resets = <&rst TH1520_RESET_ID_GPU>;
++		};
++
+ 		rst: reset-controller@ffef528000 {
+ 			compatible = "thead,th1520-reset";
+ 			reg = <0xff 0xef528000 0x0 0x4f>;
+-- 
+2.47.3
+
