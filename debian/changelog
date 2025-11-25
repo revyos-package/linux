@@ -1,8 +1,9 @@
 linux (6.17.8-1~bpo13+2) trixie-backports; urgency=medium
 
   * Apply sg2042/sg2044/th1520 backport patchset
+  * Apply sg2042/sg2044/th1520 config
 
- -- Han Gao <gaohan@iscas.ac.cn>  Tue, 25 Nov 2025 16:50:35 +0800
+ -- Han Gao <gaohan@iscas.ac.cn>  Tue, 25 Nov 2025 17:08:05 +0800
 
 linux (6.17.8-1~bpo13+1) trixie-backports; urgency=medium
 
