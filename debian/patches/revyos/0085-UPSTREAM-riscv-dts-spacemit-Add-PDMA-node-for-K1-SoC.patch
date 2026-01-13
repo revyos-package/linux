@@ -1,0 +1,46 @@
+From 84d60f2e2bddbd715558e12ac9ce6cdd93449a05 Mon Sep 17 00:00:00 2001
+From: Guodong Xu <guodong@riscstar.com>
+Date: Fri, 22 Aug 2025 11:06:32 +0800
+Subject: [PATCH 085/253] UPSTREAM: riscv: dts: spacemit: Add PDMA node for K1
+ SoC
+
+Add PDMA dma-controller node under dma_bus for SpacemiT K1 SoC.
+
+The PDMA node is marked as disabled by default, allowing board-specific
+device trees to enable it as needed.
+
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Link: https://lore.kernel.org/r/20250822-working_dma_0701_v2-v5-6-f5c0eda734cc@riscstar.com
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+(cherry picked from commit 81d79ad0ddcaeaf6136abe870b2386bde31b7ed4)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 6c68b2e54675..19dc9c94e5b5 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -660,6 +660,17 @@ dma-bus {
+ 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
+ 				     <0x1 0x00000000 0x1 0x80000000 0x3 0x00000000>;
+ 
++			pdma: dma-controller@d4000000 {
++				compatible = "spacemit,k1-pdma";
++				reg = <0x0 0xd4000000 0x0 0x4000>;
++				clocks = <&syscon_apmu CLK_DMA>;
++				resets = <&syscon_apmu RESET_DMA>;
++				interrupts = <72>;
++				dma-channels = <16>;
++				#dma-cells= <1>;
++				status = "disabled";
++			};
++
+ 			uart0: serial@d4017000 {
+ 				compatible = "spacemit,k1-uart",
+ 					     "intel,xscale-uart";
+-- 
+2.47.3
+

@@ -1,0 +1,46 @@
+From f6074a0a029c0fcc53aee4f8e6569628f6c99b50 Mon Sep 17 00:00:00 2001
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Date: Fri, 26 Sep 2025 14:22:45 +0200
+Subject: [PATCH 050/253] UPSTREAM: PCI: dwc: Support 16-lane operation
+
+Some hosts support 16 lanes of PCIe. Make num-lanes accept that number.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20250926-topic-pcie_16ln-v1-1-c249acc18790@oss.qualcomm.com
+(cherry picked from commit cef730075cfe2b2091e3c94471cc0a78405401d5)
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/pci/controller/dwc/pcie-designware.c | 3 +++
+ drivers/pci/controller/dwc/pcie-designware.h | 1 +
+ 2 files changed, 4 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index c7a2cf5e886f..86ffac35b6f3 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -841,6 +841,9 @@ static void dw_pcie_link_set_max_link_width(struct dw_pcie *pci, u32 num_lanes)
+ 	case 8:
+ 		plc |= PORT_LINK_MODE_8_LANES;
+ 		break;
++	case 16:
++		plc |= PORT_LINK_MODE_16_LANES;
++		break;
+ 	default:
+ 		dev_err(pci->dev, "num-lanes %u: invalid value\n", num_lanes);
+ 		return;
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 509e08e58b69..32b1c7fba4e3 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -90,6 +90,7 @@
+ #define PORT_LINK_MODE_2_LANES		PORT_LINK_MODE(0x3)
+ #define PORT_LINK_MODE_4_LANES		PORT_LINK_MODE(0x7)
+ #define PORT_LINK_MODE_8_LANES		PORT_LINK_MODE(0xf)
++#define PORT_LINK_MODE_16_LANES		PORT_LINK_MODE(0x1f)
+ 
+ #define PCIE_PORT_LANE_SKEW		0x714
+ #define PORT_LANE_SKEW_INSERT_MASK	GENMASK(23, 0)
+-- 
+2.47.3
+

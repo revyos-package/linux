@@ -1,0 +1,54 @@
+From 2f73579c2770bcad980240d676260195f025757f Mon Sep 17 00:00:00 2001
+From: Guodong Xu <guodong@riscstar.com>
+Date: Fri, 22 Aug 2025 11:06:28 +0800
+Subject: [PATCH 071/253] UPSTREAM: dmaengine: mmp_pdma: Add clock support
+
+Add support for retrieving and enabling an optional clock during
+mmp_pdma_probe(). It is optional because in Marvell devices
+such as "marvell,pdma-1.0" the clocks property is not a required
+property. But in SpacemiT K1 PDMA, "spacemit,k1-pdma" as the dt
+binding schema file stated, clocks is required.
+
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Link: https://lore.kernel.org/r/20250822-working_dma_0701_v2-v5-2-f5c0eda734cc@riscstar.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+(cherry picked from commit e73a9a13c99c5a55abfdb8c273651509be1eb5bb)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/dma/mmp_pdma.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index a95d31103d30..4a6dbf558237 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -15,6 +15,7 @@
+ #include <linux/device.h>
+ #include <linux/platform_data/mmp_dma.h>
+ #include <linux/dmapool.h>
++#include <linux/clk.h>
+ #include <linux/of_dma.h>
+ #include <linux/of.h>
+ 
+@@ -1019,6 +1020,7 @@ static int mmp_pdma_probe(struct platform_device *op)
+ {
+ 	struct mmp_pdma_device *pdev;
+ 	struct mmp_dma_platdata *pdata = dev_get_platdata(&op->dev);
++	struct clk *clk;
+ 	int i, ret, irq = 0;
+ 	int dma_channels = 0, irq_num = 0;
+ 	const enum dma_slave_buswidth widths =
+@@ -1037,6 +1039,10 @@ static int mmp_pdma_probe(struct platform_device *op)
+ 	if (IS_ERR(pdev->base))
+ 		return PTR_ERR(pdev->base);
+ 
++	clk = devm_clk_get_optional_enabled(pdev->dev, NULL);
++	if (IS_ERR(clk))
++		return PTR_ERR(clk);
++
+ 	if (pdev->dev->of_node) {
+ 		/* Parse new and deprecated dma-channels properties */
+ 		if (of_property_read_u32(pdev->dev->of_node, "dma-channels",
+-- 
+2.47.3
+

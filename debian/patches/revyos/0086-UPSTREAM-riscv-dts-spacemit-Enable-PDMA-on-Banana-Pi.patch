@@ -1,0 +1,52 @@
+From 0331fa6d188971c7ddad203ac64b001c762edc93 Mon Sep 17 00:00:00 2001
+From: Guodong Xu <guodong@riscstar.com>
+Date: Fri, 22 Aug 2025 11:06:33 +0800
+Subject: [PATCH 086/253] UPSTREAM: riscv: dts: spacemit: Enable PDMA on Banana
+ Pi F3 and Milkv Jupiter
+
+Enable the PDMA on the SpacemiT K1-based Banana Pi F3 and Milkv Jupiter
+boards by setting its status to "okay".
+
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Link: https://lore.kernel.org/r/20250822-working_dma_0701_v2-v5-7-f5c0eda734cc@riscstar.com
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+(cherry picked from commit 0e28eab0ca51282e3d14f3e2dba9fc92e3fddbe6)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 4 ++++
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+index fe22c747c501..6013be258542 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+@@ -40,6 +40,10 @@ &emmc {
+ 	status = "okay";
+ };
+ 
++&pdma {
++	status = "okay";
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index 448319214104..c615fcadbd33 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -20,6 +20,10 @@ chosen {
+ 	};
+ };
+ 
++&pdma {
++	status = "okay";
++};
++
+ &uart0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&uart0_2_cfg>;
+-- 
+2.47.3
+

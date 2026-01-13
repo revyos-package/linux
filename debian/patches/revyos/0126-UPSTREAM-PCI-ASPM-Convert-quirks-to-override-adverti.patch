@@ -1,0 +1,110 @@
+From 64afecda54807a31d1d82c56cdfc2b20d67497f3 Mon Sep 17 00:00:00 2001
+From: Bjorn Helgaas <bhelgaas@google.com>
+Date: Mon, 10 Nov 2025 16:22:27 -0600
+Subject: [PATCH 126/253] UPSTREAM: PCI/ASPM: Convert quirks to override
+ advertised link states
+
+Existing quirks to disable ASPM L0s and L1 use pci_disable_link_state(),
+which disables ASPM states and prevents their use in the future.  But since
+they are FINAL quirks, they happen after ASPM has already been enabled.
+Here's a typical call path:
+
+  pci_host_probe
+    pci_scan_root_bus_bridge
+      pci_scan_child_bus
+        pci_scan_slot
+          pci_scan_single_device
+            pci_device_add
+              pci_fixup_device(pci_fixup_header)  # HEADER quirks
+          pcie_aspm_init_link_state
+            pcie_config_aspm_path
+              pcie_config_aspm_link
+                pcie_config_aspm_dev              # ASPM may be enabled
+    pci_bus_add_devices
+      pci_bus_add_devices
+        pci_fixup_device(pci_fixup_final)         # FINAL quirks
+          quirk_disable_aspm_l0s
+            pci_disable_link_state(dev, PCIE_LINK_STATE_L0S)
+
+Sometimes enabling ASPM can make the link non-functional, so if we know
+ASPM is broken on a device, we shouldn't enable it at all, even
+temporarily.
+
+Convert the existing quirks to use pcie_aspm_remove_cap() instead, which
+overrides the ASPM Support advertised in PCIe Link Capabilities, and make
+them HEADER quirks so they run before pcie_aspm_init_link_state() has a
+chance to enable ASPM.
+
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://patch.msgid.link/20251110222929.2140564-4-helgaas@kernel.org
+(cherry picked from commit 30579eebba6ae52dc7441479aec9dd8d782256d3)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/pci/quirks.c | 39 +++++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
+
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 214ed060ca1b..922c77c627a1 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -2494,28 +2494,27 @@ DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_INTEL, PCI_ANY_ID,
+  */
+ static void quirk_disable_aspm_l0s(struct pci_dev *dev)
+ {
+-	pci_info(dev, "Disabling L0s\n");
+-	pci_disable_link_state(dev, PCIE_LINK_STATE_L0S);
+-}
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10a7, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10a9, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10b6, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10c6, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10c7, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10c8, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10d6, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10db, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10dd, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10e1, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10ec, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10f1, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x10f4, quirk_disable_aspm_l0s);
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1508, quirk_disable_aspm_l0s);
++	pcie_aspm_remove_cap(dev, PCI_EXP_LNKCAP_ASPM_L0S);
++}
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10a7, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10a9, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10b6, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10c6, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10c7, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10c8, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10d6, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10db, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10dd, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10e1, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10ec, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10f1, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x10f4, quirk_disable_aspm_l0s);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x1508, quirk_disable_aspm_l0s);
+ 
+ static void quirk_disable_aspm_l0s_l1(struct pci_dev *dev)
+ {
+-	pci_info(dev, "Disabling ASPM L0s/L1\n");
+-	pci_disable_link_state(dev, PCIE_LINK_STATE_L0S | PCIE_LINK_STATE_L1);
++	pcie_aspm_remove_cap(dev,
++			     PCI_EXP_LNKCAP_ASPM_L0S | PCI_EXP_LNKCAP_ASPM_L1);
+ }
+ 
+ /*
+@@ -2523,7 +2522,7 @@ static void quirk_disable_aspm_l0s_l1(struct pci_dev *dev)
+  * upstream PCIe root port when ASPM is enabled. At least L0s mode is affected;
+  * disable both L0s and L1 for now to be safe.
+  */
+-DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ASMEDIA, 0x1080, quirk_disable_aspm_l0s_l1);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ASMEDIA, 0x1080, quirk_disable_aspm_l0s_l1);
+ 
+ /*
+  * Some Pericom PCIe-to-PCI bridges in reverse mode need the PCIe Retrain
+-- 
+2.47.3
+

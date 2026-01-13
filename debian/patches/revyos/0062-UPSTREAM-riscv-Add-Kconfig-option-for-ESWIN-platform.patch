@@ -1,0 +1,39 @@
+From 063aedad616971cd053a56cb5530344a1dc9ca82 Mon Sep 17 00:00:00 2001
+From: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
+Date: Mon, 25 Aug 2025 18:54:23 +0530
+Subject: [PATCH 062/253] UPSTREAM: riscv: Add Kconfig option for ESWIN
+ platforms
+
+Create a config option to build ESWIN SoC specific resources
+
+Signed-off-by: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
+Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20250825132427.1618089-3-pinkesh.vaghela@einfochips.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+(cherry picked from commit faaf0ea59713732b66100d8b5440fe40e48b3847)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ arch/riscv/Kconfig.socs | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/riscv/Kconfig.socs b/arch/riscv/Kconfig.socs
+index 61ceae0aa27a..848e7149e443 100644
+--- a/arch/riscv/Kconfig.socs
++++ b/arch/riscv/Kconfig.socs
+@@ -7,6 +7,12 @@ config ARCH_ANDES
+ 	help
+ 	  This enables support for Andes SoC platform hardware.
+ 
++config ARCH_ESWIN
++	bool "ESWIN SoCs"
++	help
++	  This enables support for ESWIN SoC platform hardware,
++	  including the ESWIN EIC7700 SoC.
++
+ config ARCH_MICROCHIP_POLARFIRE
+ 	def_bool ARCH_MICROCHIP
+ 
+-- 
+2.47.3
+

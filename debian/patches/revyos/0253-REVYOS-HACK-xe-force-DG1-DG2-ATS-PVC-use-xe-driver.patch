@@ -1,0 +1,53 @@
+From 05d28b4d77d7d55c3558be008b1e7e5b420f8794 Mon Sep 17 00:00:00 2001
+From: Han Gao <rabenda.cn@gmail.com>
+Date: Mon, 21 Jul 2025 18:33:50 +0800
+Subject: [PATCH 253/253] REVYOS: HACK: xe: force DG1/DG2/ATS/PVC use xe driver
+
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ drivers/gpu/drm/xe/xe_pci.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
+index 47236457e6a3..ff0b9c5197b8 100644
+--- a/drivers/gpu/drm/xe/xe_pci.c
++++ b/drivers/gpu/drm/xe/xe_pci.c
+@@ -242,7 +242,7 @@ static const struct xe_device_desc dg1_desc = {
+ 	.has_gsc_nvm = 1,
+ 	.has_heci_gscfi = 1,
+ 	.max_gt_per_tile = 1,
+-	.require_force_probe = true,
++	.require_force_probe = false,
+ };
+ 
+ static const u16 dg2_g10_ids[] = { INTEL_DG2_G10_IDS(NOP), INTEL_ATS_M150_IDS(NOP), 0 };
+@@ -266,7 +266,7 @@ static const struct xe_device_desc ats_m_desc = {
+ 	.pre_gmdid_media_ip = &media_ip_xehpm,
+ 	.dma_mask_size = 46,
+ 	.max_gt_per_tile = 1,
+-	.require_force_probe = true,
++	.require_force_probe = false,
+ 
+ 	DG2_FEATURES,
+ 	.has_display = false,
+@@ -277,7 +277,7 @@ static const struct xe_device_desc dg2_desc = {
+ 	.pre_gmdid_media_ip = &media_ip_xehpm,
+ 	.dma_mask_size = 46,
+ 	.max_gt_per_tile = 1,
+-	.require_force_probe = true,
++	.require_force_probe = false,
+ 
+ 	DG2_FEATURES,
+ 	.has_display = true,
+@@ -295,7 +295,7 @@ static const __maybe_unused struct xe_device_desc pvc_desc = {
+ 	.has_heci_gscfi = 1,
+ 	.max_gt_per_tile = 1,
+ 	.max_remote_tiles = 1,
+-	.require_force_probe = true,
++	.require_force_probe = false,
+ 	.has_mbx_power_limits = false,
+ };
+ 
+-- 
+2.47.3
+

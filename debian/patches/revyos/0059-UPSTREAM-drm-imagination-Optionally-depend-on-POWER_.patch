@@ -1,0 +1,42 @@
+From f6ad18fa6af9abb3a6691b4d0007777b826c5967 Mon Sep 17 00:00:00 2001
+From: Matt Coster <matt.coster@imgtec.com>
+Date: Tue, 14 Oct 2025 12:57:31 +0100
+Subject: [PATCH 059/253] UPSTREAM: drm/imagination: Optionally depend on
+ POWER_SEQUENCING
+
+When the change using pwrseq was added, I nixed the dependency on
+POWER_SEQUENCING since we didn't want it pulled in on platforms where
+it's not needed [1]. I hadn't, however, considered the link-time
+implications of this for configs with POWER_SEQUENCING=m.
+
+[1]: https://lore.kernel.org/r/a265a20e-8908-40d8-b4e0-2c8b8f773742@imgtec.com/
+
+Fixes: e38e8391f30b ("drm/imagination: Use pwrseq for TH1520 GPU power management")
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202510111806.CMulNMKW-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202511011739.SONHjSfR-lkp@intel.com/
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
+Link: https://patch.msgid.link/20251014-pwrseq-dep-v1-1-49aabd9d8fa1@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+(cherry picked from commit b4cd8f94ae7e5b0d83041b186258eba0c8f7c5f7)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/gpu/drm/imagination/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/imagination/Kconfig b/drivers/gpu/drm/imagination/Kconfig
+index 682dd2633d0c..0482bfcefdde 100644
+--- a/drivers/gpu/drm/imagination/Kconfig
++++ b/drivers/gpu/drm/imagination/Kconfig
+@@ -7,6 +7,7 @@ config DRM_POWERVR
+ 	depends on DRM
+ 	depends on MMU
+ 	depends on PM
++	depends on POWER_SEQUENCING || !POWER_SEQUENCING
+ 	select DRM_EXEC
+ 	select DRM_GEM_SHMEM_HELPER
+ 	select DRM_SCHED
+-- 
+2.47.3
+

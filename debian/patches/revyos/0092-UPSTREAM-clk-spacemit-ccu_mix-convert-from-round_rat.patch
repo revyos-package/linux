@@ -1,0 +1,62 @@
+From a48baeecc12bd6e25952be655790c1e76d96ec83 Mon Sep 17 00:00:00 2001
+From: Brian Masney <bmasney@redhat.com>
+Date: Mon, 11 Aug 2025 11:18:42 -0400
+Subject: [PATCH 092/253] UPSTREAM: clk: spacemit: ccu_mix: convert from
+ round_rate() to determine_rate()
+
+The round_rate() clk ops is deprecated, so migrate this driver from
+round_rate() to determine_rate() using the Coccinelle semantic patch
+on the cover letter of this series.
+
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Haylen Chu <heylenay@4d2.org>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://lore.kernel.org/r/20250811-clk-for-stephen-round-rate-v1-50-b3bf97b038dc@redhat.com
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+(cherry picked from commit 56737edda7db58549550776092da12fe03600399)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/clk/spacemit/ccu_mix.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/clk/spacemit/ccu_mix.c b/drivers/clk/spacemit/ccu_mix.c
+index 9b852aa61f78..7b7990875372 100644
+--- a/drivers/clk/spacemit/ccu_mix.c
++++ b/drivers/clk/spacemit/ccu_mix.c
+@@ -80,10 +80,12 @@ static int ccu_mix_trigger_fc(struct clk_hw *hw)
+ 					       MIX_FC_TIMEOUT_US);
+ }
+ 
+-static long ccu_factor_round_rate(struct clk_hw *hw, unsigned long rate,
+-				  unsigned long *prate)
++static int ccu_factor_determine_rate(struct clk_hw *hw,
++				     struct clk_rate_request *req)
+ {
+-	return ccu_factor_recalc_rate(hw, *prate);
++	req->rate = ccu_factor_recalc_rate(hw, req->best_parent_rate);
++
++	return 0;
+ }
+ 
+ static int ccu_factor_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -198,7 +200,7 @@ const struct clk_ops spacemit_ccu_gate_ops = {
+ };
+ 
+ const struct clk_ops spacemit_ccu_factor_ops = {
+-	.round_rate	= ccu_factor_round_rate,
++	.determine_rate = ccu_factor_determine_rate,
+ 	.recalc_rate	= ccu_factor_recalc_rate,
+ 	.set_rate	= ccu_factor_set_rate,
+ };
+@@ -220,7 +222,7 @@ const struct clk_ops spacemit_ccu_factor_gate_ops = {
+ 	.enable		= ccu_gate_enable,
+ 	.is_enabled	= ccu_gate_is_enabled,
+ 
+-	.round_rate	= ccu_factor_round_rate,
++	.determine_rate = ccu_factor_determine_rate,
+ 	.recalc_rate	= ccu_factor_recalc_rate,
+ 	.set_rate	= ccu_factor_set_rate,
+ };
+-- 
+2.47.3
+

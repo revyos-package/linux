@@ -1,0 +1,35 @@
+From e314c346784d75fa6e9636ca591a62bafbf2d191 Mon Sep 17 00:00:00 2001
+From: Darshan Prajapati <darshan.prajapati@einfochips.com>
+Date: Mon, 25 Aug 2025 18:54:22 +0530
+Subject: [PATCH 061/253] UPSTREAM: dt-bindings: riscv: Add SiFive P550 CPU
+ compatible
+
+Update Documentation for supporting SiFive P550 based CPU
+
+Signed-off-by: Darshan Prajapati <darshan.prajapati@einfochips.com>
+Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
+Signed-off-by: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20250825132427.1618089-2-pinkesh.vaghela@einfochips.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+(cherry picked from commit b9607ff0f86ad310f4a5e6ac985b1e89d78fd3ec)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ Documentation/devicetree/bindings/riscv/cpus.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/riscv/cpus.yaml b/Documentation/devicetree/bindings/riscv/cpus.yaml
+index 1a0cf0702a45..153d0dac57fb 100644
+--- a/Documentation/devicetree/bindings/riscv/cpus.yaml
++++ b/Documentation/devicetree/bindings/riscv/cpus.yaml
+@@ -52,6 +52,7 @@ properties:
+               - sifive,e5
+               - sifive,e7
+               - sifive,e71
++              - sifive,p550
+               - sifive,rocket0
+               - sifive,s7
+               - sifive,u5
+-- 
+2.47.3
+

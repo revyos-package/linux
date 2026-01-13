@@ -1,0 +1,67 @@
+From d66a406faaf441ba1aa95482f3f28e30457dedca Mon Sep 17 00:00:00 2001
+From: Bjorn Helgaas <bhelgaas@google.com>
+Date: Mon, 10 Nov 2025 16:22:26 -0600
+Subject: [PATCH 125/253] UPSTREAM: PCI/ASPM: Add pcie_aspm_remove_cap() to
+ override advertised link states
+
+Add pcie_aspm_remove_cap().  A quirk can use this to prevent use of ASPM
+L0s or L1 link states, even if the device advertised support for them.
+
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://patch.msgid.link/20251110222929.2140564-3-helgaas@kernel.org
+(cherry picked from commit 575b98e39d817537afdc6c39d35c1de484a64d42)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/pci/pci.h       |  2 ++
+ drivers/pci/pcie/aspm.c | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index 34f65d69662e..2f73d7a05c4c 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -864,6 +864,7 @@ void pci_save_aspm_l1ss_state(struct pci_dev *dev);
+ void pci_restore_aspm_l1ss_state(struct pci_dev *dev);
+ 
+ #ifdef CONFIG_PCIEASPM
++void pcie_aspm_remove_cap(struct pci_dev *pdev, u32 lnkcap);
+ void pcie_aspm_init_link_state(struct pci_dev *pdev);
+ void pcie_aspm_exit_link_state(struct pci_dev *pdev);
+ void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked);
+@@ -871,6 +872,7 @@ void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
+ void pci_configure_ltr(struct pci_dev *pdev);
+ void pci_bridge_reconfigure_ltr(struct pci_dev *pdev);
+ #else
++static inline void pcie_aspm_remove_cap(struct pci_dev *pdev, u32 lnkcap) { }
+ static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
+ static inline void pcie_aspm_exit_link_state(struct pci_dev *pdev) { }
+ static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked) { }
+diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+index 7aa36841ae08..078649e29876 100644
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -1501,6 +1501,19 @@ int pci_enable_link_state_locked(struct pci_dev *pdev, int state)
+ }
+ EXPORT_SYMBOL(pci_enable_link_state_locked);
+ 
++void pcie_aspm_remove_cap(struct pci_dev *pdev, u32 lnkcap)
++{
++	if (lnkcap & PCI_EXP_LNKCAP_ASPM_L0S)
++		pdev->aspm_l0s_support = 0;
++	if (lnkcap & PCI_EXP_LNKCAP_ASPM_L1)
++		pdev->aspm_l1_support = 0;
++
++	pci_info(pdev, "ASPM: Link Capabilities%s%s treated as unsupported to avoid device defect\n",
++		 lnkcap & PCI_EXP_LNKCAP_ASPM_L0S ? " L0s" : "",
++		 lnkcap & PCI_EXP_LNKCAP_ASPM_L1 ? " L1" : "");
++
++}
++
+ static int pcie_aspm_set_policy(const char *val,
+ 				const struct kernel_param *kp)
+ {
+-- 
+2.47.3
+

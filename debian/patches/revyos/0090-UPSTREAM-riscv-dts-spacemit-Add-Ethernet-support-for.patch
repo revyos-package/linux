@@ -1,0 +1,90 @@
+From 9286972996560031c87568092226f6921ec2a416 Mon Sep 17 00:00:00 2001
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Sun, 14 Sep 2025 12:23:16 +0800
+Subject: [PATCH 090/253] UPSTREAM: riscv: dts: spacemit: Add Ethernet support
+ for Jupiter
+
+Milk-V Jupiter uses an RGMII PHY for each port and uses GPIO for PHY
+reset.
+
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250914-net-k1-emac-v12-5-65b31b398f44@iscas.ac.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+
+(cherry picked from commit e32dc7a936b11e437298bcc4601476befcbcb88f)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ .../boot/dts/spacemit/k1-milkv-jupiter.dts    | 48 +++++++++++++++++++
+ 1 file changed, 48 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index c615fcadbd33..28afd39b28da 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -12,6 +12,8 @@ / {
+ 	compatible = "milkv,jupiter", "spacemit,k1";
+ 
+ 	aliases {
++		ethernet0 = &eth0;
++		ethernet1 = &eth1;
+ 		serial0 = &uart0;
+ 	};
+ 
+@@ -20,6 +22,52 @@ chosen {
+ 	};
+ };
+ 
++&eth0 {
++	phy-handle = <&rgmii0>;
++	phy-mode = "rgmii-id";
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac0_cfg>;
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <0>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(110) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii0: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
++
++&eth1 {
++	phy-handle = <&rgmii1>;
++	phy-mode = "rgmii-id";
++	pinctrl-names = "default";
++	pinctrl-0 = <&gmac1_cfg>;
++	rx-internal-delay-ps = <0>;
++	tx-internal-delay-ps = <250>;
++	status = "okay";
++
++	mdio-bus {
++		#address-cells = <0x1>;
++		#size-cells = <0x0>;
++
++		reset-gpios = <&gpio K1_GPIO(115) GPIO_ACTIVE_LOW>;
++		reset-delay-us = <10000>;
++		reset-post-delay-us = <100000>;
++
++		rgmii1: phy@1 {
++			reg = <0x1>;
++		};
++	};
++};
++
+ &pdma {
+ 	status = "okay";
+ };
+-- 
+2.47.3
+

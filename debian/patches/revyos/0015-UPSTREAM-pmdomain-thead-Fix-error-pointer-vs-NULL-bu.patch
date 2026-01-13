@@ -1,0 +1,40 @@
+From 38c7b83db5b15377d8ec571ca20e68c80d633baa Mon Sep 17 00:00:00 2001
+From: Dan Carpenter <dan.carpenter@linaro.org>
+Date: Fri, 26 Sep 2025 07:03:29 +0300
+Subject: [PATCH 015/253] UPSTREAM: pmdomain: thead: Fix error pointer vs NULL
+ bug in th1520_pd_reboot_init()
+
+The devm_auxiliary_device_create() returns NULL on error.  It never
+returns error pointers.  Using PTR_ERR_OR_ZERO() here means the function
+always returns success.  Replace the PTR_ERR_OR_ZERO() call check with
+a NULL check.
+
+Fixes: 64581f41f4c4 ("pmdomain: thead: create auxiliary device for rebooting")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Icenowy Zheng <uwu@icenowy.me>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+(cherry picked from commit bbc3110823eca23b066e75a920bdc8118adda0d2)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/pmdomain/thead/th1520-pm-domains.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/pmdomain/thead/th1520-pm-domains.c b/drivers/pmdomain/thead/th1520-pm-domains.c
+index 5213994101a5..d7cb9633c7c8 100644
+--- a/drivers/pmdomain/thead/th1520-pm-domains.c
++++ b/drivers/pmdomain/thead/th1520-pm-domains.c
+@@ -179,8 +179,10 @@ static int th1520_pd_reboot_init(struct device *dev,
+ 	struct auxiliary_device *adev;
+ 
+ 	adev = devm_auxiliary_device_create(dev, "reboot", aon_chan);
++	if (!adev)
++		return -ENODEV;
+ 
+-	return PTR_ERR_OR_ZERO(adev);
++	return 0;
+ }
+ 
+ static int th1520_pd_probe(struct platform_device *pdev)
+-- 
+2.47.3
+

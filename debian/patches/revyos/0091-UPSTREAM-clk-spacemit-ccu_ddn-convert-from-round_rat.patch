@@ -1,0 +1,56 @@
+From 01b5eac430f6e1d6a529944ce812fcb9543c3969 Mon Sep 17 00:00:00 2001
+From: Brian Masney <bmasney@redhat.com>
+Date: Mon, 11 Aug 2025 11:18:41 -0400
+Subject: [PATCH 091/253] UPSTREAM: clk: spacemit: ccu_ddn: convert from
+ round_rate() to determine_rate()
+
+The round_rate() clk ops is deprecated, so migrate this driver from
+round_rate() to determine_rate() using the Coccinelle semantic patch
+on the cover letter of this series.
+
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Haylen Chu <heylenay@4d2.org>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Link: https://lore.kernel.org/r/20250811-clk-for-stephen-round-rate-v1-49-b3bf97b038dc@redhat.com
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+(cherry picked from commit b4a7b0d2c4485d11d37dec721709660f3967efcf)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/clk/spacemit/ccu_ddn.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/clk/spacemit/ccu_ddn.c b/drivers/clk/spacemit/ccu_ddn.c
+index be311b045698..02b68ea84db9 100644
+--- a/drivers/clk/spacemit/ccu_ddn.c
++++ b/drivers/clk/spacemit/ccu_ddn.c
+@@ -39,13 +39,16 @@ static unsigned long ccu_ddn_calc_best_rate(struct ccu_ddn *ddn,
+ 	return ccu_ddn_calc_rate(prate, *num, *den);
+ }
+ 
+-static long ccu_ddn_round_rate(struct clk_hw *hw, unsigned long rate,
+-			       unsigned long *prate)
++static int ccu_ddn_determine_rate(struct clk_hw *hw,
++				  struct clk_rate_request *req)
+ {
+ 	struct ccu_ddn *ddn = hw_to_ccu_ddn(hw);
+ 	unsigned long num, den;
+ 
+-	return ccu_ddn_calc_best_rate(ddn, rate, *prate, &num, &den);
++	req->rate = ccu_ddn_calc_best_rate(ddn, req->rate,
++					   req->best_parent_rate, &num, &den);
++
++	return 0;
+ }
+ 
+ static unsigned long ccu_ddn_recalc_rate(struct clk_hw *hw, unsigned long prate)
+@@ -78,6 +81,6 @@ static int ccu_ddn_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ const struct clk_ops spacemit_ccu_ddn_ops = {
+ 	.recalc_rate	= ccu_ddn_recalc_rate,
+-	.round_rate	= ccu_ddn_round_rate,
++	.determine_rate = ccu_ddn_determine_rate,
+ 	.set_rate	= ccu_ddn_set_rate,
+ };
+-- 
+2.47.3
+

@@ -1,0 +1,46 @@
+From dad27b24c3d904cad6c13616821c9bc87bda1e45 Mon Sep 17 00:00:00 2001
+From: Yixun Lan <dlan@gentoo.org>
+Date: Tue, 2 Sep 2025 20:26:58 +0800
+Subject: [PATCH 087/253] UPSTREAM: riscv: dts: spacemit: uart: remove
+ sec_uart1 device node
+
+sec_uart1 is not available from Linux, and no clock is implemented in
+CCF framework, thus 'make dtbs_check' will pop up this warning message:
+
+  serial@f0612000: 'clock-names' is a required property
+
+Removing the node from device tree to silence the DT check warning.
+
+Link: https://lore.kernel.org/r/20250902-02-k1-uart-clock-v2-1-f146918d44f6@gentoo.org
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+(cherry picked from commit 0f084b221e2c5ba16eca85b3d2497f9486bd0329)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 19dc9c94e5b5..66b33a9110cc 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -797,16 +797,7 @@ uart9: serial@d4017800 {
+ 				status = "disabled";
+ 			};
+ 
+-			sec_uart1: serial@f0612000 {
+-				compatible = "spacemit,k1-uart",
+-					     "intel,xscale-uart";
+-				reg = <0x0 0xf0612000 0x0 0x100>;
+-				interrupts = <43>;
+-				clock-frequency = <14857000>;
+-				reg-shift = <2>;
+-				reg-io-width = <4>;
+-				status = "reserved"; /* for TEE usage */
+-			};
++			/* sec_uart1: 0xf0612000, not available from Linux */
+ 		};
+ 
+ 		multimedia-bus {
+-- 
+2.47.3
+

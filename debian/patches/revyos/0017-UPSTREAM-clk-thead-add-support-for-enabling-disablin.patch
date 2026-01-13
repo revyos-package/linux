@@ -1,0 +1,127 @@
+From e1377349a314cc33c3c333d5297f6d42af9474db Mon Sep 17 00:00:00 2001
+From: Icenowy Zheng <uwu@icenowy.me>
+Date: Sat, 16 Aug 2025 17:11:11 +0800
+Subject: [PATCH 017/253] UPSTREAM: clk: thead: add support for
+ enabling/disabling PLLs
+
+The 2nd control word of T-Head TH1520 PLLs contains a bit to put the VCO
+into reset state, which means disabling the PLL.
+
+Some PLLs are put to disabled state by the bootloader, and the clock
+driver should be able to enable them.
+
+Add support for enabling/disabling PLLs. PLLs other than DPU ones are
+set CLK_IS_CRITICAL to prevent killing the system -- they're meant to
+drive CPU or system buses (even the GMAC/Video ones are driving arbitrary
+buses).
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Reviewed-by: Drew Fustini <fustini@kernel.org>
+Signed-off-by: Drew Fustini <fustini@kernel.org>
+(cherry picked from commit 56a48c1833aa1ede82cc3833d73750597eccfdb0)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/clk/thead/clk-th1520-ap.c | 38 +++++++++++++++++++++++++++----
+ 1 file changed, 33 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
+index 6c1976aa1ae6..04e1775b2151 100644
+--- a/drivers/clk/thead/clk-th1520-ap.c
++++ b/drivers/clk/thead/clk-th1520-ap.c
+@@ -18,6 +18,7 @@
+ #define TH1520_PLL_FBDIV	GENMASK(19, 8)
+ #define TH1520_PLL_REFDIV	GENMASK(5, 0)
+ #define TH1520_PLL_BYPASS	BIT(30)
++#define TH1520_PLL_VCO_RST	BIT(29)
+ #define TH1520_PLL_DSMPD	BIT(24)
+ #define TH1520_PLL_FRAC		GENMASK(23, 0)
+ #define TH1520_PLL_FRAC_BITS    24
+@@ -236,6 +237,30 @@ static const struct clk_ops ccu_div_ops = {
+ 	.determine_rate	= clk_hw_determine_rate_no_reparent,
+ };
+ 
++static void ccu_pll_disable(struct clk_hw *hw)
++{
++	struct ccu_pll *pll = hw_to_ccu_pll(hw);
++
++	regmap_set_bits(pll->common.map, pll->common.cfg1,
++			TH1520_PLL_VCO_RST);
++}
++
++static int ccu_pll_enable(struct clk_hw *hw)
++{
++	struct ccu_pll *pll = hw_to_ccu_pll(hw);
++
++	return regmap_clear_bits(pll->common.map, pll->common.cfg1,
++				 TH1520_PLL_VCO_RST);
++}
++
++static int ccu_pll_is_enabled(struct clk_hw *hw)
++{
++	struct ccu_pll *pll = hw_to_ccu_pll(hw);
++
++	return !regmap_test_bits(pll->common.map, pll->common.cfg1,
++				 TH1520_PLL_VCO_RST);
++}
++
+ static unsigned long th1520_pll_vco_recalc_rate(struct clk_hw *hw,
+ 						unsigned long parent_rate)
+ {
+@@ -293,6 +318,9 @@ static unsigned long ccu_pll_recalc_rate(struct clk_hw *hw,
+ }
+ 
+ static const struct clk_ops clk_pll_ops = {
++	.disable	= ccu_pll_disable,
++	.enable		= ccu_pll_enable,
++	.is_enabled	= ccu_pll_is_enabled,
+ 	.recalc_rate	= ccu_pll_recalc_rate,
+ };
+ 
+@@ -308,7 +336,7 @@ static struct ccu_pll cpu_pll0_clk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_DATA("cpu-pll0",
+ 					      osc_24m_clk,
+ 					      &clk_pll_ops,
+-					      0),
++					      CLK_IS_CRITICAL),
+ 	},
+ };
+ 
+@@ -320,7 +348,7 @@ static struct ccu_pll cpu_pll1_clk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_DATA("cpu-pll1",
+ 					      osc_24m_clk,
+ 					      &clk_pll_ops,
+-					      0),
++					      CLK_IS_CRITICAL),
+ 	},
+ };
+ 
+@@ -332,7 +360,7 @@ static struct ccu_pll gmac_pll_clk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_DATA("gmac-pll",
+ 					      osc_24m_clk,
+ 					      &clk_pll_ops,
+-					      0),
++					      CLK_IS_CRITICAL),
+ 	},
+ };
+ 
+@@ -352,7 +380,7 @@ static struct ccu_pll video_pll_clk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_DATA("video-pll",
+ 					      osc_24m_clk,
+ 					      &clk_pll_ops,
+-					      0),
++					      CLK_IS_CRITICAL),
+ 	},
+ };
+ 
+@@ -404,7 +432,7 @@ static struct ccu_pll tee_pll_clk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_DATA("tee-pll",
+ 					      osc_24m_clk,
+ 					      &clk_pll_ops,
+-					      0),
++					      CLK_IS_CRITICAL),
+ 	},
+ };
+ 
+-- 
+2.47.3
+

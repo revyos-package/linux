@@ -1,0 +1,40 @@
+From 240724adac67b7adca338d8f38d99ede333cb127 Mon Sep 17 00:00:00 2001
+From: Johan Hovold <johan@kernel.org>
+Date: Fri, 17 Oct 2025 07:54:14 +0200
+Subject: [PATCH 044/253] UPSTREAM: mailbox: th1520: fix clock imbalance on
+ probe failure
+
+The purpose of the devm_add_action_or_reset() helper is to call the
+action function in case adding an action ever fails so drop the clock
+disable from the error path to avoid disabling the clocks twice.
+
+Fixes: 5d4d263e1c6b ("mailbox: Introduce support for T-head TH1520 Mailbox driver")
+Cc: Michal Wilczynski <m.wilczynski@samsung.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Michal Wilczynski <m.wilczynski@samsung.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+(cherry picked from commit e3cee98f2fcc2234be7813c0e55a7f7a5e77aaf2)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/mailbox/mailbox-th1520.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/mailbox/mailbox-th1520.c b/drivers/mailbox/mailbox-th1520.c
+index a6b2aa9ae952..626957c2e435 100644
+--- a/drivers/mailbox/mailbox-th1520.c
++++ b/drivers/mailbox/mailbox-th1520.c
+@@ -435,10 +435,8 @@ static int th1520_mbox_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	ret = devm_add_action_or_reset(dev, th1520_disable_clk, priv);
+-	if (ret) {
+-		clk_bulk_disable_unprepare(ARRAY_SIZE(priv->clocks), priv->clocks);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	/*
+ 	 * The address mappings in the device tree align precisely with those
+-- 
+2.47.3
+

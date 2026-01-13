@@ -1,0 +1,56 @@
+From 19b2474bb16796303231810bff0b13c722da50c0 Mon Sep 17 00:00:00 2001
+From: Guodong Xu <guodong@riscstar.com>
+Date: Fri, 22 Aug 2025 11:06:29 +0800
+Subject: [PATCH 072/253] UPSTREAM: dmaengine: mmp_pdma: Add reset controller
+ support
+
+Add support to acquire and deassert an optional hardware reset controller
+during mmp_pdma_probe(). It is optional because in Marvell devices
+such as "marvell,pdma-1.0" the resets property is not a required
+property. But in SpacemiT K1 PDMA, "spacemit,k1-pdma" as the dt
+binding schema file stated, resets is required.
+
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Link: https://lore.kernel.org/r/20250822-working_dma_0701_v2-v5-3-f5c0eda734cc@riscstar.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+(cherry picked from commit fc72462bc6107b8babda05cad5bf8f7daf8bec20)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/dma/mmp_pdma.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index 4a6dbf558237..fe627efeaff0 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -16,6 +16,7 @@
+ #include <linux/platform_data/mmp_dma.h>
+ #include <linux/dmapool.h>
+ #include <linux/clk.h>
++#include <linux/reset.h>
+ #include <linux/of_dma.h>
+ #include <linux/of.h>
+ 
+@@ -1021,6 +1022,7 @@ static int mmp_pdma_probe(struct platform_device *op)
+ 	struct mmp_pdma_device *pdev;
+ 	struct mmp_dma_platdata *pdata = dev_get_platdata(&op->dev);
+ 	struct clk *clk;
++	struct reset_control *rst;
+ 	int i, ret, irq = 0;
+ 	int dma_channels = 0, irq_num = 0;
+ 	const enum dma_slave_buswidth widths =
+@@ -1043,6 +1045,11 @@ static int mmp_pdma_probe(struct platform_device *op)
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
+ 
++	rst = devm_reset_control_get_optional_exclusive_deasserted(pdev->dev,
++								   NULL);
++	if (IS_ERR(rst))
++		return PTR_ERR(rst);
++
+ 	if (pdev->dev->of_node) {
+ 		/* Parse new and deprecated dma-channels properties */
+ 		if (of_property_read_u32(pdev->dev->of_node, "dma-channels",
+-- 
+2.47.3
+

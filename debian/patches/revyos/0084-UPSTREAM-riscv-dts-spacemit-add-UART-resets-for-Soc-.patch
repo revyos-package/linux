@@ -1,0 +1,105 @@
+From 6e92bad30c4f151b18f6c6c5f94099e0869cd459 Mon Sep 17 00:00:00 2001
+From: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Date: Thu, 21 Aug 2025 17:26:19 +0200
+Subject: [PATCH 084/253] UPSTREAM: riscv: dts: spacemit: add UART resets for
+ Soc K1
+
+The UARTs in the SpacemiT K1 device tree are probed by the 8250_of driver,
+but without reset lines they remain non-functional.
+
+Add reset control entries so that the UARTs can operate when mapped to
+devices. UART0 is already de-asserted by the bootloader, but include its
+reset as well to avoid relying on bootloader state.
+
+Tested on Orange Pi RV2 and Banana Pi BPI-F3 boards, with UART9 enabled
+and verified functional.
+
+Signed-off-by: Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>
+Reviewed-by: Yixun Lan <dlan@gentoo.org>
+Link: https://lore.kernel.org/r/20250821152619.597051-1-hendrik.hamerlinck@hammernet.be
+Signed-off-by: Yixun Lan <dlan@gentoo.org>
+(cherry picked from commit eba84c94f9597a82f143997bfacc75e5b27a37de)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index abde8bb07c95..6c68b2e54675 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -667,6 +667,7 @@ uart0: serial@d4017000 {
+ 				clocks = <&syscon_apbc CLK_UART0>,
+ 					 <&syscon_apbc CLK_UART0_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART0>;
+ 				interrupts = <42>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -680,6 +681,7 @@ uart2: serial@d4017100 {
+ 				clocks = <&syscon_apbc CLK_UART2>,
+ 					 <&syscon_apbc CLK_UART2_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART2>;
+ 				interrupts = <44>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -693,6 +695,7 @@ uart3: serial@d4017200 {
+ 				clocks = <&syscon_apbc CLK_UART3>,
+ 					 <&syscon_apbc CLK_UART3_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART3>;
+ 				interrupts = <45>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -706,6 +709,7 @@ uart4: serial@d4017300 {
+ 				clocks = <&syscon_apbc CLK_UART4>,
+ 					 <&syscon_apbc CLK_UART4_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART4>;
+ 				interrupts = <46>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -719,6 +723,7 @@ uart5: serial@d4017400 {
+ 				clocks = <&syscon_apbc CLK_UART5>,
+ 					 <&syscon_apbc CLK_UART5_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART5>;
+ 				interrupts = <47>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -732,6 +737,7 @@ uart6: serial@d4017500 {
+ 				clocks = <&syscon_apbc CLK_UART6>,
+ 					 <&syscon_apbc CLK_UART6_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART6>;
+ 				interrupts = <48>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -745,6 +751,7 @@ uart7: serial@d4017600 {
+ 				clocks = <&syscon_apbc CLK_UART7>,
+ 					 <&syscon_apbc CLK_UART7_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART7>;
+ 				interrupts = <49>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -758,6 +765,7 @@ uart8: serial@d4017700 {
+ 				clocks = <&syscon_apbc CLK_UART8>,
+ 					 <&syscon_apbc CLK_UART8_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART8>;
+ 				interrupts = <50>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+@@ -771,6 +779,7 @@ uart9: serial@d4017800 {
+ 				clocks = <&syscon_apbc CLK_UART9>,
+ 					 <&syscon_apbc CLK_UART9_BUS>;
+ 				clock-names = "core", "bus";
++				resets = <&syscon_apbc RESET_UART9>;
+ 				interrupts = <51>;
+ 				reg-shift = <2>;
+ 				reg-io-width = <4>;
+-- 
+2.47.3
+

@@ -1,0 +1,35 @@
+From 0e410fd58d621d8c85faaa3ad1eb9a60f084ad45 Mon Sep 17 00:00:00 2001
+From: Darshan Prajapati <darshan.prajapati@einfochips.com>
+Date: Mon, 25 Aug 2025 18:54:25 +0530
+Subject: [PATCH 064/253] UPSTREAM: dt-bindings: interrupt-controller: Add
+ ESWIN EIC7700 PLIC
+
+Add compatible string for ESWIN EIC7700 PLIC.
+
+Signed-off-by: Darshan Prajapati <darshan.prajapati@einfochips.com>
+Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
+Signed-off-by: Pinkesh Vaghela <pinkesh.vaghela@einfochips.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20250825132427.1618089-5-pinkesh.vaghela@einfochips.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+(cherry picked from commit 21b5a7ace6b2fc2fdee1eda4a802e0abfe192262)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ .../bindings/interrupt-controller/sifive,plic-1.0.0.yaml         | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+index 34591d64cca3..234cdc2a1a26 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+@@ -59,6 +59,7 @@ properties:
+       - items:
+           - enum:
+               - canaan,k210-plic
++              - eswin,eic7700-plic
+               - sifive,fu540-c000-plic
+               - spacemit,k1-plic
+               - starfive,jh7100-plic
+-- 
+2.47.3
+

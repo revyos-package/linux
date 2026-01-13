@@ -1,0 +1,51 @@
+From f24188f3d5a91e3a3009fcee51cc17f683c17162 Mon Sep 17 00:00:00 2001
+From: Michal Wilczynski <m.wilczynski@samsung.com>
+Date: Fri, 22 Aug 2025 00:20:18 +0200
+Subject: [PATCH 058/253] UPSTREAM: drm/imagination: Enable PowerVR driver for
+ RISC-V
+
+Several RISC-V boards feature Imagination GPUs that are compatible with
+the PowerVR driver. An example is the IMG BXM-4-64 GPU on the Lichee Pi
+4A board. This commit adjusts the driver's Kconfig dependencies to allow
+the PowerVR driver to be compiled on the RISC-V architecture.
+
+By enabling compilation on RISC-V, we expand support for these GPUs,
+providing graphics acceleration capabilities and enhancing hardware
+compatibility on RISC-V platforms.
+
+The RISC-V support is restricted to 64-bit systems (RISCV && 64BIT) as
+the driver currently has an implicit dependency on a 64-bit platform.
+
+Add a dependency on MMU to fix a build warning on RISC-V configurations
+without an MMU.
+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Signed-off-by: Michal Wilczynski <m.wilczynski@samsung.com>
+Link: https://lore.kernel.org/r/20250822-apr_14_for_sending-v13-4-af656f7cc6c3@samsung.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+(cherry picked from commit 6b53cf48d9339c75fa51927b0a67d8a6751066bd)
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/gpu/drm/imagination/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/imagination/Kconfig b/drivers/gpu/drm/imagination/Kconfig
+index 3bfa2ac212dc..682dd2633d0c 100644
+--- a/drivers/gpu/drm/imagination/Kconfig
++++ b/drivers/gpu/drm/imagination/Kconfig
+@@ -3,8 +3,9 @@
+ 
+ config DRM_POWERVR
+ 	tristate "Imagination Technologies PowerVR (Series 6 and later) & IMG Graphics"
+-	depends on ARM64
++	depends on (ARM64 || RISCV && 64BIT)
+ 	depends on DRM
++	depends on MMU
+ 	depends on PM
+ 	select DRM_EXEC
+ 	select DRM_GEM_SHMEM_HELPER
+-- 
+2.47.3
+
