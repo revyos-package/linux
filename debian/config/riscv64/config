@@ -23,6 +23,7 @@ CONFIG_ARCH_SPACEMIT=y
 CONFIG_SOC_STARFIVE=y
 CONFIG_ARCH_SUNXI=y
 CONFIG_ARCH_THEAD=y
+CONFIG_ARCH_ULTRARISC=y
 CONFIG_ARCH_VIRT=y
 CONFIG_ARCH_CANAAN=y
 
@@ -70,17 +71,17 @@ CONFIG_HW_RANDOM_JH7110=m
 ## file: drivers/clk/sophgo/Kconfig
 ##
 CONFIG_CLK_SOPHGO_CV1800=m
-CONFIG_CLK_SOPHGO_SG2042_PLL=m
-CONFIG_CLK_SOPHGO_SG2042_CLKGEN=m
-CONFIG_CLK_SOPHGO_SG2042_RPGATE=m
+CONFIG_CLK_SOPHGO_SG2042_PLL=y
+CONFIG_CLK_SOPHGO_SG2042_CLKGEN=y
+CONFIG_CLK_SOPHGO_SG2042_RPGATE=y
 CONFIG_CLK_SOPHGO_SG2044=y
-CONFIG_CLK_SOPHGO_SG2044_PLL=m
+CONFIG_CLK_SOPHGO_SG2044_PLL=y
 
 ##
 ## file: drivers/clk/spacemit/Kconfig
 ##
-CONFIG_SPACEMIT_CCU=y
 CONFIG_SPACEMIT_K1_CCU=y
+CONFIG_SPACEMIT_K3_CCU=y
 
 ##
 ## file: drivers/cpufreq/Kconfig
@@ -106,7 +107,7 @@ CONFIG_SOPHGO_CV1800B_DMAMUX=m
 ##
 ## file: drivers/firmware/Kconfig
 ##
-CONFIG_TH1520_AON_PROTOCOL=m
+CONFIG_TH1520_AON_PROTOCOL=y
 
 ##
 ## file: drivers/firmware/microchip/Kconfig
@@ -120,11 +121,23 @@ CONFIG_GPIOLIB=y
 CONFIG_GPIO_DWAPB=m
 CONFIG_GPIO_SIFIVE=y
 CONFIG_GPIO_SPACEMIT_K1=y
+CONFIG_GPIO_PCA953X=m
 
 ##
 ## file: drivers/gpu/drm/Kconfig
 ##
 CONFIG_DRM=m
+
+##
+## file: drivers/gpu/drm/bridge/Kconfig
+##
+CONFIG_DRM_DISPLAY_CONNECTOR=m
+CONFIG_DRM_THEAD_TH1520_DW_HDMI=m
+
+##
+## file: drivers/gpu/drm/etnaviv/Kconfig
+##
+CONFIG_DRM_ETNAVIV=m
 
 ##
 ## file: drivers/gpu/drm/imagination/Kconfig
@@ -142,9 +155,16 @@ CONFIG_DRM_RADEON=m
 CONFIG_DRM_SUN4I=m
 
 ##
+## file: drivers/gpu/drm/verisilicon/Kconfig
+##
+CONFIG_DRM_VERISILICON_DC=m
+
+##
 ## file: drivers/hwmon/Kconfig
 ##
+CONFIG_SENSORS_MR75203=m
 CONFIG_SENSORS_LM90=m
+CONFIG_SENSORS_PWM_FAN=m
 CONFIG_SENSORS_SFCTEMP=m
 CONFIG_SENSORS_SG2042_MCU=m
 
@@ -161,6 +181,20 @@ CONFIG_I2C_DESIGNWARE_PLATFORM=m
 CONFIG_I2C_K1=m
 CONFIG_I2C_MICROCHIP_CORE=m
 CONFIG_I2C_MV64XXX=m
+
+##
+## file: drivers/i2c/muxes/Kconfig
+##
+CONFIG_I2C_ARB_GPIO_CHALLENGE=m
+CONFIG_I2C_MUX_GPIO=m
+CONFIG_I2C_MUX_GPMUX=m
+CONFIG_I2C_MUX_LTC4306=m
+CONFIG_I2C_MUX_PCA9541=m
+CONFIG_I2C_MUX_PCA954x=m
+CONFIG_I2C_MUX_PINCTRL=m
+CONFIG_I2C_MUX_REG=m
+CONFIG_I2C_DEMUX_PINCTRL=m
+CONFIG_I2C_MUX_MLXCPLD=m
 
 ##
 ## file: drivers/input/misc/Kconfig
@@ -245,6 +279,11 @@ CONFIG_DWMAC_THEAD=m
 CONFIG_MOTORCOMM_PHY=m
 
 ##
+## file: drivers/net/usb/Kconfig
+##
+CONFIG_USB_NET_DRIVERS=m
+
+##
 ## file: drivers/net/wireless/broadcom/brcm80211/brcmfmac/Kconfig
 ##
 CONFIG_BRCMFMAC_SDIO=y
@@ -252,6 +291,7 @@ CONFIG_BRCMFMAC_SDIO=y
 ##
 ## file: drivers/nvmem/Kconfig
 ##
+CONFIG_NVMEM_SOPHGO_EFUSE=m
 CONFIG_NVMEM_SUNXI_SID=m
 
 ##
@@ -299,6 +339,11 @@ CONFIG_STARFIVE_STARLINK_PMU=y
 CONFIG_PHY_SUN4I_USB=m
 
 ##
+## file: drivers/phy/spacemit/Kconfig
+##
+CONFIG_PHY_SPACEMIT_K1_USB2=m
+
+##
 ## file: drivers/phy/starfive/Kconfig
 ##
 CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=m
@@ -323,6 +368,11 @@ CONFIG_PINCTRL_SOPHGO_SG2042=y
 CONFIG_PINCTRL_SOPHGO_SG2044=y
 
 ##
+## file: drivers/pinctrl/ultrarisc/Kconfig
+##
+CONFIG_PINCTRL_ULTRARISC_DP1000=y
+
+##
 ## file: drivers/pmdomain/thead/Kconfig
 ##
 CONFIG_TH1520_PM_DOMAINS=m
@@ -337,6 +387,12 @@ CONFIG_POWER_RESET_RESTART=y
 CONFIG_POWER_RESET_TH1520_AON=m
 
 ##
+## file: drivers/power/sequencing/Kconfig
+##
+CONFIG_POWER_SEQUENCING=m
+CONFIG_POWER_SEQUENCING_TH1520_GPU=m
+
+##
 ## file: drivers/pps/clients/Kconfig
 ##
 CONFIG_PPS_CLIENT_GPIO=m
@@ -349,6 +405,7 @@ CONFIG_PWM_MICROCHIP_CORE=m
 CONFIG_PWM_PXA=m
 CONFIG_PWM_SIFIVE=m
 CONFIG_PWM_SOPHGO_SG2042=m
+CONFIG_PWM_TH1520=m
 
 ##
 ## file: drivers/regulator/Kconfig
@@ -362,15 +419,24 @@ CONFIG_REGULATOR_TPS65086=m
 ##
 ## file: drivers/reset/Kconfig
 ##
+CONFIG_RESET_K230=m
 CONFIG_RESET_TH1520=m
+
+##
+## file: drivers/reset/spacemit/Kconfig
+##
+CONFIG_RESET_SPACEMIT_K1=m
+CONFIG_RESET_SPACEMIT_K3=m
 
 ##
 ## file: drivers/rtc/Kconfig
 ##
 CONFIG_RTC_DRV_DS1307=m
 CONFIG_RTC_DRV_PCF8563=m
+CONFIG_RTC_DRV_SD3078=m
 CONFIG_RTC_DRV_PCF85063=m
 CONFIG_RTC_DRV_DA9063=m
+CONFIG_RTC_DRV_EFI=m
 CONFIG_RTC_DRV_CV1800=m
 CONFIG_RTC_DRV_SUN6I=y
 CONFIG_RTC_DRV_POLARFIRE_SOC=m
@@ -391,6 +457,7 @@ CONFIG_SOPHGO_SG2044_TOPSYS=y
 ##
 CONFIG_SPI_DESIGNWARE=y
 CONFIG_SPI_DW_MMIO=m
+CONFIG_SPI_FSL_QUADSPI=m
 CONFIG_SPI_SIFIVE=m
 CONFIG_SPI_SG2044_NOR=m
 CONFIG_SPI_SUN6I=m
@@ -409,6 +476,11 @@ CONFIG_VIDEO_STARFIVE_CAMSS=m
 ## file: drivers/thermal/Kconfig
 ##
 CONFIG_SUN8I_THERMAL=m
+
+##
+## file: drivers/thermal/spacemit/Kconfig
+##
+CONFIG_SPACEMIT_K1_TSENSOR=m
 
 ##
 ## file: drivers/tty/hvc/Kconfig
@@ -432,7 +504,7 @@ CONFIG_SERIAL_OF_PLATFORM=y
 ##
 ## file: drivers/usb/Kconfig
 ##
-CONFIG_USB=m
+CONFIG_USB=y
 
 ##
 ## file: drivers/usb/cdns3/Kconfig
@@ -442,6 +514,16 @@ CONFIG_USB_CDNS3=m
 CONFIG_USB_CDNS3_GADGET=y
 CONFIG_USB_CDNS3_HOST=y
 CONFIG_USB_CDNS3_STARFIVE=m
+
+##
+## file: drivers/usb/dwc2/Kconfig
+##
+CONFIG_USB_DWC2=m
+
+##
+## file: drivers/usb/dwc3/Kconfig
+##
+CONFIG_USB_DWC3=m
 
 ##
 ## file: drivers/usb/gadget/Kconfig
@@ -456,6 +538,11 @@ CONFIG_USB_EHCI_HCD=m
 CONFIG_USB_EHCI_HCD_PLATFORM=m
 CONFIG_USB_OHCI_HCD=m
 CONFIG_USB_OHCI_HCD_PLATFORM=m
+
+##
+## file: drivers/usb/misc/Kconfig
+##
+CONFIG_USB_ONBOARD_DEV=m
 
 ##
 ## file: drivers/usb/musb/Kconfig
@@ -478,6 +565,7 @@ CONFIG_FB_EFI=y
 ## file: drivers/watchdog/Kconfig
 ##
 CONFIG_DA9063_WATCHDOG=m
+CONFIG_DW_WATCHDOG=m
 CONFIG_SUNXI_WATCHDOG=m
 CONFIG_STARFIVE_WATCHDOG=m
 
@@ -491,6 +579,7 @@ CONFIG_KERNEL_GZIP=y
 # CONFIG_KERNEL_ZSTD is not set
 ## end choice
 CONFIG_KALLSYMS_ALL=y
+CONFIG_RUST=y
 
 ##
 ## file: kernel/Kconfig.kexec
@@ -498,9 +587,21 @@ CONFIG_KALLSYMS_ALL=y
 CONFIG_KEXEC=y
 
 ##
+## file: kernel/dma/Kconfig
+##
+CONFIG_DMA_CMA=y
+CONFIG_DMA_NUMA_CMA=y
+CONFIG_CMA_SIZE_MBYTES=256
+
+##
 ## file: lib/Kconfig.debug
 ##
 CONFIG_DEBUG_INFO_BTF=y
+
+##
+## file: mm/Kconfig
+##
+CONFIG_CMA=y
 
 ##
 ## file: sound/hda/controllers/Kconfig
@@ -521,6 +622,11 @@ CONFIG_SND_DESIGNWARE_I2S=m
 ## file: sound/soc/generic/Kconfig
 ##
 CONFIG_SND_SIMPLE_CARD=m
+
+##
+## file: sound/soc/spacemit/Kconfig
+##
+CONFIG_SND_SOC_K1_I2S=m
 
 ##
 ## file: sound/soc/starfive/Kconfig
