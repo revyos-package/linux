@@ -1,0 +1,41 @@
+From 2b7cedcca7d675954d0d6d3c54f25754f4ea5769 Mon Sep 17 00:00:00 2001
+From: Iker Pedrosa <ikerpedrosam@gmail.com>
+Date: Mon, 30 Mar 2026 10:38:07 +0200
+Subject: [PATCH 199/234] BACKPORT: FROMLIST: riscv: dts: spacemit:
+ k1-orangepi-rv2: add PMIC and power infrastructure
+
+Add Spacemit P1 PMIC configuration and board power infrastructure for
+voltage regulation support.
+
+- Add board power regulators (5V input, 4V rail)
+- Enable I2C8 for PMIC communication
+- Configure PMIC with buck4 (vmmc) and aldo1 (vqmmc) regulators
+- Set up regulator constraints for SD card operation
+
+Tested-by: Anand Moon <linux.amoon@gmail.com>
+Tested-by: Trevor Gamblin <tgamblin@baylibre.com>
+Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+Tested-by: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+Link: https://lore.kernel.org/r/20260330-orangepi-sd-card-uhs-v5-6-bd853604322d@gmail.com
+[ Han Gao: add node aldo1, drop others ]
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index 157bbb39c268..7799099d4693 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -191,7 +191,7 @@ buck6 {
+ 				regulator-always-on;
+ 			};
+ 
+-			aldo1 {
++			aldo1: aldo1 {
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <3400000>;
+ 				regulator-boot-on;
+-- 
+2.47.3
+

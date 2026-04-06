@@ -1,0 +1,41 @@
+From ebaf82a0671d80b3474cfed79b0aabdbfa88969b Mon Sep 17 00:00:00 2001
+From: Yao Zi <me@ziyao.cc>
+Date: Sun, 5 Apr 2026 15:41:54 +0000
+Subject: [PATCH 125/234] FROMLIST: PCI: sg2042: Avoid L0s and L1 on Sophgo
+ 2042 PCIe Root Ports
+
+Since commit f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM
+states for devicetree platforms") force enable ASPM on all device tree
+platform, the SG2042 root port breaks as it advertises L0s and L1
+capabilities without supporting it.
+
+Set ASPM quirks to disable advertisement of L0s and L1 support, so
+it doesn't try to enable those states.
+
+Fixes: 4e27aca4881a ("riscv: sophgo: dts: add PCIe controllers for SG2042")
+Co-developed-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Yao Zi <me@ziyao.cc>
+Tested-by: Han Gao <gaohan@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260405154154.46829-3-me@ziyao.cc
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/pci/controller/cadence/pcie-sg2042.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/pci/controller/cadence/pcie-sg2042.c b/drivers/pci/controller/cadence/pcie-sg2042.c
+index 0c50c74d03ee..4a2af4d0713e 100644
+--- a/drivers/pci/controller/cadence/pcie-sg2042.c
++++ b/drivers/pci/controller/cadence/pcie-sg2042.c
+@@ -48,6 +48,8 @@ static int sg2042_pcie_probe(struct platform_device *pdev)
+ 	bridge->child_ops = &sg2042_pcie_child_ops;
+ 
+ 	rc = pci_host_bridge_priv(bridge);
++	rc->quirk_broken_aspm_l0s = 1;
++	rc->quirk_broken_aspm_l1 = 1;
+ 	pcie = &rc->pcie;
+ 	pcie->dev = dev;
+ 
+-- 
+2.47.3
+

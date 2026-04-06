@@ -1,0 +1,37 @@
+From 1544d5b044d14a471f365900b0e8284ad4e6945e Mon Sep 17 00:00:00 2001
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Thu, 26 Mar 2026 16:17:21 +0800
+Subject: [PATCH 189/234] FROMLIST: clk: spacemit: k3: mark top_dclk as
+ CLK_IS_CRITICAL
+
+top_dclk is the DDR bus clock. If it is gated by clk_disable_unused,
+all memory-mapped bus transactions cease to function, causing DMA
+engines to hang and general system instability.
+
+Mark it CLK_IS_CRITICAL so the CCF never gates it during the
+unused clock sweep.
+
+Fixes: e371a77255b8 ("clk: spacemit: k3: add the clock tree")
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Link: https://lore.kernel.org/r/20260326-k3-pdma-v2-6-ca94ca7bb595@linux.spacemit.com
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ drivers/clk/spacemit/ccu-k3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/spacemit/ccu-k3.c b/drivers/clk/spacemit/ccu-k3.c
+index e98afd59f05c..bb8b75bdbdb3 100644
+--- a/drivers/clk/spacemit/ccu-k3.c
++++ b/drivers/clk/spacemit/ccu-k3.c
+@@ -846,7 +846,7 @@ static const struct clk_parent_data top_parents[] = {
+ 	CCU_PARENT_HW(pll6_d3),
+ };
+ CCU_MUX_DIV_GATE_FC_DEFINE(top_dclk, top_parents, APMU_TOP_DCLK_CTRL, 5, 3,
+-			   BIT(8), 2, 3, BIT(1), 0);
++			   BIT(8), 2, 3, BIT(1), CLK_IS_CRITICAL);
+ 
+ static const struct clk_parent_data ucie_parents[] = {
+ 	CCU_PARENT_HW(pll1_d8_307p2),
+-- 
+2.47.3
+
