@@ -1,8 +1,9 @@
 linux (6.19.13-1~bpo13+2) trixie-backports; urgency=medium
 
   * Apply sg2042/sg2044/th1520/dp1000/k1/k3 backport patchset
+  * Apply sg2042/sg2044/th1520/dp1000/k1/k3 config
 
- -- Han Gao <rabenda.cn@gmail.com>  Thu, 30 Apr 2026 00:31:21 +0800
+ -- Han Gao <rabenda.cn@gmail.com>  Thu, 30 Apr 2026 00:34:41 +0800
 
 linux (6.19.13-1~bpo13+1) trixie-backports; urgency=medium
 
