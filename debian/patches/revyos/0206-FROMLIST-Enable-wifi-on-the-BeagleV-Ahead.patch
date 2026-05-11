@@ -1,0 +1,96 @@
+From 70ea8209523f6bccb3e23a366cb440b310cbf6e6 Mon Sep 17 00:00:00 2001
+From: Thomas Gerner <thomas.gerner@muenchen-mail.de>
+Date: Mon, 11 May 2026 16:11:00 +0200
+Subject: [PATCH 206/231] FROMLIST: Enable wifi on the BeagleV-Ahead
+
+The BeagleV-Ahead board uses an AP6203BM WiFi chip from AMPAK Technology
+Inc. connected to SDIO1. The chip is compatible to the broadcom wireless
+driver.
+
+Enable wifi on the BeagleV-Ahead.
+
+Signed-off-by: Thomas Gerner <thomas.gerner@muenchen-mail.de>
+Link: https://lore.kernel.org/r/20260511141119.155369-1-thomas.gerner@muenchen-mail.de
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ .../boot/dts/thead/th1520-beaglev-ahead.dts   | 50 +++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/thead/th1520-beaglev-ahead.dts b/arch/riscv/boot/dts/thead/th1520-beaglev-ahead.dts
+index 91f3f9b987bc..5e0dc47d263c 100644
+--- a/arch/riscv/boot/dts/thead/th1520-beaglev-ahead.dts
++++ b/arch/riscv/boot/dts/thead/th1520-beaglev-ahead.dts
+@@ -86,6 +86,11 @@ hdmi_con_in: endpoint {
+ 			};
+ 		};
+ 	};
++
++	brcmf_pwrseq: brcmf_pwrseq {
++		compatible = "mmc-pwrseq-simple";
++		reset-gpios = <&gpio2 31 GPIO_ACTIVE_LOW>;	/* WL-REG-ON */
++	};
+ };
+ 
+ &osc {
+@@ -239,6 +244,28 @@ rx-pins {
+ 			slew-rate = <0>;
+ 		};
+ 	};
++
++	wifi_pins: wifi-pins {
++	    host-wake-wl {
++			pins = "GPIO2_25";
++			function = "gpio";
++			bias-pull-up;
++			drive-strength = <1>;
++			input-enable;
++			input-schmitt-disable;
++			slew-rate = <0>;
++		};
++
++	    reg-on-wl {
++		    pins = "GPIO2_31";
++		    function = "gpio";
++			bias-pull-up;
++			drive-strength = <3>;
++			input-disable;
++			input-schmitt-disable;
++			slew-rate = <0>;
++	    };
++	};
+ };
+ 
+ &sdio0 {
+@@ -247,6 +274,29 @@ &sdio0 {
+ 	status = "okay";
+ };
+ 
++&sdio1 {
++	bus-width = <4>;
++	max-frequency = <198000000>;
++	status = "okay";
++	#address-cells = <1>;
++	#size-cells = <0>;
++	non-removable;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&wifi_pins>;
++	mmc-pwrseq = <&brcmf_pwrseq>;
++
++	wifi@1 {
++		compatible = "cypress,cyw43012-fmac", "brcm,bcm4329-fmac";
++		reg = <1>;
++		brcm,sd_head_align = <4>;
++		brcm,sd_sgentry_align = <512>;
++		interrupt-parent = <&gpio2>;
++		interrupts = <25 IRQ_TYPE_EDGE_RISING>;
++		interrupt-names = "host-wake";
++	};
++};
++
+ &dpu {
+ 	status = "okay";
+ };
+-- 
+2.47.3
+
