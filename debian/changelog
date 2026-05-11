@@ -1,6 +1,7 @@
 linux (7.0.4-1~bpo13+2) trixie-backports; urgency=medium
 
   * Apply sg2042/sg2044/th1520/dp1000/k1/k3 backport patchset
+  * Apply sg2042/sg2044/th1520/dp1000/k1/k3 config
 
  -- Han Gao <rabenda.cn@gmail.com>  Tue, 12 May 2026 02:40:47 +0800
 
