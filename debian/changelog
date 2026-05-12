@@ -1,3 +1,9 @@
+linux (7.0.4-1~bpo13+3) trixie-backports; urgency=medium
+
+  * Refresh backport patchset
+
+ -- Han Gao <rabenda.cn@gmail.com>  Wed, 13 May 2026 02:30:12 +0800
+
 linux (7.0.4-1~bpo13+2) trixie-backports; urgency=medium
 
   * Apply sg2042/sg2044/th1520/dp1000/k1/k3 backport patchset
